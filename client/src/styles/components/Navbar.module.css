@@ -49,6 +49,9 @@
 }
 
 /* Profile section at Navbar */
+.Navbar .nav-item .nav-profile-section span::selection {
+  background-color: transparent;
+}
 .Navbar .nav-item .nav-profile-section {
   background-color: grey;
   width: 6rem;

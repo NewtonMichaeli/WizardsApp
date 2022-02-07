@@ -1,0 +1,25 @@
+/* Styles for DashboardAddWizard component - at Dashboard */
+
+/* Dashboard Add wizard container */
+.DashboardAddWizard {
+  background-color: #e0e0e066;
+  width: 100%;
+  min-height: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* mouse */
+  cursor: pointer; 
+}
+.DashboardAddWizard:hover {
+  background-color: #e7e7e766;
+}
+
+/* Dashboard Add wizard - add icon */
+.DashboardAddWizard img {
+  height: 50%;
+  opacity: 0.75;
+}

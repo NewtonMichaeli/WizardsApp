@@ -1,0 +1,85 @@
+/* Styles for DashbordWizard component - at Dashboard */
+
+/* DashboardWizard container */
+.DashboardWizard {
+  background-color: #e0e0e0;
+  width: 100%;
+  min-height: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+/* innr sections layout */
+.DashboardWizard section {
+  width: fit-content;
+  /* layout */
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+}
+
+/* left section - nameinfo */
+.DashboardWizard .nameinfo {
+  /* background-color: lightgreen; */
+  height: 100%;
+  padding: 0 1.4rem;
+  width: fit-content;
+  /* layout */
+  justify-content: flex-start;
+}
+.DashboardWizard .nameinfo .user-name {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #666;
+}
+.DashboardWizard .nameinfo .line {
+  background-color: #c4c4c4;
+  width: 1px;
+  height: 72%;
+  margin: 0 1.34em;
+}
+.DashboardWizard .nameinfo .wizard-name {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #4a4164cc;
+  height: 1.2rem;
+}
+
+/* DashboardWizard wizard-info */
+.DashboardWizard .wizardinfo {
+  padding-top: 0.3rem;
+  height: 100%;
+  justify-content: center;
+}
+.DashboardWizard .wizardinfo .wizardinfo-id {
+  text-align: center;
+  color: #909090;
+  font-size: 1.2rem;
+  font-family: "Dongle", sans-serif;
+  font-weight: 400;
+}
+
+/* DashboardWizard wizard controllers */
+.DashboardWizard .wizard-controllers {
+  height: 100%;
+  width: fit-content;
+  width: 8rem;
+  /* layout */
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+.DashboardWizard .wizard-controllers img {
+  height: 2rem;
+  margin-left: 0.5rem;
+  transition: transform 0.1s ease;
+  /* mouse */
+  cursor: pointer;
+}
+.DashboardWizard .wizard-controllers img:hover {
+  transform: scale(1.05);
+}

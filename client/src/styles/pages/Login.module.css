@@ -3,7 +3,6 @@
 /* Login Page */
 .Login {
   width: 100vw;
-  /* background-color: green; */
   height: calc(100vh - var(--navbar_height));
   /* layout */
   display: flex;

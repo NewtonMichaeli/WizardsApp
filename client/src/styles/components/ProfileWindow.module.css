@@ -1,0 +1,120 @@
+/* Styles for ProfileWindow component */
+
+/* profile window container */
+.ProfileWindow {
+  /* enter animation */
+  transform: translateY(-1rem);
+  opacity: 0;
+  animation: onEnterWindow 0.2s forwards;
+
+  width: 16rem;
+  height: 16rem;
+  background-color: #fff;
+  border-radius: 0.6rem;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px #00000020;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* position */
+  position: absolute;
+  top: calc(var(--navbar_height) - 1rem);
+  right: 1.2rem;
+}
+
+/* profile top section */
+.ProfileWindow .profile-top-section {
+  /* background-color: lightgreen; */
+  border-bottom: 1px solid #c4c4c4;
+  width: 100%;
+  height: 55%;
+  padding-top: 0.5rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ProfileWindow .profile-top-section img {
+  opacity: 0.8;
+  width: 3.5rem;
+}
+.ProfileWindow .profile-top-section .user-username {
+  font-family: "Dongle", sans-serif;
+  font-size: 2rem;
+  height: 1.8rem;
+}
+.ProfileWindow .profile-top-section .user-email {
+  color: #666666cc;
+  font-family: "Dongle", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* profile btm section */
+.ProfileWindow .profile-btm-section {
+  width: 100%;
+  height: 45%;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.3rem;
+}
+
+/* user status section */
+.ProfileWindow .profile-btm-section .user-status-section {
+  height: 3rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ProfileWindow .profile-btm-section .user-status-section .user-status {
+  font-family: "Dongle", sans-serif;
+  color: #444;
+  font-size: 1.8rem;
+  height: 1.5rem;
+  font-weight: 400;
+}
+.ProfileWindow .profile-btm-section .user-status-section .user-status::before {
+  content: "Status: ";
+  font-weight: 300;
+}
+.ProfileWindow .profile-btm-section .user-status-section .learn-more {
+  color: #7b69af;
+  font-family: "Dongle", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-decoration: none;
+}
+/* sign out button */
+.ProfileWindow .profile-btm-section .sign-out-btn {
+  border: 3px solid #888;
+  outline: none !important;
+  background-color: transparent;
+  height: 1.8rem;
+  width: 8rem;
+  border-radius: 1rem;
+  transform: scale(0.85);
+  /* mouse */
+  cursor: pointer;
+}
+.ProfileWindow .profile-btm-section .sign-out-btn span {
+  font-family: "Dongle", sans-serif;
+  font-size: 1.2rem;
+  color: #666666fb;
+}
+
+/* keyframes */
+
+@keyframes onEnterWindow {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

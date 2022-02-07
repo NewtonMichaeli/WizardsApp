@@ -16,6 +16,9 @@
 *::selection {
   background-color: #55555533;
 }
+img::selection {
+  background-color: transparent;
+}
 
 html,
 body,
