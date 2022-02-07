@@ -1,0 +1,124 @@
+/* Styles for Login page */
+
+/* Login Page */
+.Login {
+  width: 100vw;
+  /* background-color: green; */
+  height: calc(100vh - var(--navbar_height));
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+/* login container - for login page */
+.Login .login-container {
+  width: 20rem;
+  height: 25rem;
+  background-color: #fff;
+}
+
+/* login header section */
+.login-container .login-header-section {
+  background-color: #816dbab3;
+  width: 100%;
+  height: 5rem;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* login header title */
+.login-header-section h1 {
+  color: #fff;
+}
+
+/* login form section */
+.login-form-section {
+  /* background-color: lightgreen; */
+  width: 100%;
+  height: calc(100% - 5rem);
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+/* input struct container */
+.input-struct-container {
+  width: fit-content;
+  height: 7rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* input struct container - for regsister page */
+.input-struct-container_register {
+  height: 10rem;
+}
+
+/* login form section - input subcomponent */
+.login-form-section .input-struct {
+  width: 15rem;
+  height: 2rem;
+  /* background-color: #f04f4f; */
+  padding: 0.3rem;
+  border-bottom: 1px solid #777;
+  /* layout */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* input subcomponent - img */
+.input-struct img {
+  height: 100%;
+}
+
+/* input subcomponent - input */
+.input-struct input {
+  height: 100%;
+  width: 85%;
+  border: none !important;
+  background-color: transparent !important;
+  outline: none !important;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* link style */
+.login-form-section .link {
+  text-decoration: none;
+  font-size: 0.6rem;
+  color: #685b8e;
+}
+
+/* login submit button */
+.login-form-section .login-submit-btn {
+  background-color: var(--app_def_color);
+  color: #fff;
+  border: none !important;
+  outline: none !important;
+  width: 8rem;
+  height: 1.7rem;
+  border-radius: 51px;
+  /* mouse */
+  cursor: pointer;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 670px) {
+  .Login .login-container {
+    width: 18rem;
+  }
+  .login-form-section .input-struct {
+    width: 13rem;
+  }
+}
