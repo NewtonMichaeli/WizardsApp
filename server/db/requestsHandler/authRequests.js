@@ -1,47 +1,56 @@
+const con = require('../connection')
+const {promisify} = require('util')
 
-export const createUser = async (user) => {
+const asyncQuery = promisify(con.query.bind(con));
+
+const createUser = async (user) => {
 
     const {name, email, password, role} = user
-    let error = false
-    const query = `INSERT INTO 'users' ('name', 'email', 'password', 'role') VALUES ('${name}', '${email}', '${password}', '${role}')`
-
-    await con.query(query, (err) => {if (err) return error = true})
-
-    if(error) return false
-    return true
+    const query = `INSERT INTO users (id, name, email, password, role) VALUES (NULL, '${name}', '${email}', '${password}', '${role}')`
+    try {
+        const result = await asyncQuery(query)
+        return true
+    }
+    catch {
+        return false
+    }
 }
 
-export const deleteUser = async (id) => {
+const deleteUser = async (id) => {
 
-    let error = false
-    const query = `DELETE FROM 'users' WHERE id = ${id}`
-
-    await con.query(query, (err) => {if (err) return error = true})
-
-    if(error) return false
-    return true
+    const query = `DELETE FROM users WHERE id = ${id}`
+    try {
+        const result = await asyncQuery(query)
+        return true
+    }
+    catch {
+        return false
+    }
 }
 
-export const updateUser = async (newUser, id) => {
+const updateUser = async (newUser, id) => {
 
     const {name, email, password, role} = newUser
-    let error = false
-    const query = `UPDATE 'users' SET 'name' = '${name}', 'email' = '${email}', 'password' = '${password}', 'role' = '${role}' WHERE 'users'.'id' = ${id}`
-
-    await con.query(query, (err) => {if (err) return error = true})
-
-    if(error) return false
-    return true
+    const query = `UPDATE users SET name = '${name}', email = '${email}', password = '${password}', role = '${role}' WHERE users.id = ${id}`
+    try {
+        const result = await asyncQuery(query)
+        return true
+    }
+    catch {
+        return false
+    }
 }
 
-export const getUser = async (id) => {
+const getUserByEmail = async (email) => {
 
-    let error = false
-    let res = undefined
-    const query = `UPDATE 'users' SET 'name' = '${name}', 'email' = '${email}', 'password' = '${password}', 'role' = '${role}' WHERE 'users'.'id' = ${id}`
-
-    await con.query(query, (err, result) => {if (err) return error = true; else res = result})
-
-    if(error) return false
-    return res
+    const query = `SELECT * FROM users WHERE email = '${email}'`
+    try {
+        const result = await asyncQuery(query)
+        return result[0]
+    }
+    catch {
+        return false
+    }
 }
+
+module.exports = {createUser, deleteUser, updateUser, getUserByEmail}

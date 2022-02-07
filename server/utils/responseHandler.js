@@ -1,32 +1,37 @@
 
 //Auth responses:
-export const emailPassIncorrectErr = res => res.status(403).send("your email or password is incorrect")
+const emailPassIncorrectErr = res => res.status(403).send("your email or password is incorrect")
 
-export const loggedInSuccessfuly = (res, token) = res.status(200).json({token}) //get the token with res.data.token
+const loggedInSuccessfuly = (res, token) => res.status(200).json({token}) //get the token with res.data.token
 
-export const userCreatedSuccessfuly = res => res.status(200).send("user created successfuly.")
+const userCreatedSuccessfuly = res => res.status(200).send("user created successfuly.")
 
-export const userDeletedSuccessfuly = res => res.status(200).send("user deleted successfuly.")
+const userDeletedSuccessfuly = res => res.status(200).send("user deleted successfuly.")
 
-export const userUpdatedSuccessfuly = res => res.status(200).send("user updated successfuly.")
+const userUpdatedSuccessfuly = res => res.status(200).send("user updated successfuly.")
+
+const userSentSuccessfuly = (res, user) => res.status(200).json({user}) //get the user with res.data.user
 
 //Wizard responses:
-export const wizardNotFoundErr = res => res.status(404).send("wizard not found.")
+const wizardNotFoundErr = res => res.status(404).send("wizard not found.")
 
-export const wizardCreatedSuccessfuly = res => res.status(200).send("wizard created successfuly.")
+const wizardCreatedSuccessfuly = res => res.status(200).send("wizard created successfuly.")
 
-export const wizardDeletedSuccessfuly = res => res.status(200).send("wizard deleted successfuly.")
+const wizardDeletedSuccessfuly = res => res.status(200).send("wizard deleted successfuly.")
 
-export const wizardUpdatedSuccessfuly = res => res.status(200).send("wizard updated successfuly.")
+const wizardUpdatedSuccessfuly = res => res.status(200).send("wizard updated successfuly.")
 
-export const wizardSentSuccessfuly = res => res.status(200).send("wizard sent successfuly")
+const wizardSentSuccessfuly = res => res.status(200).send("wizard sent successfuly")
 
 
 //Global responses:
-export const emptyFieldErr = res => res.status(400).send("one of the fields is empty.")
 
-export const internalServerErr = res => res.status(500).send("internal server error.")
+const fieldsErr = (res, err) => res.status(400).send(`fields error: ${err}`)
 
-export const accessDeniedErr = res => res.status(403).send("access denied.")
+const internalServerErr = res => res.status(500).send("internal server error.")
+
+const accessDeniedErr = res => res.status(403).send("access denied.")
 
 
+module.exports = {emailPassIncorrectErr, loggedInSuccessfuly, userCreatedSuccessfuly, userDeletedSuccessfuly, userUpdatedSuccessfuly, userSentSuccessfuly,
+wizardNotFoundErr, wizardCreatedSuccessfuly, wizardDeletedSuccessfuly, wizardUpdatedSuccessfuly, wizardSentSuccessfuly, internalServerErr, accessDeniedErr, fieldsErr}
