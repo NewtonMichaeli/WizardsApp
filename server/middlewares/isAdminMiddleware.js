@@ -6,19 +6,19 @@ const isAdmin = (req, res, next) => {
     const token = req.header('auth-token')
     if(!token) {
         req.isAdmin = false
-        next()
+        return next()
     }
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET)
         if(verified.role === "Admin") {
             req.isAdmin = true
-            next()
+            return next()
         }
     }
     catch(err) {
         req.isAdmin = false
-        next()
+        return next()
     }
 }
 

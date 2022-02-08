@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 
-const SERVER_URL = 'http://localhost:5000/'
+const SERVER_URL = 'http://213.137.90.195:5000/'
 
 // Callback function params
 export type AddWizard_callback_props = {

@@ -1,9 +1,8 @@
 // Authorization
 
 import axios, { AxiosError } from 'axios'
-import GetDashboardWizards from './GetDashboardWizards'
 
-const SERVER_URI = 'http://localhost:5000/'
+const SERVER_URI = 'http://213.137.90.195:5000/'
 const SERVER_SIGNIN_URI = SERVER_URI + 'api/auth/signin'
 const SERVER_SIGNUP_URI = SERVER_URI + 'api/auth/signup'
 
@@ -35,7 +34,7 @@ export const SignIn: SignIn_props = async (email, password) =>
         console.log('not authed')
         return {
             success: false,
-            data: err.response?.data || err.response?.message
+            data: err.response?.data || "Unknown error. try again"
         }
     }
 }
@@ -50,6 +49,7 @@ export type SignUp_props = {
         data: string
     }>
 }
+
 // Tries to sign up
 export const SignUp: SignUp_props = async (name, email, password) =>
 {
@@ -68,7 +68,7 @@ export const SignUp: SignUp_props = async (name, email, password) =>
         console.log('not authed')
         return {
             success: false,
-            data: err.response?.data || err.response?.message
+            data: err.response?.data || "Unknown error. try again"
         }
     }
 }

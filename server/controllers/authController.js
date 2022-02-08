@@ -19,7 +19,7 @@ const signup = async (req, res) => {
     password = await bcrypt.hash(password, 10)
     const result = await authRequests.createUser({email, password, name, role})
     if(result) return resHandler.userCreatedSuccessfuly(res)
-    else return resHandler.internalServerErr(res)
+    return resHandler.internalServerErr(res)
 }
 
 const signin = async (req, res) => {

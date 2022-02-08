@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { WizardsFormat } from '../../interfaces/WizardFormat'
 
-const SERVER_URL = 'http://localhost:5000/'
+const SERVER_URL = 'http://213.137.90.195:5000/'
 
 // Callback function params
 export type GetAllWizards_callback_props = {
@@ -13,7 +13,7 @@ export type GetAllWizards_callback_props = {
 // Tries to get all data & wizards from the server
 export default (callback: GetAllWizards_callback_props) =>
 {
-    const token = window.localStorage.getItem('token')
+    const token = window.localStorage.getItem('auth-token')
     if (token === null)
         // -- user not authorized
         return callback(false, null)
