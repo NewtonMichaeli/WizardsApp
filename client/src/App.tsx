@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 // Components:
 import Navbar from './components/Navbar'
@@ -7,6 +7,9 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 
 const App: React.FC = () => {
+
+  const [UserData, setUserData] = useState<any>({})
+
   return (
     <div className="App">
       <Navbar />
@@ -18,14 +21,30 @@ const App: React.FC = () => {
         <Route 
           path="/signup"
           element={<Register />}
-        />
+          />
         <Route 
           path="/dashboard"
           element={<Dashboard />}
-        />
+          />
+        <Route 
+          path="*"
+          element={<GoToFromHome />}
+          />
       </Routes>
     </div>
   );
+}
+
+const GoToFromHome: React.FC = () => {
+  if (localStorage.getItem('token') === null) return(
+    <>{window.location.href = '/signin'}</>
+  )
+  else if (localStorage.getItem('token') === null) return(
+    <>{window.location.href = '/dashboard'}</>
+  )
+  else return (
+    <>{null}</>
+  )
 }
 
 export default App;

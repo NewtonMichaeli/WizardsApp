@@ -1,36 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
-import { getStyles } from "../controllers"
-// Interface:
-import { Login__Props } from "../interfaces/Login"
-// Styles:
-import Styles from "../styles/pages/Login.module.css"
+// Assets:
 import UserImg from "../assets/user.png"
 import EmailImg from "../assets/email.png"
 import PwdImg from "../assets/password.png"
-
-// Sign In Handler
-const registerHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const username: string = (e.target as any)[0].value,
-        email: string = (e.target as any)[1].value,
-        password: string = (e.target as any)[2].value
-    // validate inputs
-    if (username.length > 32 || username.length < 3) return
-    if (email.length > 32 || email.length < 3) return
-    if (password.length > 32 || password.length < 3) return
-    // send to server..
-}
+// Utils:
+import { registerHandler } from "../utils/handlers/Register"
+import { Feedback__props } from "../interfaces/Feedback"
+import { getStyles } from "../controllers"
+// Styles:
+import Styles from "../styles/pages/Login.module.css"
+// Components:
+import Feedback from "../components/Feedback"
 
 // Login Page
 const Register: React.FC = () => {
+
+    const [feedback, setFeedback] = useState<Feedback__props>({
+        status: false,
+        data: ""
+    })
+
     return (
         <div className={Styles["Login"]}>
             <div className={Styles["login-container"]}>
                 <section className={Styles["login-header-section"]}>
                     <h1>Sign Up</h1>
                 </section>
-                <form onSubmit={e=>registerHandler(e)} className={Styles["login-form-section"]}>
+                <form onSubmit={e=>registerHandler(e, setFeedback)} className={Styles["login-form-section"]}>
                 <div className={getStyles(Styles, "input-struct-container input-struct-container_register")}>
                     <div className={Styles["input-struct"]}>
                         <img src={UserImg} alt="Username" />
@@ -66,6 +63,9 @@ const Register: React.FC = () => {
                     <NavLink to="/signin" className={Styles["link"]}>Already Have An Account? Sign In</NavLink>
                 </div>
                 <button className={Styles["login-submit-btn"]}>SIGN UP</button>
+                {/* feedback - position absolute */}
+                <Feedback status={feedback.status}
+                        data={feedback.data} />
                 </form>
             </div>
         </div>

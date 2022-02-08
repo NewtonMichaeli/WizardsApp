@@ -33,6 +33,7 @@
   padding: 0.8rem;
   /* overflow */
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* mid section - dashboard container */

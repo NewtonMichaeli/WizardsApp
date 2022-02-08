@@ -1,7 +1,7 @@
 /* Styles for DashboardAddWizard component - at Dashboard */
 
 /* Dashboard Add wizard container */
-.DashboardAddWizard {
+.DashboardAddWizardBtn {
   background-color: #e0e0e066;
   width: 100%;
   min-height: 4rem;
@@ -12,14 +12,27 @@
   align-items: center;
   justify-content: center;
   /* mouse */
-  cursor: pointer; 
+  cursor: pointer;
+  /* animation */
+  transform: translateX(1rem);
+  opacity: 0;
+  animation: onEnter_Wizard 0.2s 0s forwards;
 }
-.DashboardAddWizard:hover {
+.DashboardAddWizardBtn:hover {
   background-color: #e7e7e766;
 }
 
 /* Dashboard Add wizard - add icon */
-.DashboardAddWizard img {
+.DashboardAddWizardBtn img {
   height: 50%;
   opacity: 0.75;
+}
+
+/* animations */
+
+@keyframes onEnter_Wizard {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

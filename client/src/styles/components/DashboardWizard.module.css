@@ -12,6 +12,10 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.25rem;
+  /* animation */
+  transform: translateX(-1rem);
+  opacity: 0;
+  animation: onEnter_Wizard 0.2s 0s forwards;
 }
 
 /* innr sections layout */
@@ -82,4 +86,22 @@
 }
 .DashboardWizard .wizard-controllers img:hover {
   transform: scale(1.05);
+}
+
+/* amimation */
+
+@keyframes onEnter_Wizard {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* animations */
+
+@keyframes onEnter_Wizard {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

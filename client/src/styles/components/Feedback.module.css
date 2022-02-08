@@ -1,0 +1,22 @@
+/* Styles for Feedback component - at Signin/Signup */
+
+/* Feedback container */
+.Feedback {
+  /* background-color: lightblue; */
+  position: absolute;
+  bottom: 1rem;
+}
+.Feedback .good-feedback {
+  font-size: 0.8rem;
+  color: blue;
+}
+.Feedback .good-feedback::before {
+  content: "Success: ";
+}
+.Feedback .bad-feedback {
+  font-size: 0.8rem;
+  color: red;
+}
+.Feedback .bad-feedback::before {
+  content: "Error: ";
+}

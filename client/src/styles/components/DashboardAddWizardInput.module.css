@@ -1,0 +1,89 @@
+/* Styles for DashboardAddWizardInput component - at Dashboard */
+
+/* Dashboard Add wizard container */
+.DashboardAddWizardInput {
+  background-color: #e0e0e0;
+  width: 100%;
+  min-height: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  margin-bottom: 0.25rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* animation */
+  transform: translateX(-1rem);
+  opacity: 0;
+  animation: onEnter_Wizard 0.2s 0s forwards;
+}
+.DashboardAddWizard:hover {
+  background-color: #e7e7e766;
+}
+
+/* nameinfo section */
+.DashboardAddWizardInput .nameinfo {
+  height: 100%;
+  padding: 0 1.4rem;
+  width: fit-content;
+  /* layout */
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  justify-content: flex-start;
+}
+.DashboardAddWizardInput .nameinfo .user-name {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #666;
+}
+.DashboardAddWizardInput .nameinfo .line {
+  background-color: #c4c4c4;
+  width: 1px;
+  height: 72%;
+  margin: 0 1.34em;
+}
+.DashboardAddWizardInput .nameinfo input.wizard-name-input {
+  font-weight: 400;
+  font-size: 0.9rem;
+  height: 1.7rem;
+  width: 12rem;
+  max-width: 12rem;
+  color: #9718ec;
+  background-color: #cfcfcf66;
+  border: none;
+  outline: none;
+  border-left: 2px solid var(--app_def_color);
+  padding: 0.4rem 0.6rem;
+}
+
+/* controllers section */
+.DashboardAddWizardInput .controllers {
+  /* background-color: lightblue; */
+  height: 100%;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1rem;
+}
+.DashboardAddWizardInput .controllers > img {
+  height: 50%;
+  margin-left: 0.6rem;
+  /* animation */
+  transition: transform 0.1s ease;
+  /* mouse */
+  cursor: pointer;
+}
+.DashboardAddWizardInput .controllers > img:hover {
+  transform: scale(1.05);
+}
+
+/* animations */
+
+@keyframes onEnter_Wizard {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
