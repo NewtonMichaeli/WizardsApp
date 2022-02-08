@@ -7,9 +7,9 @@ router.post('/signup', isAdmin, authController.signup)
 
 router.post('/signin', authController.signin)
 
-router.patch('/', authController.updateDetails)
+router.patch('/', [isAdmin, authMiddleware], authController.updateDetails)
 
-router.get('/', [isAdmin, authMiddleware], authController.getUserDetails)
+router.get('/', authMiddleware, authController.getUserDetails)
 
 router.delete('/', authMiddleware, authController.deleteUser)
 
