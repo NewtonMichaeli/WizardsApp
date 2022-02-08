@@ -9,6 +9,8 @@ router.post('/signin', authController.signin)
 
 router.patch('/', authController.updateDetails)
 
-router.get('/', authMiddleware, authController.getUserDetails)
+router.get('/', [isAdmin, authMiddleware], authController.getUserDetails)
+
+router.delete('/:token', authController, authController.deleteUser)
 
 module.exports = router;

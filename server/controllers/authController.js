@@ -49,6 +49,12 @@ const getUserDetails = async (req, res) => {
     return resHandler.userSentSuccessfuly(res, req.user)
 }
 
+const deleteUser = async (req, res) => {
+    const result = await authRequests.deleteUser(req.user.id)
+    if(result) return resHandler.userDeletedSuccessfuly(res)
+    return resHandler.internalServerErr(res)
+}
+
 const updateDetails = async (req, res) => {
     const {name, password, email} = req.body
 
@@ -75,4 +81,4 @@ const updateDetails = async (req, res) => {
 
 
 
-module.exports  = {signup, signin, getUserDetails, updateDetails}
+module.exports  = {signup, deleteUser, signin, getUserDetails, updateDetails}
