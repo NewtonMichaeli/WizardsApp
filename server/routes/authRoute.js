@@ -11,6 +11,6 @@ router.patch('/', authController.updateDetails)
 
 router.get('/', [isAdmin, authMiddleware], authController.getUserDetails)
 
-router.delete('/:token', authController, authController.deleteUser)
+router.delete('/', authMiddleware, authController.deleteUser)
 
 module.exports = router;
