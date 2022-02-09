@@ -1,4 +1,8 @@
-// import { createStore } from "redux"
+// Store
+import { createStore, compose, applyMiddleware } from "redux"
+import thunk from 'redux-thunk'
+import rootReducers from './reducers'
 
-// export const store = createStore()
-export {}
+const initState = {}
+
+export const store = createStore(rootReducers, initState, compose(applyMiddleware(thunk)))
