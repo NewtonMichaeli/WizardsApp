@@ -53,4 +53,15 @@ const getUserByEmail = async (email) => {
     }
 }
 
-module.exports = {createUser, deleteUser, updateUser, getUserByEmail}
+const getUserById = async (id) => {
+    const query = `SELECT * FROM users WHERE id = ${id}`
+    try {
+        const result = await asyncQuery(query)
+        return result[0]
+    }
+    catch {
+        return false
+    }
+}
+
+module.exports = {createUser, getUserById, deleteUser, updateUser, getUserByEmail}

@@ -4,7 +4,7 @@ const emailPassIncorrectErr = res => res.status(403).send("your email or passwor
 
 const loggedInSuccessfuly = (res, token) => res.status(200).json({token}) //get the token with res.data.token
 
-const userCreatedSuccessfuly = res => res.status(200).send("user created successfuly.")
+const userCreatedSuccessfuly = (res, token) => res.status(200).send({token})
 
 const userDeletedSuccessfuly = res => res.status(200).send("user deleted successfuly.")
 
@@ -23,6 +23,7 @@ const wizardUpdatedSuccessfuly = res => res.status(200).send("wizard updated suc
 
 const wizardSentSuccessfuly = res => res.status(200).send("wizard sent successfuly")
 
+const wizardFilledSuccessfuly = res => res.status(200).send("wizard filled successfuly")
 
 //Global responses:
 
@@ -34,4 +35,4 @@ const accessDeniedErr = res => res.status(403).send("access denied.")
 
 
 module.exports = {emailPassIncorrectErr, loggedInSuccessfuly, userCreatedSuccessfuly, userDeletedSuccessfuly, userUpdatedSuccessfuly, userSentSuccessfuly,
-wizardNotFoundErr, wizardCreatedSuccessfuly, wizardDeletedSuccessfuly, wizardUpdatedSuccessfuly, wizardSentSuccessfuly, internalServerErr, accessDeniedErr, fieldsErr}
+wizardNotFoundErr, wizardCreatedSuccessfuly, wizardDeletedSuccessfuly, wizardUpdatedSuccessfuly, wizardSentSuccessfuly, wizardFilledSuccessfuly, internalServerErr, accessDeniedErr, fieldsErr}

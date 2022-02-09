@@ -6,6 +6,7 @@ const { signinSchema, signupSchema, updateDetailsSchema } = require('../validati
 
 const signup = async (req, res) => {
 
+    //data extracting
     let {email, password, name, role} = req.body
 
     //fields validation
@@ -17,13 +18,26 @@ const signup = async (req, res) => {
 
     //pass hashing
     password = await bcrypt.hash(password, 10)
+
+    //user creating
     const result = await authRequests.createUser({email, password, name, role})
-    if(result) return resHandler.userCreatedSuccessfuly(res)
-    return resHandler.internalServerErr(res)
+    if(!result) return resHandler.internalServerErr(res)
+
+    //get user data
+    const userData = await authRequests.getUserByEmail(email)
+    if(!userData) return resHandler.internalServerErr(res)
+
+    //jwt wrapping
+    const token = jwt.sign(JSON.stringify(result), process.env.TOKEN_SECRET)
+    if(!token) return resHandler.internalServerErr(res)
+
+    //return the token
+    if(token) return resHandler.userCreatedSuccessfuly(res, token)
 }
 
 const signin = async (req, res) => {
 
+    //data extracting
     let {email, password} = req.body
     
     //fields validation
@@ -44,18 +58,24 @@ const signin = async (req, res) => {
 }
 
 const getUserDetails = async (req, res) => {
+
+    //get the data with the id that we recived from the auth middleware
     
-    //send the data from the middleware
-    return resHandler.userSentSuccessfuly(res, req.user)
+    //return it
+    return resHandler.userSentSuccessfuly(res, req.user.id)
 }
 
 const deleteUser = async (req, res) => {
+
+    //delete the wizard & error handling
     const result = await authRequests.deleteUser(req.user.id)
     if(result) return resHandler.userDeletedSuccessfuly(res)
     return resHandler.internalServerErr(res)
 }
 
 const updateDetails = async (req, res) => {
+
+    //data extracting
     const {name, password, email} = req.body
 
     //fields validation
