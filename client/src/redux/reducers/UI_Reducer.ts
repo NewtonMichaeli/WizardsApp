@@ -1,6 +1,6 @@
 // UI (feedback) reducer file
 
-import { UI_ActionType } from "../types/actionTypes";
+import { UIAction } from "../action-types/UI";
 import { ui_state_type } from "../types/reducerStateTypes";
 
 
@@ -9,7 +9,7 @@ const initState: ui_state_type = {
   status: false
 }
 
-export default (state = initState, action: UI_ActionType) => {
+export default (state = initState, action: UIAction) => {
   switch (action.type) {
     case 'SET_FEEDBACK':
       return {
@@ -18,8 +18,8 @@ export default (state = initState, action: UI_ActionType) => {
       }
     case 'CLEAR_FEEDBACK':
       return {
-        msg: "",
-        status: null,
+        msg: null,
+        status: false,
       }
     default:
       return state

@@ -1,56 +1,41 @@
 // User Auth Reducer
 
-import { Auth_ActionType } from '../types/actionTypes'
+import { AuthAction } from '../action-types/Auth'
 import { auth_state_type } from '../types/reducerStateTypes'
+// Storage configs - token
+import { TOKEN_NAME } from '../../configs/_storage'
 
 
 const initState: auth_state_type = {
-  token: localStorage.getItem('auth-token'),
+  token: localStorage.getItem(TOKEN_NAME),
   isAuthed: null,
-  isLoading: false,
-  user: null  // user-data: username, password
+  isLoading: false
 }
 
-export default (state = initState, action: Auth_ActionType) => {
+export default (state = initState, action: AuthAction) => {
   switch (action.type) {
-    // user is loading
-    case 'USER_LOADING':
-      return {
-        ...state,
-        isLoading: true
-      }
-    // user was loaded
-    case 'USER_LOADED':
-      return {
-        ...state, 
-        isLoading: false,
-        isAuthed: true,
-        token: action.payload
-      }
-    // get user data on success
+    // Get user data on success
     case 'LOGIN_SUCCESS':
     case 'REGISTER_SUCCESS':
-      localStorage.setItem('auth-token', action.payload.token)
+      localStorage.setItem(TOKEN_NAME, action.payload.token)  // insert token to localStorage
       return {
         ...state,
-        user: action.payload.user,   // currently is token:string
         isAuthed: true,
         isLoading: false,
         token: action.payload.token
       }
-    // handle errors
-    case 'AUTH_ERROR':
+    // Handle errors
     case 'LOGIN_FAIL':
     case 'REGISTER_FAIL':
-    case 'LOGOUT_SUCCESS':
-      localStorage.removeItem('auth-token')
       return {
         ...state,
         token: null,
         isAuthed: false,
         isLoading: false,
-        user: null
       }
+    case 'LOGOUT_SUCCESS':
+      localStorage.removeItem(TOKEN_NAME)   // remove token from localStorage
+      return state
     default:
       return state
   }

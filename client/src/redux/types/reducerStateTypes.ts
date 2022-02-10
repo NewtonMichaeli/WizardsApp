@@ -1,4 +1,4 @@
-// Reducer's init state types
+// Reducer's initial state types
 
 // Auth state type
 export interface auth_state_type
@@ -6,12 +6,6 @@ export interface auth_state_type
   token: string | null,
   isAuthed: boolean | null,
   isLoading: boolean,
-  user: {
-    username: string
-    email: string,
-    hashedPassword: string,
-    role: string
-  } | null
 }
 
 // UI state type

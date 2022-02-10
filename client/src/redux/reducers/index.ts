@@ -6,5 +6,5 @@ import { combineReducers } from "redux";
 // export all reducers on index file
 export default combineReducers({
   auth: authReducer,
-  error: errorReducer
+  ui: errorReducer
 })

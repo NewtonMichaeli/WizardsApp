@@ -2,5 +2,5 @@
 
 export type Feedback__props = {
     status: boolean,
-    data: string
+    msg: string | null
 }

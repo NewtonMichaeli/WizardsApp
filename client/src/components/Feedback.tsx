@@ -1,17 +1,14 @@
 import React from 'react'
-import { Feedback__props } from '../interfaces/Feedback'
+import { ui_state_type } from '../redux/types/reducerStateTypes'
 // Styles:
 import Styles from '../styles/components/Feedback.module.css'
 
 
-const Feedback: React.FC<Feedback__props> = (msg) => {
-    console.log("msg: ")
-    console.log(msg)
-    if (msg.data.length) return (
+const Feedback: React.FC<ui_state_type> = ({status, msg}) => {
+    if (msg) return (
         <div className={Styles["Feedback"]}>
-            <p className={Styles[msg?.status ?
-                'good-feedback' : 'bad-feedback']}>
-                {msg?.data}
+            <p className={Styles[status ? 'good-feedback' : 'bad-feedback']}>
+                {msg}
             </p>
         </div>
     )

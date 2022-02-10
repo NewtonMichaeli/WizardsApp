@@ -1,25 +1,28 @@
-import React, { useState } from "react"
+import React from "react"
 import { NavLink } from "react-router-dom"
 // Assets:
 import UserImg from "../assets/user.png"
 import EmailImg from "../assets/email.png"
 import PwdImg from "../assets/password.png"
+// Redux:
+import { useDispatch, useSelector } from "react-redux"
+import { bindActionCreators } from "redux"
 // Utils:
-import { registerHandler } from "../utils/handlers/Register"
-import { Feedback__props } from "../interfaces/Feedback"
-import { getStyles } from "../controllers"
+import { AuthActions, RootState } from "../redux"
+import { ui_state_type } from "../redux/types/reducerStateTypes"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
+import { getStyles } from "../controllers"
 // Components:
 import Feedback from "../components/Feedback"
+
 
 // Login Page
 const Register: React.FC = () => {
 
-    const [feedback, setFeedback] = useState<Feedback__props>({
-        status: false,
-        data: ""
-    })
+    const { SignUp } = bindActionCreators(AuthActions, useDispatch())
+
+    const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
 
     return (
         <div className={Styles["Login"]}>
@@ -27,7 +30,7 @@ const Register: React.FC = () => {
                 <section className={Styles["login-header-section"]}>
                     <h1>Sign Up</h1>
                 </section>
-                <form onSubmit={e=>registerHandler(e, setFeedback)} className={Styles["login-form-section"]}>
+                <form onSubmit={e=> SignUp(e)} className={Styles["login-form-section"]}>
                 <div className={getStyles(Styles, "input-struct-container input-struct-container_register")}>
                     <div className={Styles["input-struct"]}>
                         <img src={UserImg} alt="Username" />
@@ -64,8 +67,7 @@ const Register: React.FC = () => {
                 </div>
                 <button className={Styles["login-submit-btn"]}>SIGN UP</button>
                 {/* feedback - position absolute */}
-                <Feedback status={feedback.status}
-                        data={feedback.data} />
+                <Feedback status={feedback.status} msg={feedback.msg} />
                 </form>
             </div>
         </div>

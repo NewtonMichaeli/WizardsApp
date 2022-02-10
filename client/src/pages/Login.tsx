@@ -1,22 +1,26 @@
-import React, { useState } from "react"
+import React from "react"
 import { NavLink } from "react-router-dom"
+// Assets:
+import EmailImg from "../assets/email.png"
+import PwdImg from "../assets/password.png"
+// Redux:
+import { useDispatch, useSelector } from "react-redux"
+import { bindActionCreators } from "redux"
 // Utils:
-import { signInHandler } from "../utils/handlers/Login"
+import { AuthActions, RootState } from "../redux"
+import { ui_state_type } from "../redux/types/reducerStateTypes"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
-import UserImg from "../assets/user.png"
-import PwdImg from "../assets/password.png"
 // Components:
 import Feedback from "../components/Feedback"
-import { Feedback__props } from "../interfaces/Feedback"
+
 
 // Login Page
 const Login: React.FC = () => {
 
-    const [feedback, setFeedback] = useState<Feedback__props>({
-        status: false,
-        data: ""
-    })
+    const { SignIn } = bindActionCreators(AuthActions, useDispatch())
+
+    const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
 
     return (
         <div className={Styles["Login"]}>
@@ -24,10 +28,10 @@ const Login: React.FC = () => {
                 <section className={Styles["login-header-section"]}>
                     <h1>Sign In</h1>
                 </section>
-                <form onSubmit={e=>signInHandler(e, setFeedback)} className={Styles["login-form-section"]}>
+                <form onSubmit={e => SignIn(e)} className={Styles["login-form-section"]}>
                     <div className={Styles["input-struct-container"]}>
                         <div className={Styles["input-struct"]}>
-                            <img src={UserImg} alt="Username" />
+                            <img src={EmailImg} alt="Username" />
                             <input 
                                 type="text"
                                 name="username"
@@ -46,12 +50,11 @@ const Login: React.FC = () => {
                                 minLength={3}
                                 maxLength={32} />
                         </div>
-                        <NavLink to="/signup" className={Styles["link"]}>Don’t Have An Account? Sign Up</NavLink>
+                        <NavLink to="/signup" className={Styles["link"]}>Don't Have An Account? Sign Up</NavLink>
                     </div>
                     <button className={Styles["login-submit-btn"]}>SIGN IN</button>
-                    {/* feedback - position absolute */}
-                    <Feedback status={feedback.status}
-                        data={feedback.data} />
+                    {/* feedback - absolute position */}
+                    <Feedback status={feedback.status} msg={feedback.msg} />
                 </form>
             </div>
         </div>
