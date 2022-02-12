@@ -8,7 +8,7 @@ interface InputTypes {
     "Label": {
         type: "Label",
         title: string,
-        name: string
+        name: string,
     },
     "Checkbox": {
         type: 'Checkbox',
@@ -58,93 +58,142 @@ interface InputTypes {
         max: number
     },
     "Image": {
+        name: string,
         type: "Image"
+        title: string,
         url: Url,   // either 
     }
     "RadioboxList": {
-        "type": "RadioboxList",
-        "elements": InputTypes['Radiobox'][]
+        name: string,
+        type: "RadioboxList",
+        title: string,
+        elements: InputTypes['Radiobox'][]
     },
     "CheckboxList": {
-        "type": "CheckboxList",
-        "elements": InputTypes['Checkbox'][]
+        name: string,
+        type: "CheckboxList",
+        title: string,
+        elements: InputTypes['Checkbox'][]
     },
     "ListsList": {
-        "type": "ListsList",
-        "elements": (
+        name: string,
+        type: "ListsList",
+        title: string,
+        elements: (
             InputTypes['CheckboxList'] | InputTypes['RadioboxList']
         )[]
     }
 }
 
+// Wizard : page : section : Input
+export type ValidInputType =
+    InputTypes['Label'] |
+    InputTypes['Checkbox'] |
+    InputTypes['Radiobox'] |
+    InputTypes['Range'] |
+    InputTypes['SecuredInput'] |
+    InputTypes['Text'] |
+    InputTypes['Textarea'] |
+    InputTypes['CheckboxList'] |
+    InputTypes['RadioboxList'] |
+    InputTypes['ListsList']
+
+// Wizard : page : section - Format
+export type WizardSectionFormat = {
+    section_name: string,
+    order: number,
+    elements: ValidInputType[/*elements*/]
+}
+
+
 // Wizards format
-export type WizardsFormat = {
+export type WizardFormat = {
     name: string,
     id: string,
     isPrivate: boolean,
-    pages: {
-        section_name: string,
-        order: number,
-        elements: (
-            InputTypes['Label'] |
-            InputTypes['Checkbox'] |
-            InputTypes['Radiobox'] |
-            InputTypes['Range'] |
-            InputTypes['SecuredInput'] |
-            InputTypes['Text'] |
-            InputTypes['Textarea'] |
-            InputTypes['CheckboxList'] |
-            InputTypes['RadioboxList'] |
-            InputTypes['ListsList']
-        )[]
-    }[]
+    pages: WizardSectionFormat[/*sections*/][/*pages*/]
 }
 
 
 // export dummy wizard
-export const fake_wizard: WizardsFormat[] = [
+export const fake_wizard: WizardFormat[] = [
     {
         name: "Wizard 1.0",
         id: "j18cn63ng98hHi9",
         isPrivate: false,
         pages: [
-            {
-                section_name: "section-1",
-                order: 1,
-                elements: [
-                    {
-                        type: 'Checkbox',
-                        title: "string",
-                        name: "string",
-                        alreadyChecked: true
-                    }
-                ]
-            },
-            {
-                section_name: "section-2",
-                order: 2,
-                elements: [
-                    {
-                        type: "Label",
-                        name: "name",
-                        title: "What is your name?"
-                    },
-                    {
-                        type: "Text",
-                        name: "name",
-                        title: "What is your name?",
-                        min: 3,
-                        max: 16,
-                        required: true,
-                        regex: null
-                    }
-                ]
-           }       
+            // page 1
+            [
+                // section 1
+                {
+                    section_name: "Section 1",
+                    order: 1,
+                    elements: [
+                        {
+                            type: 'Text',
+                            title: "Enter your Name",
+                            name: "string",
+                            min: 6,
+                            max: 32,
+                            regex: null,
+                            required: true
+                        },
+                        {
+                            type: 'SecuredInput',
+                            title: "Enter your Password",
+                            name: "string",
+                            min: 6,
+                            max: 32,
+                            regex: null,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    section_name: "Section 2",
+                    order: 2,
+                    elements: []
+                },
+                {
+                    section_name: "Section 3",
+                    order: 3,
+                    elements: []
+                },
+                {
+                    section_name: "Section 4",
+                    order: 4,
+                    elements: []
+                }
+            ],
+            // page 2
+            [
+                // section 1
+                {
+                    section_name: "Section 4",
+                    order: 1,
+                    elements: [
+                        {
+                            type: "Label",
+                            name: "name",
+                            title: "What is your name?"
+                        },
+                        {
+                            type: "Text",
+                            name: "name",
+                            title: "What is your name?",
+                            min: 3,
+                            max: 16,
+                            required: true,
+                            regex: null
+                        }
+                    ]
+                }
+            ]      
         ]
     },
     {
         name: "Wizard 2.0",
-        id: "j18HZ63YgX8hH01",
+        id: "X18HZ63YgX8hH01",
         isPrivate: true,
         pages: []
     },

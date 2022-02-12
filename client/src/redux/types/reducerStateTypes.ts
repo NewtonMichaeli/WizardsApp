@@ -1,6 +1,6 @@
 // Reducer's initial state types
 
-import { WizardsFormat } from "../../interfaces/WizardFormat";
+import { WizardFormat } from "../../interfaces/WizardFormat";
 import { UserRoleTypes } from "../action-types/User";
 
 
@@ -26,6 +26,6 @@ export interface user_state_type {
     username: string
     email: string,
     role: UserRoleTypes.USER | UserRoleTypes.WIZARD_CREATOR | UserRoleTypes.ADMIN,
-    wizards: WizardsFormat[]
+    wizards: WizardFormat[]
   } | null
 }

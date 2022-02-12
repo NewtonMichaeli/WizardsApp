@@ -105,3 +105,17 @@
 .wizard-content-container .container-header .header-btm button.btn-selected {
   color: #4a4164;
 }
+
+/* wizard container body */
+.wizard-content-container .container-body {
+  width: 100%;
+  height: calc(100% - 5.1rem);
+  padding: 1rem 0.8rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* overflow */
+  overflow-y: auto;
+}

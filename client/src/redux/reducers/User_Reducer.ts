@@ -29,7 +29,7 @@ export default (state = initState, action: UserAction) => {
       }
     case 'LOAD_USER_SUCCESS':
       return {
-        ...state,
+        // ...state,
         isLoading: false,
         isAuthed: true,
         UserData: action.payload.UserData

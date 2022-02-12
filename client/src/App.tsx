@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, Router } from 'react-router-dom'
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 // Utils:
 import { GetUserDetails } from './utils/GetUserDetails'
 import { GoToDashboard } from './utils/GotoDashboard'

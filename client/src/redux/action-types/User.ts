@@ -1,6 +1,6 @@
 // Action types for User
 
-import { WizardsFormat } from "../../interfaces/WizardFormat";
+import { WizardFormat } from "../../interfaces/WizardFormat";
 
 // Action types
 export enum UserActionTypes {
@@ -28,7 +28,7 @@ interface LoadUserSuccessAction {
             role: UserRoleTypes.ADMIN
                 | UserRoleTypes.USER
                 | UserRoleTypes.WIZARD_CREATOR
-            wizards: WizardsFormat[]
+            wizards: WizardFormat[]
         }
     }
 }

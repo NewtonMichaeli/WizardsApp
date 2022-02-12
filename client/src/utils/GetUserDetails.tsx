@@ -3,15 +3,15 @@
 import React, {useEffect} from 'react'
 // Redux:
 import { bindActionCreators } from 'redux'
-import { RootState, UserActions } from '../redux'
-import { useDispatch, useSelector } from 'react-redux'
+import { UserActions } from '../redux'
+import { useDispatch } from 'react-redux'
 
 // Gets User Details before Rendering Component
 export const GetUserDetails: React.FC<{children: JSX.Element}> = ({children}) => {
   // Get UserData
   const { LoadUser } = bindActionCreators(UserActions, useDispatch())
   useEffect(() => {
-      LoadUser()
+    LoadUser()
   }, [])
   return children
 }

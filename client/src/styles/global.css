@@ -11,13 +11,29 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
+  /* scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #aaa #fff;
 }
 
 *::selection {
   background-color: #55555533;
 }
+
 img::selection {
   background-color: transparent;
+}
+
+/* Scrollbar style */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: #fff;
+}
+*::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 100px;
 }
 
 html,
