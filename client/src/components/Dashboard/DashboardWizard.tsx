@@ -4,7 +4,7 @@ import Delete from '../../assets/wizard-controllers/delete.png'
 import Edit from '../../assets/wizard-controllers/edit.png'
 import View from '../../assets/wizard-controllers/view.png'
 // Styles:
-import Styles from '../../styles/components/DashboardWizard.module.css'
+import Styles from '../../styles/components/Dashboard/DashboardWizard.module.css'
 
 const DashboardWizard: React.FC<any> = ({wizard, SetData}) => {
     return (

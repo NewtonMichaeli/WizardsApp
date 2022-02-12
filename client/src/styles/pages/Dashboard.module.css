@@ -35,6 +35,16 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+/* mid section - dashboard conainer (:loading wizards) */
+.Dashboard .dashboard-container-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* loading img */
+.Dashboard .dashboard-container-loading img {
+  width: 5rem;
+}
 
 /* mid section - dashboard container */
 .Dashboard .wizards-counter .wizards-counter-id {

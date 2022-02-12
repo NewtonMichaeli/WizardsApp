@@ -4,7 +4,7 @@ import { getStyles } from '../../controllers'
 import Delete from '../../assets/wizard-controllers/delete.png'
 import Save from '../../assets/wizard-controllers/red-yes.png'
 // Styles:
-import Styles from '../../styles/components/DashboardAddWizardInput.module.css'
+import Styles from '../../styles/components/Dashboard/DashboardAddWizardInput.module.css'
 
 // Dashboard - Add Wizard Input component
 const DashboardAddWizardInput: React.FC<any> = ({toggleAddingWizard, SetData}) => {

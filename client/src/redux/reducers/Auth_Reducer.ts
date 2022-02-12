@@ -35,6 +35,7 @@ export default (state = initState, action: AuthAction) => {
       }
     case 'LOGOUT_SUCCESS':
       localStorage.removeItem(TOKEN_NAME)   // remove token from localStorage
+      window.location.href = '/signin'
       return state
     default:
       return state

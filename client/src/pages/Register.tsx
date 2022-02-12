@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux"
 // Utils:
 import { AuthActions, RootState } from "../redux"
 import { ui_state_type } from "../redux/types/reducerStateTypes"
+import { TOKEN_NAME } from "../configs/_storage"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
 import { getStyles } from "../controllers"
@@ -20,8 +21,11 @@ import Feedback from "../components/Feedback"
 // Login Page
 const Register: React.FC = () => {
 
-    const { SignUp } = bindActionCreators(AuthActions, useDispatch())
+    if (localStorage.getItem(TOKEN_NAME) !== null)
+        window.location.href = '/dashboard'
 
+    const { SignUp } = bindActionCreators(AuthActions, useDispatch())
+    
     const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
 
     return (

@@ -98,11 +98,11 @@ export type WizardsFormat = {
             InputTypes['ListsList']
         )[]
     }[]
-}[]
+}
 
 
 // export dummy wizard
-export const fake_wizard: WizardsFormat = [
+export const fake_wizard: WizardsFormat[] = [
     {
         name: "Wizard 1.0",
         id: "j18cn63ng98hHi9",

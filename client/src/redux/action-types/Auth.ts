@@ -9,7 +9,6 @@ export enum AuthActionTypes {
   REGISTER_FAIL = "REGISTER_FAIL"
 }
 
-
 interface LoginSuccessAction {
   type: AuthActionTypes.LOGIN_SUCCESS
   payload: {

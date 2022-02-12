@@ -2,7 +2,7 @@ import React from 'react'
 // Assets:
 import Add from '../../assets/wizard-controllers/add.png'
 // Styles:
-import Styles from '../../styles/components/DashboardAddWizardBtn.module.css'
+import Styles from '../../styles/components/Dashboard/DashboardAddWizardBtn.module.css'
 
 // Dashboard Add Wizard component
 const DashboardAddWizardBtn: React.FC<any> = ({toggleAddingWizard}) => {

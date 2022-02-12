@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Routes, Route, Router } from 'react-router-dom'
+// Utils:
+import { GetUserDetails } from './utils/GetUserDetails'
+import { GoToDashboard } from './utils/GotoDashboard'
 // Components:
 import Navbar from './components/Navbar'
+// Pages:
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import WizardStats from './pages/WizardStats'
+
 
 const App: React.FC = () => {
-
-  const [UserData, setUserData] = useState<any>({})
-
+  
   return (
     <div className="App">
       <Navbar />
@@ -24,27 +28,19 @@ const App: React.FC = () => {
           />
         <Route 
           path="/dashboard"
-          element={<Dashboard />}
+          element={<GetUserDetails children={<Dashboard />} />}
+          />
+        <Route 
+          path="/view/:id"
+          element={<GetUserDetails children={<WizardStats />} />}
           />
         <Route 
           path="*"
-          element={<GoToFromHome />}
+          element={<GoToDashboard />}
           />
       </Routes>
     </div>
   );
-}
-
-const GoToFromHome: React.FC = () => {
-  if (localStorage.getItem('token') === null) return(
-    <>{window.location.href = '/signin'}</>
-  )
-  else if (localStorage.getItem('token') === null) return(
-    <>{window.location.href = '/dashboard'}</>
-  )
-  else return (
-    <>{null}</>
-  )
 }
 
 export default App;

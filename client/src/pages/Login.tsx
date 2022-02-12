@@ -13,10 +13,14 @@ import { ui_state_type } from "../redux/types/reducerStateTypes"
 import Styles from "../styles/pages/Login.module.css"
 // Components:
 import Feedback from "../components/Feedback"
+import { TOKEN_NAME } from "../configs/_storage"
 
 
 // Login Page
 const Login: React.FC = () => {
+
+    if (localStorage.getItem(TOKEN_NAME) !== null)
+        window.location.href = '/dashboard'
 
     const { SignIn } = bindActionCreators(AuthActions, useDispatch())
 

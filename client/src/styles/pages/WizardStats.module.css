@@ -1,0 +1,107 @@
+/* Styles for Wizard Staistics page */
+
+/* Wizard Stats Page */
+.WizardStats {
+  /* background-color: silver; */
+  width: 100vw;
+  height: calc(100vh - var(--navbar_height));
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* WizardStats - Inner content container */
+.WizardStats .wizard-content-container {
+  width: 76vw;
+  height: 74vh;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px #00000044;
+  border-radius: 8px;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+/* WizardStats - Inner content container (wizard not fount at url) */
+.WizardStats .wizard-content-container-404 {
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #ff555580;
+}
+
+/* Top header */
+.wizard-content-container .container-header {
+  background: #8080804d;
+  width: 100%;
+  height: 5.1rem;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #333333bc;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Top header */
+.wizard-content-container .container-header .header-top {
+  /* background-color: #f04f4f; */
+  height: 3rem;
+  width: 100%;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* header top layout */
+.wizard-content-container .container-header .header-top * {
+  flex: 1 1 0;
+}
+.wizard-content-container .container-header .header-top .wizard-title {
+  text-align: left;
+  padding-left: 1rem;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #4a4164bc;
+}
+.wizard-content-container .container-header .header-top .page-counter {
+  text-align: center;
+  font-weight: 400;
+  color: #9a8dc1;
+}
+.wizard-content-container .container-header .header-top .page-controllers {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+/* bottom header */
+.wizard-content-container .container-header .header-btm {
+  /* background-color: #40e0f0; */
+  height: calc(100% - 3rem);
+  width: 100%;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.wizard-content-container .container-header .header-btm .line {
+  width: 1px;
+  height: 70%;
+  background-color: #33333316;
+}
+.wizard-content-container .container-header .header-btm button {
+  background-color: transparent !important;
+  border: none;
+  outline: none;
+  width: 49%;
+  height: 95%;
+  font-size: 0.95rem;
+  color: #4a4164a0;
+  /* mouse */
+  cursor: pointer;
+}
+.wizard-content-container .container-header .header-btm button.btn-selected {
+  color: #4a4164;
+}
