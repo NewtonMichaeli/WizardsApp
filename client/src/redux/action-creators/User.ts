@@ -5,17 +5,18 @@ import axios from "axios"
 import { Dispatch } from "redux"
 import { RootState } from ".."
 // Server configs:
-import { SERVER_USERDETAILS_URL } from "../../configs/_server"
+import { SERVER_SPECIFIC_WIZARD_URL, SERVER_USERDETAILS_URL } from "../../configs/_server"
 import { fake_wizard } from "../../interfaces/WizardFormat"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 
 
 // Load User Action creator, called directly from <App> component
-export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
+export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
   // Try receiving user data
   const token = getState().auth.token
   dispatch({ type: UserActionTypes.TRY_LOAD_USER })   // set loading to true
-  try {
+  try 
+  {
     if (token === null) {
       // -- auth failed - token doesn't exist
       dispatch({ type: UserActionTypes.AUTH_FAIL })
@@ -32,11 +33,15 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
         }
       }
     }
-    // const res = await axios.get(SERVER_USERDETAILS_URL, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "auth-token": token
-    //   }
+
+    // // if id is null - get all wizards
+    // const server_res = await axios.get(
+    //   id ? SERVER_USERDETAILS_URL : SERVER_SPECIFIC_WIZARD_URL + id,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "auth-token": token
+    //     }
     // })
     
     // extract user details from response
@@ -56,6 +61,7 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
   }
   catch (err: any) {
     console.log(err)
-    // dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
 }
+

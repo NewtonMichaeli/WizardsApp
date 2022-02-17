@@ -36,44 +36,35 @@
 .wizard-content-container .container-header {
   background: #8080804d;
   width: 100%;
-  height: 5.1rem;
+  height: 2.95rem;
   border-radius: 8px 8px 0 0;
   border-bottom: 1px solid #333333bc;
   /* layout */
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
-/* Top header */
-.wizard-content-container .container-header .header-top {
-  height: 3rem;
-  width: 100%;
-  /* layout */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 /* header top layout */
-.wizard-content-container .container-header .header-top .wizard-title,
-.wizard-content-container .container-header .header-top .page-counter,
-.wizard-content-container .container-header .header-top .page-controllers {
+.wizard-content-container .container-header .wizard-title,
+.wizard-content-container .container-header .page-counter,
+.wizard-content-container .container-header .page-controllers {
   flex: 1 1 0;
 }
-.wizard-content-container .container-header .header-top .wizard-title {
+.wizard-content-container .container-header .wizard-title {
   text-align: left;
   padding-left: 1rem;
   font-weight: 400;
   font-size: 1rem;
   color: #4a4164bc;
 }
-.wizard-content-container .container-header .header-top .page-counter {
+.wizard-content-container .container-header .page-counter {
   text-align: center;
   font-weight: 400;
   color: #9a8dc1;
 }
 
-.wizard-content-container .container-header .header-top .page-controllers {
+.wizard-content-container .container-header .page-controllers {
   height: 1.4rem;
   padding-right: 1rem;
   /* layout */
@@ -82,39 +73,10 @@
   justify-content: flex-end;
 }
 
-/* bottom header */
-.wizard-content-container .container-header .header-btm {
-  height: calc(100% - 3rem);
-  width: 100%;
-  /* layout */
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.wizard-content-container .container-header .header-btm .line {
-  width: 1px;
-  height: 70%;
-  background-color: #33333316;
-}
-.wizard-content-container .container-header .header-btm button {
-  background-color: transparent !important;
-  border: none;
-  outline: none;
-  width: 49%;
-  height: 95%;
-  font-size: 0.95rem;
-  color: #4a4164a0;
-  /* mouse */
-  cursor: pointer;
-}
-.wizard-content-container .container-header .header-btm button.btn-selected {
-  color: #4a4164;
-}
-
 /* wizard container body */
 .wizard-content-container .container-body {
   width: 100%;
-  height: calc(100% - 5.1rem);
+  height: calc(100% - 2.95rem);
   padding: 1rem 0.8rem;
   /* layout */
   display: flex;

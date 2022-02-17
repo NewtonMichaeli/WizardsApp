@@ -1,0 +1,93 @@
+/* Styles for WizardStats : HeaderControllers */
+
+/* All buttons desings */
+.btn-page-back,
+.btn-page-next,
+.btn-finished,
+.btn-add {
+  height: 100%;
+  margin-left: 0.3rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  color: #555;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* mouse */
+  cursor: pointer;
+}
+
+/* Button - Page back */
+.btn-page-back {
+  background-color: #aaaaaa80;
+  color: #fff;
+  width: 3.2rem;
+}
+.btn-page-back img {
+  height: 80%;
+  display: none;
+  /* mouse */
+  cursor: pointer;
+}
+
+/* Button - Page next */
+.btn-page-next {
+  border: 2px solid #55257a;
+  background-color: #9b58cf;
+  color: #fff;
+  width: 3.2rem;
+}
+.btn-page-next img {
+  height: 80%;
+  display: none;
+}
+
+/* Button - Finished */
+.btn-finished {
+  background-color: #28b05f;
+  border: 2px solid #257a47;
+  color: #fff;
+  width: 1.75rem;
+}
+.btn-finished img {
+  height: 60%;
+}
+
+/* Button - Leave */
+.btn-add {
+  background-color: #cf5f58;
+  border: 2px solid #7a2525;
+  color: #fff;
+  width: 1.75rem;
+}
+.btn-add img {
+  height: 75%;
+  /* animation */
+  transition: transform 0.2s ease;
+}
+.btn-add.onAddMenu img {
+  transform: rotate(45deg);
+}
+
+/* Responsive */
+
+@media screen and (max-width: 650px) {
+  .btn-page-back,
+  .btn-page-next,
+  .btn-finished,
+  .btn-add {
+    width: 1.9rem;
+  }
+  /* back btn */
+  .btn-page-back span,
+  .btn-page-next span {
+    display: none;
+  }
+  .btn-page-back img,
+  .btn-page-next img {
+    display: block;
+  }
+}

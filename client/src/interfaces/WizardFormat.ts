@@ -130,6 +130,11 @@ export const fake_wizard: WizardFormat[] = [
                     order: 1,
                     elements: [
                         {
+                            type: "Label",
+                            title: "Enter your Name",
+                            name: "string",
+                        },
+                        {
                             type: 'Text',
                             title: "Enter your Name",
                             name: "string",
@@ -139,6 +144,11 @@ export const fake_wizard: WizardFormat[] = [
                             required: true
                         },
                         {
+                            type: "Label",
+                            title: "Enter your Password",
+                            name: "string",
+                        },
+                        {
                             type: 'SecuredInput',
                             title: "Enter your Password",
                             name: "string",
@@ -146,7 +156,7 @@ export const fake_wizard: WizardFormat[] = [
                             max: 32,
                             regex: null,
                             required: true
-                        }
+                        },
                     ]
                 },
                 {
@@ -157,11 +167,6 @@ export const fake_wizard: WizardFormat[] = [
                 {
                     section_name: "Section 3",
                     order: 3,
-                    elements: []
-                },
-                {
-                    section_name: "Section 4",
-                    order: 4,
                     elements: []
                 }
             ],
@@ -198,3 +203,40 @@ export const fake_wizard: WizardFormat[] = [
         pages: []
     },
 ]
+
+
+// const wizardSchema = Joi.object({
+//     name: Joi.string().required(),
+//     title: Joi.string().min(2).max(300).required(),
+//     pages: Joi.array([
+//         {
+//             title: Joi.string().required(),
+//             sections: Joi.array([
+//                 {
+//                     title: Joi.string().min(2).required(),
+//                     content: Joi.array([
+//                             ...itemSchema
+//                     ]).required()
+//                 }
+//         ]).required()
+//         }
+//     ])
+// })
+
+// const filledWizardSchema = Joi.object({
+//     id: Joi.number().required(),
+//     data: Joi.object({
+//         pages: Joi.array([
+//             {
+//                 title: Joi.string().required(),
+//                 sections: Joi.array([
+//                     {
+//                         title: Joi.string().min(2).required(),
+//                         content: Joi.array([
+//                                 ...filledItemSchema
+//                         ]).required()
+//                     }
+//                 ]).required()
+//             }
+//         ]).required()
+//     }).required()

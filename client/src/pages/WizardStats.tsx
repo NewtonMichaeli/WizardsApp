@@ -1,6 +1,8 @@
 // Wizard Statistics Viewer
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+// Assets:
+import Loading from '../assets/loading-1.gif'
 // Redux:
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux'
@@ -9,6 +11,7 @@ import Styles from '../styles/pages/WizardStats.module.css'
 import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardStats/Wizard.Section'
+import { BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 
 
 // Stats mode type - <stats> option or <results> option:
@@ -22,7 +25,7 @@ const WizardStats: React.FC = () => {
 
   const { id } = useParams();
 
-  const UserData = useSelector<RootState, RootState['user']['UserData']>(state => state.user.UserData)
+  const { UserData, isLoading, isAuthed } = useSelector<RootState, RootState['user']>(state => state.user)
 
   const CurrWizard = UserData?.wizards.filter(wizard => wizard.id === id)[0] ?? null
   // State for viewing mode - <stats> option or <results> option:
@@ -33,6 +36,10 @@ const WizardStats: React.FC = () => {
   const [PageIdx, changePageIdx] = useState(1)
   // Current page
   const Page = CurrWizard?.pages[0]
+
+  if (isLoading === false && !CurrWizard && isAuthed)
+    // -- wizard not found
+    window.location.href = '/dashboard'
 
   if (CurrWizard) return (
     <div className={Styles["WizardStats"]}>
@@ -47,7 +54,9 @@ const WizardStats: React.FC = () => {
               Page {PageIdx} out of {CurrWizard?.pages.length}
             </h5>
             <div className={Styles["page-controllers"]}>
-              controllers
+              <BtnPageBack onClick={()=>2} />
+              <BtnPageNext onClick={()=>2} />
+              <BtnFinish onClick={()=>2} />
             </div>
           </section>
           <section className={Styles["header-btm"]}>
@@ -79,8 +88,8 @@ const WizardStats: React.FC = () => {
   )
   else return (
     <div className={Styles["WizardStats"]}>
-        <div className={getStyles(Styles, "wizard-content-container wizard-content-container-404")}>
-          Wizard not found
+        <div className={getStyles(Styles, "wizard-content-container wizard-content-container-loading")}>
+          <img src={Loading} alt="Loading Wizard.." />
         </div>
     </div>
   )

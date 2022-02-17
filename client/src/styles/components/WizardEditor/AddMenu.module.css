@@ -1,0 +1,106 @@
+/* Styles for WizardEditor : AddMenu */
+
+/* Add Menu container */
+.AddMenu.show-elements-list {
+  height: 16.2rem;
+}
+.AddMenu {
+  background-color: #4a4164d1;
+  width: 13rem;
+  height: 7.2rem;
+  border-radius: 0.5rem;
+  /* position */
+  position: absolute;
+  top: calc(2.95rem + 0.75rem);
+  right: 0.75rem;
+  /* layout */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* animation */
+  transition: all 0.2s ease;
+  animation: onEnter 0.2s 0s forwards;
+  /* init props */
+  transform: translateX(20%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.AddMenu .prim-add-btn:hover {
+  background-color: #ffffff30;
+}
+.AddMenu .prim-add-btn {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  outline: none !important;
+  border: none !important;
+  width: 100%;
+  height: 1.7rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* animation */
+  transition: background-color 0.15s ease;
+  /* cursor */
+  cursor: pointer;
+}
+.AddMenu .prim-add-btn img {
+  height: 70%;
+  margin: 0 0.4rem;
+}
+.AddMenu .prim-add-btn span {
+  color: #fff;
+  font-weight: 300;
+}
+
+/* Styles for ElementsList Component */
+
+/* Elements List */
+.ElementsList {
+  width: 100%;
+  height: 9.3rem;
+  /* animation */
+  animation: onEnter 0.2s 0.1s forwards;
+  /* init props */
+  transform: translateX(-15%);
+  opacity: 0;
+  pointer-events: none;
+  list-style-type: none;
+}
+
+.ElementsList li:hover {
+  background-color: #ffffff30;
+}
+.ElementsList li {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  outline: none !important;
+  border: none !important;
+  /* width: 100%; */
+  height: 1.5rem;
+  /* text */
+  color: #bbb;
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-left: 1.65rem;
+  padding: 0.2rem 0.4rem;
+  /* position */
+  position: relative;
+  /* animation */
+  transition: all 0.15s ease;
+  /* cursor */
+  cursor: pointer;
+}
+
+/* keyframes */
+
+@keyframes onEnter {
+  to {
+    transform: translateX(0) translateX(0);
+    opacity: 1;
+    pointer-events: visible;
+  }
+}

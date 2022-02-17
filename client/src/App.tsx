@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 // Utils:
-import { GetUserDetails } from './utils/GetUserDetails'
+import { GetUserDetails } from './utils/middlewares/GetUserDetails'
 import { GoToDashboard } from './utils/GotoDashboard'
 // Components:
 import Navbar from './components/Navbar'
@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import WizardStats from './pages/WizardStats'
+import WizardEditor from './pages/WizardEditor'
 
 
 const App: React.FC = () => {
@@ -33,6 +34,10 @@ const App: React.FC = () => {
         <Route 
           path="/view/:id"
           element={<GetUserDetails children={<WizardStats />} />}
+          />
+        <Route 
+          path="/edit/:id"
+          element={<GetUserDetails children={<WizardEditor />} />}
           />
         <Route 
           path="*"

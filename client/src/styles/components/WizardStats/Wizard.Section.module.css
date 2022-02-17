@@ -57,3 +57,22 @@
   justify-content: center;
   align-items: center;
 }
+
+/* responsive */
+
+@media screen and (max-width: 800px) {
+  .Section-container {
+    flex-direction: column;
+  }
+  /* title section */
+  .Section-container .title-section {
+    width: 10rem;
+  }
+  .Section-container .title-section .title-section-title {
+    border-radius: 5px 5px 0 0;
+  }
+  /* info section */
+  .Section-container .info-section {
+    width: 100%;
+  }
+}
