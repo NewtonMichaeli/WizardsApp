@@ -3,13 +3,27 @@
 // Types:
 import { Dispatch } from "redux"
 import { RootState } from ".."
-import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
+import { ValidInputType } from "../../interfaces/WizardFormat"
+import { AddElementAction, ElementTypes, WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
+import { wizard_editor_state_type } from "../types/reducerStateTypes"
 
 
-// Move Page
+// Move Page Action
 export const MovePage = (dir: "BACK" | "NEXT"): WizardEditorAction => ({
   type: WizardEditorActionTypes.MOVE_PAGE,
   payload: dir
+})
+
+
+// Activate Adding Element State
+export const AddingElementMode = (element: ElementTypes): WizardEditorAction => ({
+  type: WizardEditorActionTypes.ADDING_ELEMENT,
+  payload: element
+})
+// Activate Relocating Element State
+export const RelocatingElementMode = (element: ElementTypes): WizardEditorAction => ({
+  type: WizardEditorActionTypes.RELOCATING_ELEMENT,
+  payload: element
 })
 
 
@@ -35,3 +49,36 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
   })
 }
 
+
+// Add Element
+export const AddElement = (
+  state: wizard_editor_state_type, 
+  action: AddElementAction
+) => {
+
+  // Add en element based on it's element-type
+  switch (action.payload.element) {
+    case ElementTypes.QUESTION: {
+      // Add Question inside given path
+      const new_element: ValidInputType = {
+        type: 'Label',
+        name: "new",
+        title: 'aaa'
+      }
+      const {page, section, question} = action.payload.path
+      // insert new element to the given path inside wizard tree
+      state.WizardState?.pages[page][section].elements
+        .splice(question, 0, new_element)
+      
+      return {
+        ...state,
+        IsAction: false,
+        ActionTriggerType: null,
+        ActionType: null
+      }
+    }
+    default: 
+      return state
+  }
+
+}

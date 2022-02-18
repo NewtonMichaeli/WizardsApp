@@ -5,20 +5,30 @@ import { ValidInputType } from '../../interfaces/WizardFormat'
 import { Label, Text, Textarea, SecuredText } from '../../components/WizardEditor/InputField'
 
 
-const ParseElement: React.FC<{element: ValidInputType}> = ({element}) => {
+type ParseElement__props = React.FC<{
+  element: ValidInputType,
+  page_idx: number,
+  section_idx: number,
+  q_idx: number,
+}>
+const ParseElement: ParseElement__props = ({element, q_idx, page_idx, section_idx}) => {
   // switch lelement type
+  const path = {
+    q_idx, page_idx, section_idx
+  }
+  
   switch (element.type)
   {
     case "Label":
-      return <Label element={element} />
+      return <Label element={element} path={path} />
     case "Text":
-      return <Text element={element} />
+      return <Text element={element} path={path} />
     case "Textarea":
-      return <Textarea element={element} />
+      return <Textarea element={element} path={path} />
     case "SecuredInput":
-      return <SecuredText element={element} />
+      return <SecuredText element={element} path={path} />
     case 'Range':
-      return <SecuredText element={element} />
+      return <SecuredText element={element} path={path} />
     default:
       return <></>
   }

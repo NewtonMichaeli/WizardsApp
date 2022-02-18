@@ -100,8 +100,7 @@ export type ValidInputType =
 
 // Wizard : page : section - Format
 export type WizardSectionFormat = {
-    section_name: string,
-    order: number,
+    name: string,
     elements: ValidInputType[/*elements*/]
 }
 
@@ -112,7 +111,6 @@ export type WizardPageFormat = WizardSectionFormat[]
 export type WizardFormat = {
     name: string,
     id: string,
-    isPrivate: boolean,
     pages: WizardPageFormat[]
 }
 
@@ -122,24 +120,22 @@ export const fake_wizard: WizardFormat[] = [
     {
         name: "Wizard 1.0",
         id: "j18cn63ng98hHi9",
-        isPrivate: false,
         pages: [
             // page 1
             [
                 // section 1
                 {
-                    section_name: "Section 1",
-                    order: 1,
+                    name: "Section 1",
                     elements: [
                         {
                             type: "Label",
                             title: "Hi",
-                            name: "string",
+                            name: "1",
                         },
                         {
                             type: 'Text',
                             title: "Enter your Name",
-                            name: "string",
+                            name: "2",
                             min: 6,
                             max: 32,
                             regex: null,
@@ -148,12 +144,12 @@ export const fake_wizard: WizardFormat[] = [
                         {
                             type: "Label",
                             title: "Hi Again",
-                            name: "string",
+                            name: "3",
                         },
                         {
                             type: 'SecuredInput',
                             title: "Enter your Password",
-                            name: "string",
+                            name: "4",
                             min: 6,
                             max: 32,
                             regex: null,
@@ -162,12 +158,12 @@ export const fake_wizard: WizardFormat[] = [
                         {
                             type: "Label",
                             title: "Enter your Sentence",
-                            name: "string",
+                            name: "5",
                         },
                         {
                             type: 'Textarea',
                             title: "Enter your Password",
-                            name: "string",
+                            name: "6",
                             min: 6,
                             max: 32,
                             regex: null,
@@ -176,13 +172,11 @@ export const fake_wizard: WizardFormat[] = [
                     ]
                 },
                 {
-                    section_name: "Section 2",
-                    order: 2,
+                    name: "Section 2",
                     elements: []
                 },
                 {
-                    section_name: "Section 3",
-                    order: 3,
+                    name: "Section 3",
                     elements: []
                 }
             ],
@@ -190,17 +184,16 @@ export const fake_wizard: WizardFormat[] = [
             [
                 // section 1
                 {
-                    section_name: "Section 4",
-                    order: 1,
+                    name: "Section 4",
                     elements: [
                         {
                             type: "Label",
-                            name: "name",
+                            name: "7",
                             title: "Ya still there?"
                         },
                         {
                             type: "Text",
-                            name: "name",
+                            name: "8",
                             title: "What is your name?",
                             min: 3,
                             max: 16,
@@ -215,7 +208,6 @@ export const fake_wizard: WizardFormat[] = [
     {
         name: "Wizard 2.0",
         id: "X18HZ63YgX8hH01",
-        isPrivate: true,
         pages: []
     },
 ]

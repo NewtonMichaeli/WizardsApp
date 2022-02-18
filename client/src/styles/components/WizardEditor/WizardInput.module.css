@@ -2,10 +2,9 @@
 
 /* Each Wizard Input */
 .Wizard-Input {
-  /* background-color: #90ee9090; */
   position: relative;
   border-left: 2px solid #4a416499;
-  padding: 0.4rem 1rem;
+  padding: 0.6rem 1rem;
   width: 100%;
   /* height: 3.2rem; */
   height: fit-content;
@@ -15,6 +14,10 @@
   justify-content: space-between;
   align-items: flex-start;
   margin: 1rem 0;
+  /* animation */
+  animation: onEnterQ 0.6s 0.4s forwards;
+  /* init state */
+  background-color: #77777740;
 }
 
 .Wizard-Input .upper-section {
@@ -79,4 +82,55 @@
   margin-top: 0.4rem;
   /* mouse */
   cursor: default;
+}
+
+/* Styles for Add Here component */
+
+.Add-Here {
+  /* background-color: red; */
+  width: 100%;
+  height: fit-content;
+  border-top: 2px solid #a377a9;
+  border-top-right-radius: 5px;
+  opacity: 0.5;
+  /* layout */
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  /* position */
+  position: absolute;
+  top: -1rem;
+  left: 0.5rem;
+  /* animation */
+  transition: all 0.15s ease;
+  pointer-events: none;
+}
+.Add-Here:hover {
+  opacity: 1;
+}
+.Add-Here section {
+  width: 7rem;
+  height: 1.9rem;
+  background-color: #a377a9;
+  border-radius: 0 5px 5px 5px;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* mouse */
+  cursor: pointer;
+  pointer-events: visible;
+}
+.Add-Here section img {
+  height: 70%;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+/* animations */
+
+@keyframes onEnterQ {
+  to {
+    background-color: #00000000;
+  }
 }

@@ -28,6 +28,13 @@
   opacity: 0;
   pointer-events: none;
 }
+.AddMenu.adding-mode-active {
+  animation: onAddingMode 0.2s 0s forwards;
+  pointer-events: none !important;
+}
+.AddMenu.adding-mode-active .ElementsList {
+  pointer-events: none !important;
+}
 
 .AddMenu .prim-add-btn:hover {
   background-color: #ffffff30;
@@ -102,6 +109,18 @@
   to {
     transform: translateX(0) translateX(0);
     opacity: 1;
+    pointer-events: visible;
+  }
+}
+
+@keyframes onAddingMode {
+  from {
+    transform: translateX(0) translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(20%);
+    opacity: 0;
     pointer-events: visible;
   }
 }

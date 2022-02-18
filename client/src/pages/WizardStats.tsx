@@ -80,7 +80,7 @@ const WizardStats: React.FC = () => {
         {/* {body */}
         <section className={Styles["container-body"]}>
           
-          {Page?.map(section => <Section key={section.order} section={section}/>)}
+          {Page?.map((section, i) => <Section key={i} page_idx={PageIdx} section_idx={i} section={section} />)}
         
         </section>
       </div>

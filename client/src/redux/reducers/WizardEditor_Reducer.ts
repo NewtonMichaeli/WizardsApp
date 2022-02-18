@@ -1,6 +1,7 @@
 // User Data reducer file
 
-import { WizardEditorAction } from "../action-types/WizardEditor"
+import { AddElement } from "../action-creators/WizardEditor"
+import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { wizard_editor_state_type } from "../types/reducerStateTypes"
 
 
@@ -8,31 +9,32 @@ const initState: wizard_editor_state_type = {
   IsAction: false,
   ActionTriggerType: null,
   ActionType: null,
-  temp_payload: {},
   // current wizard state - questions, sections, etc.. :
   WizardState: null,
   Page: null,
   PageIdx: 0
 }
 
-export default (state = initState, action: WizardEditorAction) => {
+
+export default (state = initState, action: WizardEditorAction): wizard_editor_state_type => {
   
   switch (action.type) {
+    // Extract wizard from user wizards
     case 'EXTRACT_WIZARD': {
         const PageIdx = action.payload?.pages.length ? 0 : -1
         return {
           ...state,
           WizardState: action.payload,
           PageIdx,
-          Page: PageIdx >= 0 && action.payload?.pages[PageIdx]    // default page
+          Page: action.payload?.pages[PageIdx] ?? null    // default page
         }
       }
+    // Auth failure
     case 'AUTH_FAIL': {
       window.location.href = '/dashboard'
-      return {
-        ...state
-      }
+      return state
     }
+    // Move page next/back
     case 'MOVE_PAGE': {
       // avoid page overflow
       if (
@@ -41,7 +43,7 @@ export default (state = initState, action: WizardEditorAction) => {
         action.payload === 'BACK' &&
         state['PageIdx'] === 0 ||
         !state.WizardState?.pages.length
-      ) return { ... state}
+      ) return state
       // update page index
       const UpdatedPageIdx = action.payload === 'NEXT'
         ? state['PageIdx'] + 1 
@@ -53,6 +55,27 @@ export default (state = initState, action: WizardEditorAction) => {
         Page: state.WizardState?.pages[UpdatedPageIdx] ?? null
       }
     }
+    // AddElement
+    case 'ADDING_ELEMENT': {
+      return {
+        ...state,
+        IsAction: true,
+        ActionTriggerType: action.payload,
+        ActionType: WizardEditorActionTypes.ADDING_ELEMENT
+      }
+    }
+    case 'ADD_ELEMENT': {
+      return AddElement(state, action)
+    }
+    case 'ABORT_ELEMENT_MODE': {
+      return {
+        ...state,
+        IsAction: false,
+        ActionTriggerType: null,
+        ActionType: null
+      }
+    }
+    // Default
     default:
       return state
   }

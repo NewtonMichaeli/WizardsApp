@@ -1,35 +1,51 @@
 // Menu for adding different comoponents in wizard editor
-import React, { useState } from 'react'
+import React, { Dispatch, useState } from 'react'
 // Assets:
 import NewPage from '../../assets/wizard-controllers/new_page.png'
 import NewElement from '../../assets/wizard-controllers/add-white.png'
+// Redux:
+import { useDispatch, useSelector } from 'react-redux'
 // Styles:
 import Styles from '../../styles/components/WizardEditor/AddMenu.module.css'
 import { getStyles } from '../../controllers'
+import { ElementTypes, WizardEditorAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { AddingElementMode } from '../../redux/action-creators/WizardEditor'
+import { RootState } from '../../redux'
+import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 
 
 const AddMenu: React.FC = () => {
 
   // States:
   const [ElementsListState, setElementsListState] = useState(false)
-
+  // Store:
+  const { ActionType } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  // Dispatch:
+  const dispatch = useDispatch<Dispatch<WizardEditorAction>>()
+  const AddingMode = () => dispatch(
+    AddingElementMode(ElementTypes.QUESTION)
+  )
 
   // Elements list
   const ElementsList: React.FC = () => {
     return (
       <ul className={Styles["ElementsList"]}>
-        <li>Label</li>
-        <li>Textbox</li>
-        <li>Checkbox</li>
-        <li>Image</li>
-        <li>Textarea</li>
-        <li>Secured Input</li>
+        <li onClick={AddingMode}>Label</li>
+        <li onClick={AddingMode}>Textbox</li>
+        <li onClick={AddingMode}>Checkbox</li>
+        <li onClick={AddingMode}>Image</li>
+        <li onClick={AddingMode}>Textarea</li>
+        <li onClick={AddingMode}>Secured Input</li>
       </ul>
     )
   }
 
   return (
-    <div className={getStyles(Styles, `AddMenu ${ElementsListState?'show-elements-list':''}`)}>
+    <div className={getStyles(Styles, `AddMenu ${ElementsListState
+      ? 'show-elements-list'
+      : ''} ${ActionType === WizardEditorActionTypes.ADDING_ELEMENT
+      ? 'adding-mode-active'
+      : ''}`)}>
       {/* add new page */}
       <button className={Styles['prim-add-btn']}>
         <img src={NewPage} alt="New Page" title='New Page' />

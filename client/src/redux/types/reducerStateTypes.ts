@@ -2,6 +2,7 @@
 
 import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
 import { UserRoleTypes } from "../action-types/User";
+import { ElementTypes, WizardEditorActionTypes } from "../action-types/WizardEditor";
 
 
 // Auth state type
@@ -33,10 +34,14 @@ export interface user_state_type {
 // Wizard_editor state type
 export interface wizard_editor_state_type {
   IsAction: boolean
-  ActionTriggerType: "PAGE" | "SECTION" | "ELEMENT" | null
-  ActionType: "DELETE" | "ADD" | "MODIFY" | null
+  ActionTriggerType: 
+    ElementTypes.PAGE | 
+    ElementTypes.SECTION | 
+    ElementTypes.QUESTION | null
+  ActionType:
+    WizardEditorActionTypes.ADDING_ELEMENT |
+    WizardEditorActionTypes.RELOCATING_ELEMENT | null
   // current wizard state - questions, sections, etc.. :
-  temp_payload: any
   WizardState: WizardFormat | null
   Page: WizardPageFormat | null
   PageIdx: number

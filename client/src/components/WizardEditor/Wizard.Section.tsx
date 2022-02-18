@@ -5,7 +5,12 @@ import Styles from '../../styles/components/WizardEditor/Wizard.Section.module.c
 import ParseElement from '../../utils/WizardEditor/ParseElement'
 
 
-const Section: React.FC<{section: WizardSectionFormat}> = ({section}) => {
+type Section__props = React.FC<{
+  section: WizardSectionFormat, 
+  page_idx: number,
+  section_idx: number
+}>
+const Section: Section__props = ({section, section_idx, page_idx}) => {
 
   return (
     <div className={Styles["Section-container"]}>
@@ -14,15 +19,19 @@ const Section: React.FC<{section: WizardSectionFormat}> = ({section}) => {
         <h3 className={Styles["title-section-title"]}>
           <input 
             type="text" 
-            defaultValue={section.section_name}
+            defaultValue={section.name}
             placeholder="Enter Section Name" />
         </h3>
       </section>
       {/* right section - info */}
       <section className={Styles["info-section"]}>
 
-        {section.elements.map(element => 
-          <ParseElement key={element.title} element={element} />
+        {section.elements.map((element, i) => 
+          <ParseElement key={element.name}
+            page_idx={page_idx}
+            section_idx={section_idx}
+            q_idx={i}
+            element={element} />
         )}
         
       </section>
