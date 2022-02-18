@@ -29,7 +29,7 @@ interface InputTypes {
         type: "Textarea",
         title: string,
         name: string,
-        regex: RegExp,
+        regex: RegExp | null,
         required: boolean
         min: number,
         max: number
@@ -105,13 +105,15 @@ export type WizardSectionFormat = {
     elements: ValidInputType[/*elements*/]
 }
 
+// Wizard : page - Format
+export type WizardPageFormat = WizardSectionFormat[]
 
 // Wizards format
 export type WizardFormat = {
     name: string,
     id: string,
     isPrivate: boolean,
-    pages: WizardSectionFormat[/*sections*/][/*pages*/]
+    pages: WizardPageFormat[]
 }
 
 
@@ -131,7 +133,7 @@ export const fake_wizard: WizardFormat[] = [
                     elements: [
                         {
                             type: "Label",
-                            title: "Enter your Name",
+                            title: "Hi",
                             name: "string",
                         },
                         {
@@ -145,11 +147,25 @@ export const fake_wizard: WizardFormat[] = [
                         },
                         {
                             type: "Label",
-                            title: "Enter your Password",
+                            title: "Hi Again",
                             name: "string",
                         },
                         {
                             type: 'SecuredInput',
+                            title: "Enter your Password",
+                            name: "string",
+                            min: 6,
+                            max: 32,
+                            regex: null,
+                            required: true
+                        },
+                        {
+                            type: "Label",
+                            title: "Enter your Sentence",
+                            name: "string",
+                        },
+                        {
+                            type: 'Textarea',
                             title: "Enter your Password",
                             name: "string",
                             min: 6,
@@ -180,7 +196,7 @@ export const fake_wizard: WizardFormat[] = [
                         {
                             type: "Label",
                             name: "name",
-                            title: "What is your name?"
+                            title: "Ya still there?"
                         },
                         {
                             type: "Text",

@@ -1,0 +1,82 @@
+/* Styles for Wizard : Input components */
+
+/* Each Wizard Input */
+.Wizard-Input {
+  /* background-color: #90ee9090; */
+  position: relative;
+  border-left: 2px solid #4a416499;
+  padding: 0.4rem 1rem;
+  width: 100%;
+  /* height: 3.2rem; */
+  height: fit-content;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 1rem 0;
+}
+
+.Wizard-Input .upper-section {
+  /* width: 13rem; */
+  height: 1.7rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* text inputs */
+.Wizard-Input .upper-section input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 2px solid #4a416466;
+  padding: 0.25rem 0.4rem;
+  width: 11rem;
+  height: 100%;
+}
+/* text inputs on focus */
+.Wizard-Input .upper-section textarea:focus,
+.Wizard-Input .upper-section input:focus {
+  border-bottom: 2px solid #4a4164aa;
+}
+
+/* question controllers */
+.Wizard-Input .upper-section .question-controllers {
+  height: 100%;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 0.1rem;
+}
+.Wizard-Input .upper-section .question-controllers img {
+  height: 64%;
+  margin-left: 0.4rem;
+  opacity: 0.7;
+  /* mouse */
+  cursor: pointer;
+}
+.Wizard-Input .upper-section .question-controllers img:hover {
+  opacity: 1;
+}
+
+/* Input-type placeholder - bottom section of each question */
+.Wizard-Input .Input-type-placeholder {
+  background-color: #99999933;
+  /* border-radius: 0 5px 5px 5px; */
+  width: 11rem;
+  height: 1.8rem;
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #777;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.4rem;
+  /* mouse */
+  cursor: default;
+}

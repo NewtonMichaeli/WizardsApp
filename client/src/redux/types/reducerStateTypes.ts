@@ -1,6 +1,6 @@
 // Reducer's initial state types
 
-import { WizardFormat } from "../../interfaces/WizardFormat";
+import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
 import { UserRoleTypes } from "../action-types/User";
 
 
@@ -28,4 +28,16 @@ export interface user_state_type {
     role: UserRoleTypes.USER | UserRoleTypes.WIZARD_CREATOR | UserRoleTypes.ADMIN,
     wizards: WizardFormat[]
   } | null
+}
+
+// Wizard_editor state type
+export interface wizard_editor_state_type {
+  IsAction: boolean
+  ActionTriggerType: "PAGE" | "SECTION" | "ELEMENT" | null
+  ActionType: "DELETE" | "ADD" | "MODIFY" | null
+  // current wizard state - questions, sections, etc.. :
+  temp_payload: any
+  WizardState: WizardFormat | null
+  Page: WizardPageFormat | null
+  PageIdx: number
 }

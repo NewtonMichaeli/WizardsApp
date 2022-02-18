@@ -1,0 +1,92 @@
+/* Styles for Wizard : Page : Section */
+
+/* Section container */
+.Section-container {
+  width: 100%;
+  /* layout */
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+/* Section left side - Section title */
+.Section-container .title-section {
+  width: 22%;
+  text-align: center;
+  /* layout */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.Section-container .title-section .title-section-title {
+  width: 100%;
+  height: 3rem;
+  background-color: #c4c4c444;
+  color: #555;
+  border-radius: 5px 0 0 5px;
+  font-size: 1rem;
+  font-weight: 400;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* section title input field */
+.Section-container .title-section .title-section-title input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 2px solid #4a416466;
+  width: 85%;
+  height: 1.8rem;
+  /* text */
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
+  padding: 0.25rem 0.4rem;
+}
+
+/* Section right side - Section info */
+.Section-container .info-section {
+  background-color: #c4c4c499;
+  width: 78%;
+  min-height: 4.4rem;
+  height: fit-content;
+  border-radius: 0 5px 5px 5px;
+  padding: 1rem 1.7rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.Section-container .title-section .title-section-title {
+  width: 100%;
+  height: 3rem;
+  background-color: #c4c4c444;
+  color: #555;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* responsive */
+
+@media screen and (max-width: 970px) {
+  .Section-container {
+    flex-direction: column;
+  }
+  /* title section */
+  .Section-container .title-section {
+    width: 10rem;
+  }
+  .Section-container .title-section .title-section-title {
+    border-radius: 5px 5px 0 0;
+  }
+  /* info section */
+  .Section-container .info-section {
+    width: 100%;
+  }
+}

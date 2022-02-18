@@ -19,6 +19,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  z-index: 10;
   /* animation */
   transition: all 0.2s ease;
   animation: onEnter 0.2s 0s forwards;
@@ -68,7 +69,7 @@
   transform: translateX(-15%);
   opacity: 0;
   pointer-events: none;
-  list-style-type: none;
+  list-style-type: disc;
 }
 
 .ElementsList li:hover {

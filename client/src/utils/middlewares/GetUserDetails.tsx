@@ -3,15 +3,17 @@
 import React, {useEffect} from 'react'
 // Redux:
 import { bindActionCreators } from 'redux'
-import { UserActions } from '../../redux'
-import { useDispatch } from 'react-redux'
+import { RootState, UserActions } from '../../redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { user_state_type } from '../../redux/types/reducerStateTypes'
 
 // Gets User Details before Rendering Component
 export const GetUserDetails: React.FC<{children: JSX.Element}> = ({children}) => {
   // Get UserData
+  const { isAuthed } = useSelector<RootState, user_state_type>(state => state.user)
   const { LoadUser } = bindActionCreators(UserActions, useDispatch())
   useEffect(() => {
-    LoadUser()
+    if (!isAuthed) LoadUser()
   }, [])
   return children
 }
