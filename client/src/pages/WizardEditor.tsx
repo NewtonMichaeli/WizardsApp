@@ -14,7 +14,6 @@ import { getStyles } from '../controllers'
 import Section from '../components/WizardEditor/Wizard.Section'
 import AddMenu from '../components/WizardEditor/AddMenu'
 import { BtnAdd, BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
-import { WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
 
 
 // Stats mode type - <stats> option or <results> option:

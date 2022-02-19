@@ -7,14 +7,15 @@ import Remove from '../../assets/Q-controllers/no-grey.png'
 import Options from '../../assets/Q-controllers/options.png'
 // Redux:
 import { useDispatch, useSelector } from 'react-redux'
-import { Dispatch } from 'redux'
 // styles:
 import Styles from '../../styles/components/WizardEditor/WizardInput.module.css'
+import { getStyles } from '../../controllers'
 // Types:
-import { ValidInputType } from '../../interfaces/WizardFormat'
+import { InputTypes, ValidInputType } from '../../interfaces/WizardFormat'
 import { RootState } from '../../redux'
 import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
-import { AddElementAction, ElementTypes, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { AddElementAction, ElementTypes, QuestionTypes, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { AddElement, RemoveElement } from '../../redux/action-creators/WizardEditor'
 
 
 // Input controllers field
@@ -33,36 +34,49 @@ const InputControllers: InputControllers__props = ({children}) => {
 
 
 // Component for  
-const AddHere: React.FC<{path: path_type}> = ({path}) => {
+export const AddHere: React.FC<{
+  path: path_type, 
+  lastOne?: boolean,
+  noElements?: boolean
+}> = ({path, lastOne, noElements}) => {
 
-  const dispatch = useDispatch<Dispatch<AddElementAction>>()
-  // dispatch addHere onClick
-  const addHereHandler = () => dispatch({
-    type: WizardEditorActionTypes.ADD_ELEMENT,
-    payload: {
-      element: ElementTypes.QUESTION,
-      path: {
-        page: path.page_idx,
-        section: path.section_idx,
-        question: path.q_idx
-      }
-    }
-  })
+  const dispatch = useDispatch()
+  // Dispatch Actions
+  const addHereHandler = (lastAddHere?: boolean) => dispatch<AddElementAction>(
+    AddElement(ElementTypes.QUESTION, {
+      ...path,
+      question: path.question + (lastAddHere ? 1 : 0)
+    })
+  )
 
-  return (
-    <div className={Styles["Add-Here"]}>
-      <section onClick={addHereHandler}>
+  const AddHereSection: React.FC<{
+    isLastElement?: boolean,
+    isEmptySection?: boolean
+  }> = ({isLastElement, isEmptySection}) => 
+    <div className={getStyles(Styles, `Add-Here ${isLastElement
+      ? "last-element"
+      : ""} 
+      ${isEmptySection
+      ? "no-elements"
+      : ""}`)}>
+      <section onClick={()=>addHereHandler(isLastElement)}>
         <img src={Add} alt="Add Here" title='Add Here' />
       </section>
     </div>
+
+  return (
+    <>
+      <AddHereSection isEmptySection={noElements} />
+      { lastOne && <AddHereSection isLastElement /> }
+    </>
   )
 }
 
 
 export type path_type = {
-  page_idx: number,
-  section_idx: number,
-  q_idx: number
+  page: number,
+  section: number,
+  question: number
 }
 // Input Struct : Text, SecuredInput, Textarea, etc..
 type InputStruct__props = React.FC<{
@@ -72,7 +86,15 @@ type InputStruct__props = React.FC<{
 export const InputStruct: InputStruct__props = ({element, path}) => {
 
   // States:
-  const {IsAction, ActionType, ActionTriggerType} = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const { ActionType, ActionTrigger, Page } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const IsLastElement = Page && Page[path.section]
+    ?.elements[Page[path.section]?.elements.length - 1]?.name === element.name
+
+  // Handlers:
+  const dispatch = useDispatch()
+  const removeHandler = () => dispatch(
+    RemoveElement(ElementTypes.QUESTION, path)
+  )
 
   return (
     <div className={Styles["Wizard-Input"]}>
@@ -86,7 +108,8 @@ export const InputStruct: InputStruct__props = ({element, path}) => {
           />
         <section className={Styles["question-controllers"]}>
           <img src={Required} alt="Required" title='Set to Required' />
-          <img src={Remove} alt="Remove" title='Remove Question' />
+          <img src={Remove} alt="Remove" title='Remove Question' 
+            onClick={removeHandler} />
           <img src={Options} alt="Options" title='Options' />
         </section>
       </div>
@@ -94,33 +117,15 @@ export const InputStruct: InputStruct__props = ({element, path}) => {
         ? <h1 className={Styles["Input-type-placeholder"]}>{element.type}</h1>
         : ''}
       {/* Add element here */}
-      {ActionTriggerType === ElementTypes.QUESTION && <AddHere path={path} />}
+      {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
+        && ActionTrigger.Type === ElementTypes.QUESTION 
+        && <AddHere path={path} />}
+      {/* Add element here (last element identifier) */}
+      {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
+        && ActionTrigger.Type === ElementTypes.QUESTION 
+        && IsLastElement 
+        && <AddHere path={path} lastOne={IsLastElement} />
+      }
     </div>
   )
 }
-
-
-// Input : Label field
-export const Label: InputStruct__props
-  = ({element, path}) => <InputStruct element={element} path={path} />
-
-
-// Input : Text field
-export const Text: InputStruct__props
-  = ({element, path}) => <InputStruct element={element} path={path} />
-
-
-// Input : Text field
-export const Textarea: InputStruct__props
-  = ({element, path}) => <InputStruct element={element} path={path} />
-
-
-// Input : SecuredText field
-export const SecuredText: InputStruct__props
-  = ({element, path}) => <InputStruct element={element} path={path} />
-
-
-// Input : Range field
-export const Range: InputStruct__props
-  = ({element, path}) => <InputStruct element={element} path={path} />
-

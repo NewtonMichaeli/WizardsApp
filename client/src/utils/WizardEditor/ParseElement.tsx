@@ -2,36 +2,50 @@
 import React from 'react'
 import { ValidInputType } from '../../interfaces/WizardFormat'
 // Input fields:
-import { Label, Text, Textarea, SecuredText } from '../../components/WizardEditor/InputField'
+import { InputStruct } from '../../components/WizardEditor/InputField'
 
 
 type ParseElement__props = React.FC<{
   element: ValidInputType,
-  page_idx: number,
-  section_idx: number,
-  q_idx: number,
+  page: number,
+  section: number,
+  question: number,
 }>
-const ParseElement: ParseElement__props = ({element, q_idx, page_idx, section_idx}) => {
+const ParseElement: ParseElement__props = ({element, question, page, section}) => {
   // switch lelement type
   const path = {
-    q_idx, page_idx, section_idx
+    question, page, section
   }
+  return <InputStruct element={element} path={path} />
   
-  switch (element.type)
-  {
-    case "Label":
-      return <Label element={element} path={path} />
-    case "Text":
-      return <Text element={element} path={path} />
-    case "Textarea":
-      return <Textarea element={element} path={path} />
-    case "SecuredInput":
-      return <SecuredText element={element} path={path} />
-    case 'Range':
-      return <SecuredText element={element} path={path} />
-    default:
-      return <></>
-  }
+  // switch (element.type)
+  // {
+  //   case QuestionTypes.LABEL:
+  //     return <Label element={element} path={path} />
+  //   case QuestionTypes.TEXT:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.TEXTAREA:
+  //     return <Textarea element={element} path={path} />
+  //   case QuestionTypes.SECURED_INPUT:
+  //     return <SecuredText element={element} path={path} />
+  //   case QuestionTypes.RANGE:
+  //     return <SecuredText element={element} path={path} />
+      
+  //   case QuestionTypes.CHECKBOX:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.IMAGE:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.RADIOBOX_LIST:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.CHECKBOX_LIST:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.LISTS_LIST:
+  //     return <Text element={element} path={path} />
+  //   case QuestionTypes.RADIOBOX:
+  //     return <Text element={element} path={path} />
+  //   default:
+  //     return <></>
+  // }
 }
 
 export default ParseElement

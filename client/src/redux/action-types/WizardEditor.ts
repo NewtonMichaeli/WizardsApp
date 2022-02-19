@@ -1,6 +1,21 @@
 // Action types for User
 
-import { WizardFormat } from "../../interfaces/WizardFormat";
+import { InputTypes, ValidInputType, WizardFormat, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat";
+
+
+export enum QuestionTypes {
+  LABEL = "Label",
+  TEXT = "Text",
+  CHECKBOX = "Checkbox",
+  IMAGE = "Image",
+  TEXTAREA = "Textarea",
+  SECURED_INPUT = "SecuredInput",
+  RADIOBOX_LIST = "Radiobox List",
+  CHECKBOX_LIST = "Checkbox List",
+  LISTS_LIST = "Lists List",
+  RANGE = "Range",
+  RADIOBOX = "Radiobox",
+}
 
 export enum ElementTypes {
   PAGE = "PAGE",
@@ -8,21 +23,25 @@ export enum ElementTypes {
   QUESTION = "QUESTION"
 }
 
-// Action types
 export enum WizardEditorActionTypes {
   EXTRACT_WIZARD = "EXTRACT_WIZARD",
   AUTH_FAIL = "AUTH_FAIL",
   MOVE_PAGE = "MOVE_PAGE",
-  // Enter/abort modifying mode
+  // Status Indicators
   ADDING_ELEMENT = "ADDING_ELEMENT",  // adding mode
   RELOCATING_ELEMENT = "RELOCATING_ELEMENT",  // relocating mode
   ABORT_ELEMENT_MODE = "ABORT_ELEMENT_MODE",
-  // Modify elements
+  // Enter/abort modifying mode
   ADD_ELEMENT = "ADD_ELEMENT",
-  RELOCATE_ELEMENT = "RELOCATE_ELEMENT",
-  // 
-  REMOVE_ELEMENT = "REMOVE_ELEMENT"
+  REMOVE_ELEMENT = "REMOVE_ELEMENT",
+  // Modifying Element Properties
+  MODIFY_ELEMENT = "MODIFY_ELEMENT",
+  // ELEMENT_PROP_REQUIRED = "ELEMENT_PROP_REQUIRED",
+  // RELOCATE_ELEMENT = "RELOCATE_ELEMENT",
 }
+
+
+/** Simple Action Types */
 
 // Extract wizard from user wizards
 interface ExtractWizardAction {
@@ -41,6 +60,8 @@ interface MovePageAction {
   payload: "NEXT" | "BACK"
 }
 
+
+/** Add Element Types */
 
 // Add-Element Action
 interface AddQuestionAction {
@@ -71,19 +92,45 @@ interface AddPageAction {
   payload: {
     element: ElementTypes.PAGE
     path: {
-      page: string
+      page: number
     }
   }
 }
-// Add Element / Section / Page
+// Add Element - Question / Section / Page
 export type AddElementAction = AddQuestionAction | AddPageAction | AddSectionAction
 
 
-// Add-Element Action
+/** Remove Element Types */
+
+// Remove-Element Action
 interface RemoveQuestionAction {
   type: WizardEditorActionTypes.REMOVE_ELEMENT
+  payload: AddQuestionAction['payload']
+}
+// Remove-Section Action
+interface RemoveSectionAction {
+  type: WizardEditorActionTypes.REMOVE_ELEMENT
+  payload: AddSectionAction['payload']
+}
+// Remove-Page Action
+interface RemovePageAction {
+  type: WizardEditorActionTypes.REMOVE_ELEMENT
+  payload: AddPageAction['payload']
+}
+// Remove Element - Question / Section / Page
+export type RemoveElementAction = RemoveQuestionAction | RemoveSectionAction | RemovePageAction
+
+
+/** Change Element Property */
+
+type OptionalProperties<T, K extends keyof T> = Omit<T, K> & Partial<T>
+export type ValidInputTypeProps = OptionalProperties<ValidInputType, 'name' | 'title'>
+// Modify Question Action (with optional properties to change)
+export interface ModifyQuestionAction {
+  type: WizardEditorActionTypes.MODIFY_ELEMENT
   payload: {
     element: ElementTypes.QUESTION
+    properties: ValidInputTypeProps
     path: {
       page: number
       section: number
@@ -91,41 +138,36 @@ interface RemoveQuestionAction {
     }
   }
 }
-// Add-Section Action
-interface RemoveSectionAction {
-  type: WizardEditorActionTypes.REMOVE_ELEMENT
+// Modify Section Action (with optional properties to change)
+export interface ModifySectionAction {
+  type: WizardEditorActionTypes.MODIFY_ELEMENT
   payload: {
     element: ElementTypes.SECTION
+    name: WizardSectionFormat['name']
     path: {
       page: number
       section: number
     }
   }
 }
-// Add-Page Action
-interface RemovePageAction {
-  type: WizardEditorActionTypes.REMOVE_ELEMENT
-  payload: {
-    element: ElementTypes.PAGE
-    path: {
-      page: number
-    }
-  }  
-}
-// Add Element / Section / Page
-export type RemoveElementAction = RemoveQuestionAction | RemoveSectionAction | RemovePageAction
+// Modify Element Action - Section / Question
+export type ModifyElementAction = ModifyQuestionAction | ModifySectionAction
 
 
+/** States - indicating Current Modifying Mode */
 
 // Adding mode
 interface AddingElementAction {
   type: WizardEditorActionTypes.ADDING_ELEMENT,
-  payload: ElementTypes.PAGE | ElementTypes.SECTION | ElementTypes.QUESTION
+  payload: {
+    type: ElementTypes,
+    question?: QuestionTypes
+  }
 }
 // Relocating mode
 interface RelocatingElementAction {
   type: WizardEditorActionTypes.RELOCATING_ELEMENT,
-  payload: ElementTypes.PAGE | ElementTypes.SECTION | ElementTypes.QUESTION
+  payload: ElementTypes
 }
 // Abort Element Mode Action
 interface AbortElementModeAction {
@@ -133,12 +175,14 @@ interface AbortElementModeAction {
 }
 
 
+
 // Action types for WizardEditor Action
 export type WizardEditorAction = ExtractWizardAction
   | AuthFailAction 
   | MovePageAction 
-  | AddElementAction
-  | RemoveElementAction
+  | AddElementAction          // add element
+  | ModifyElementAction       // modify element
+  | RemoveElementAction       // remove element
   | AddingElementAction       // changing mode
   | RelocatingElementAction   // changing mode
   | AbortElementModeAction    // changing mode (abort)

@@ -72,6 +72,8 @@
   height: 9.3rem;
   /* animation */
   animation: onEnter 0.2s 0.1s forwards;
+  /* overflow */
+  overflow-y: auto;
   /* init props */
   transform: translateX(-15%);
   opacity: 0;

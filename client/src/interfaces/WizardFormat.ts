@@ -1,23 +1,24 @@
 // Interfaces for Wizard structure formatting
 
 import { Url } from "url"
+import { QuestionTypes } from "../redux/action-types/WizardEditor"
 
 
 // All Input types for a Wizard to have
-interface InputTypes {
+export interface InputTypes {
     "Label": {
-        type: "Label",
+        type: QuestionTypes.LABEL,
         title: string,
         name: string,
     },
     "Checkbox": {
-        type: 'Checkbox',
+        type: QuestionTypes.CHECKBOX,
         title: string,
         name: string,
         alreadyChecked: boolean
     },
     "Text": {
-        type: "Text",
+        type: QuestionTypes.TEXT,
         title: string,
         name: string,
         regex: RegExp | null,
@@ -26,7 +27,7 @@ interface InputTypes {
         max: number
     },
     "Textarea": {
-        type: "Textarea",
+        type: QuestionTypes.TEXTAREA,
         title: string,
         name: string,
         regex: RegExp | null,
@@ -35,7 +36,7 @@ interface InputTypes {
         max: number
     },
     "Range": {
-        type: "Range",
+        type: QuestionTypes.RANGE,
         title: string,
         name: string,
         required: boolean,
@@ -43,13 +44,13 @@ interface InputTypes {
         max: number
     },
     "Radiobox": {
-        type: "Radiobox",
+        type: QuestionTypes.RADIOBOX,
         title: string,
         name: string,
         alreadyChecked: boolean
     },
     "SecuredInput": {
-        type: "SecuredInput",
+        type: QuestionTypes.SECURED_INPUT,
         title: string,
         name: string,
         regex: RegExp | null,
@@ -58,29 +59,29 @@ interface InputTypes {
         max: number
     },
     "Image": {
-        name: string,
-        type: "Image"
+        type: QuestionTypes.IMAGE,
+        name: string
         title: string,
         url: Url,   // either 
     }
-    "RadioboxList": {
+    "Radiobox List": {
+        type: QuestionTypes.RADIOBOX_LIST,
         name: string,
-        type: "RadioboxList",
         title: string,
         elements: InputTypes['Radiobox'][]
     },
-    "CheckboxList": {
+    "Checkbox List": {
+        type: QuestionTypes.CHECKBOX_LIST,
         name: string,
-        type: "CheckboxList",
         title: string,
         elements: InputTypes['Checkbox'][]
     },
-    "ListsList": {
+    "Lists List": {
+        type: QuestionTypes.LISTS_LIST,
         name: string,
-        type: "ListsList",
         title: string,
         elements: (
-            InputTypes['CheckboxList'] | InputTypes['RadioboxList']
+            InputTypes['Checkbox List'] | InputTypes['Radiobox List']
         )[]
     }
 }
@@ -94,9 +95,10 @@ export type ValidInputType =
     InputTypes['SecuredInput'] |
     InputTypes['Text'] |
     InputTypes['Textarea'] |
-    InputTypes['CheckboxList'] |
-    InputTypes['RadioboxList'] |
-    InputTypes['ListsList']
+    InputTypes['Checkbox List'] |
+    InputTypes['Radiobox List'] |
+    InputTypes['Lists List'] | 
+    InputTypes['Image']
 
 // Wizard : page : section - Format
 export type WizardSectionFormat = {
@@ -128,12 +130,12 @@ export const fake_wizard: WizardFormat[] = [
                     name: "Section 1",
                     elements: [
                         {
-                            type: "Label",
+                            type: QuestionTypes.LABEL,
                             title: "Hi",
                             name: "1",
                         },
                         {
-                            type: 'Text',
+                            type: QuestionTypes.TEXT,
                             title: "Enter your Name",
                             name: "2",
                             min: 6,
@@ -142,12 +144,12 @@ export const fake_wizard: WizardFormat[] = [
                             required: true
                         },
                         {
-                            type: "Label",
+                            type: QuestionTypes.LABEL,
                             title: "Hi Again",
                             name: "3",
                         },
                         {
-                            type: 'SecuredInput',
+                            type: QuestionTypes.SECURED_INPUT,
                             title: "Enter your Password",
                             name: "4",
                             min: 6,
@@ -156,12 +158,12 @@ export const fake_wizard: WizardFormat[] = [
                             required: true
                         },
                         {
-                            type: "Label",
+                            type: QuestionTypes.LABEL,
                             title: "Enter your Sentence",
                             name: "5",
                         },
                         {
-                            type: 'Textarea',
+                            type: QuestionTypes.TEXTAREA,
                             title: "Enter your Password",
                             name: "6",
                             min: 6,
@@ -187,13 +189,32 @@ export const fake_wizard: WizardFormat[] = [
                     name: "Section 4",
                     elements: [
                         {
-                            type: "Label",
+                            type: QuestionTypes.LABEL,
                             name: "7",
                             title: "Ya still there?"
                         },
                         {
-                            type: "Text",
+                            type: QuestionTypes.TEXT,
                             name: "8",
+                            title: "What is your name?",
+                            min: 3,
+                            max: 16,
+                            required: true,
+                            regex: null
+                        }
+                    ]
+                },
+                {
+                    name: "Section 5",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "9",
+                            title: "Ya still there?"
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "10",
                             title: "What is your name?",
                             min: 3,
                             max: 16,

@@ -17,17 +17,22 @@ const Section: Section__props = ({section, page_idx, section_idx}) => {
       {/* left section - title */}
       <section className={Styles["title-section"]}>
         <h3 className={Styles["title-section-title"]}>
-          <input type="text" placeholder={section.name} />
+          <input 
+            key={section.name}
+            type="text"
+            defaultValue={section.name}
+            placeholder="Enter Section Name" />
         </h3>
       </section>
       {/* right section - info */}
       <section className={Styles["info-section"]}>
 
         {section.elements.map((element, i) => 
-          <ParseElement key={element.name}
-            page_idx={page_idx}
-            section_idx={section_idx}
-            q_idx={i}
+          <ParseElement 
+            key={element.name}
+            page={page_idx}
+            section={section_idx}
+            question={i}
             element={element} />
         )}
         
