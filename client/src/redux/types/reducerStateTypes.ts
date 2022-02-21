@@ -1,8 +1,9 @@
 // Reducer's initial state types
 
+import { ElementTypes, QuestionTypes } from ".";
 import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
 import { UserRoleTypes } from "../action-types/User";
-import { ElementTypes, QuestionTypes, WizardEditorActionTypes } from "../action-types/WizardEditor";
+import { WizardEditorActionTypes } from "../action-types/WizardEditor";
 
 
 // Auth state type

@@ -1,35 +1,75 @@
 // Wizard Edirot
-import React, { Dispatch, useState } from 'react'
+import React, { useState } from 'react'
 // Assets:
+import Add from '../assets/wizard-controllers/add-white.png'
 import Loading from '../assets/loading-1.gif'
 // Redux:
+import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux'
+import { RootState, WizardEditorActions } from '../redux'
 import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
-import { MovePage } from '../redux/action-creators/WizardEditor'
+import { AddElement, MovePage } from '../redux/action-creators/WizardEditor'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
 import { getStyles } from '../controllers'
 // Components:
-import Section from '../components/WizardEditor/Wizard.Section'
+import Section, { AddSectionHere } from '../components/WizardEditor/Wizard.Section'
 import AddMenu from '../components/WizardEditor/AddMenu'
 import { BtnAdd, BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { ElementTypes } from '../redux/types'
+import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
 
 
-// Stats mode type - <stats> option or <results> option:
-const enum StatsMode_types {
-  STATS = "STATS",
-  RESULTS = "RESULTS"
+// Add Page in a certain index (path)
+const AddPageHere: React.FC<{
+  page_idx: number,
+  noElements?: boolean
+}> = ({page_idx, noElements}) => {
+
+  const dispatch = useDispatch()
+  // Dispatch Actions
+  const addHereHandler = (isAppendingLeft?: boolean) => dispatch<AddElementAction>(
+    AddElement.Page(
+      page_idx + (isAppendingLeft ? 0 : 1)
+    )
+  )
+
+  const AddHereSection: React.FC<{
+    isAppendingLeft?: boolean,
+    isEmptyPage?: boolean
+  }> = ({isAppendingLeft, isEmptyPage}) => 
+    <div className={getStyles(Styles, `Add-Page-Here ${isAppendingLeft===true
+      ? "append-left"
+      : ""} 
+      ${isAppendingLeft===false
+      ? "append-right"
+      : ""} 
+      ${isEmptyPage
+      ? "no-elements"
+      : ""}`)}>
+      <section title='Add Here' onClick={()=>addHereHandler(isAppendingLeft)}>
+        <img src={Add} alt="Add Here" />
+      </section>
+    </div>
+
+  // Normal Page - append on specific side
+  if (!noElements) return <>
+    <AddHereSection isAppendingLeft={true} />
+    <AddHereSection isAppendingLeft={false} />
+  </>
+  // No pages - append one
+  else return <AddHereSection isEmptyPage />
 }
-type StatsMode_type = StatsMode_types.RESULTS | StatsMode_types.STATS
+
 
 const WizardEditor: React.FC = () => {
   
-  // States:
+  // Dispatch
   const dispatch = useDispatch()
-  // State for toggling element's list:
-  const [ElementsListMode, setElementsListMode] = useState(false)
-  
+  // States:
+  const [ElementsListMode, setElementsListMode] = useState(false)   // -- toggling element's list
+  const { SaveChanges } = bindActionCreators<RootState, any>(WizardEditorActions, dispatch)
+  // Handlers
   const closeAddMenuHandler = () => {
     if (!ElementsListMode)
       setElementsListMode(true)
@@ -40,7 +80,7 @@ const WizardEditor: React.FC = () => {
   }
 
   // Curent page & wizard:
-  const { WizardState, Page, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const { ActionTrigger, ActionType, WizardState, Page: Sections, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
 
   if (WizardState) return (
     <div className={Styles["WizardStats"]}>
@@ -51,12 +91,14 @@ const WizardEditor: React.FC = () => {
             Currently Editing: {WizardState?.name}
           </h1>
           <h5 className={Styles["page-counter"]}>
-            Page {PageIdx + 1} out of {WizardState?.pages.length}
+            Page {
+              PageIdx + (WizardState?.pages.length ? 1 : 0)
+            } out of {WizardState?.pages.length}
           </h5>
           <div className={Styles["page-controllers"]}>
             <BtnPageBack onClick={()=>dispatch(MovePage('BACK'))} />
             <BtnPageNext onClick={()=>dispatch(MovePage('NEXT'))} />
-            <BtnFinish onClick={()=>2} />
+            <BtnFinish onClick={SaveChanges} />
             <BtnAdd focus={ElementsListMode} onClick={closeAddMenuHandler} />
             { ElementsListMode && <AddMenu /> }
           </div>
@@ -64,8 +106,28 @@ const WizardEditor: React.FC = () => {
         {/* {body */}
         <section className={Styles["container-body"]}>
 
-          {Page?.map((section, i) => <Section key={i} page_idx={PageIdx} section_idx={i} section={section} />)}
-        
+          {/* Add Page here (if 0 pages found) */}
+          { !Sections
+            && <AddPageHere page_idx={0} noElements />}
+
+          {/* Add page here */}
+          {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
+            && ActionTrigger.Type === ElementTypes.PAGE 
+            && <AddPageHere page_idx={PageIdx} />}
+          {/* Add sections here (if 0 sections exist) */}
+          { Sections
+            && !Sections?.length
+            && <AddSectionHere path={{page: PageIdx, section: 0}} noElements />}
+
+          {/* map through sections */}
+          {Sections?.map((section, i) => 
+            <Section 
+              key={i}
+              page_idx={PageIdx} 
+              section_idx={i}
+              section={section} />
+          )}
+
         </section>
       </div>
     </div>

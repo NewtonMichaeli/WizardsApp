@@ -3,14 +3,15 @@
 import { v4 as uuidv4 } from 'uuid'
 // Types:
 import { RootState } from "../../redux"
-import { ValidInputType } from "../../interfaces/WizardFormat"
-import { QuestionTypes } from "../../redux/action-types/WizardEditor"
+import { ValidInputType, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat"
+import { QuestionTypes } from "../../redux/types"
 
 
 type RenderInitInput__props = (
   ActionTrigger: RootState['wizard_editor']['ActionTrigger']
 ) => ValidInputType
 
+// Renders Initial input structure and inserts it as one of the wizard elements
 export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
   // Return Initial element object
   switch (ActionTrigger.QuestionType) {
@@ -105,3 +106,14 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
       }
   }
 }
+
+
+// Renders Initial section structure and inserts it as one of the wizard elements
+export const RenderInitSection = (): WizardSectionFormat => ({
+  name: "",
+  elements: []  
+})
+
+
+// Renders Initial page structure and inserts it as one of the wizard elements
+export const RenderInitPage = (): WizardPageFormat => ([])

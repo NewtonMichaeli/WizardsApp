@@ -63,6 +63,15 @@
   color: #fff;
   font-weight: 300;
 }
+/* disabled adding button */
+.AddMenu .prim-add-btn.add-disabled {
+  opacity: 0.4;
+  /* mouse */
+  cursor: default;
+}
+.AddMenu .prim-add-btn.add-disabled:hover {
+  background-color: transparent;
+}
 
 /* Styles for ElementsList Component */
 

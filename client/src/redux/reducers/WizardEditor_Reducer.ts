@@ -1,6 +1,6 @@
 // User Data reducer file
 
-import { AddElementToState, RemoveElementFromState, ModifyElementInState } from "../action-creators/WizardEditor"
+import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../action-creators/WizardEditor"
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { wizard_editor_state_type } from "../types/reducerStateTypes"
 
@@ -23,7 +23,7 @@ export default (state = initState, action: WizardEditorAction): wizard_editor_st
   switch (action.type) {
     // Extract wizard from user wizards
     case 'EXTRACT_WIZARD': {
-        const PageIdx = action.payload?.pages.length ? 0 : -1
+        const PageIdx = 0
         return {
           ...state,
           WizardState: action.payload,
@@ -69,24 +69,14 @@ export default (state = initState, action: WizardEditorAction): wizard_editor_st
         ActionType: WizardEditorActionTypes.ADDING_ELEMENT
       }
     }
-    case 'ADD_ELEMENT': {
+    case 'ADD_ELEMENT':
       return AddElementToState(state, action)
-    }
-    case 'REMOVE_ELEMENT': {
+    case 'REMOVE_ELEMENT':
       return RemoveElementFromState(state, action)
-    }
     case 'MODIFY_ELEMENT':
       return ModifyElementInState(state, action)
-    case 'ABORT_ELEMENT_MODE': {
-      return {
-        ...state,
-        IsAction: false,
-        ActionTrigger: {
-          Type: null
-        },
-        ActionType: null
-      }
-    }
+    case 'ABORT_ELEMENT_MODE':
+      return ClearStateSideStats(state)
     // Default
     default:
       return state

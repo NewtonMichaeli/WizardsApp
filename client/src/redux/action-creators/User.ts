@@ -44,6 +44,7 @@ export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<
     //     }
     // })
     
+    const wizard_data = localStorage.getItem('data')
     // extract user details from response
     const user = res.data.user
     // fake init dispatch - testing
@@ -54,7 +55,11 @@ export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<
           username: user['name'],
           email: user['email'],
           role: user['role'],
-          wizards: fake_wizard   // load fake wizards for now
+          // wizards: fake_wizard   // load fake wizards for now
+          wizards: wizard_data
+            ? [JSON.parse(wizard_data)]
+            : fake_wizard
+          // load fake wizards for now
         }
       }
     })

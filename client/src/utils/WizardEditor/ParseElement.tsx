@@ -2,7 +2,7 @@
 import React from 'react'
 import { ValidInputType } from '../../interfaces/WizardFormat'
 // Input fields:
-import { InputStruct } from '../../components/WizardEditor/InputField'
+import { InputStruct } from '../../components/WizardEditor/Wizard.Input'
 
 
 type ParseElement__props = React.FC<{

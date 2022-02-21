@@ -3,10 +3,21 @@ import React from 'react'
 import Delete from '../../assets/wizard-controllers/delete.png'
 import Edit from '../../assets/wizard-controllers/edit.png'
 import View from '../../assets/wizard-controllers/view.png'
+import { WizardFormat } from '../../interfaces/WizardFormat'
 // Styles:
 import Styles from '../../styles/components/Dashboard/DashboardWizard.module.css'
 
-const DashboardWizard: React.FC<any> = ({wizard, SetData}) => {
+
+type DashboardWizard__props = React.FC<{
+    wizard: WizardFormat
+    SetData: any
+}>
+const DashboardWizard: DashboardWizard__props = ({wizard, SetData}) => {
+
+    const editHandler = () => {
+        window.location.href = '/edit/' + wizard.id
+    }
+    
     return (
         <div className={Styles["DashboardWizard"]}>
             <section className={Styles["nameinfo"]}>
@@ -20,7 +31,7 @@ const DashboardWizard: React.FC<any> = ({wizard, SetData}) => {
             </section>
             <section className={Styles["wizard-controllers"]}>
                 <img draggable='false' src={View} alt="View Wizard" title="View Wizard" />
-                <img draggable='false' src={Edit} alt="Edit Wizard" title="Edit Wizard" />
+                <img draggable='false' src={Edit} onClick={editHandler} alt="Edit Wizard" title="Edit Wizard" />
                 <img draggable='false' src={Delete}
                 onClick={() => deleteHandler(wizard.id, SetData)}
                 alt="Delete Wizard" title="Delete Wizard" />

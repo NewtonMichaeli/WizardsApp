@@ -85,8 +85,7 @@
 
 /* Styles for Add Here component */
 
-.Add-Here {
-  /* background-color: red; */
+.Add-Input-Here {
   width: 100%;
   height: fit-content;
   border-top: 2px solid #a377a9;
@@ -101,6 +100,7 @@
   position: absolute;
   top: -1rem;
   left: 0.5rem;
+  z-index: 9;
   /* animation */
   transition: all 0.15s ease;
   animation: onEnterAddHere 0.15s 0s forwards;
@@ -110,25 +110,25 @@
   left: 3rem;
 }
 /* Add Here modes (last element, empty section) */
-.Add-Here.last-element {
+.Add-Input-Here.last-element {
   top: unset;
   bottom: -1.2rem;
   transform: rotateX(180deg);
 }
-.Add-Here.no-elements {
+.Add-Input-Here.no-elements {
   position: relative;
   top: 0.2rem;
   border-top: none;
 }
 
 /* Add Here Plus section */
-.Add-Here.no-elements section {
+.Add-Input-Here.no-elements section {
   border-radius: 5px;
 }
-.Add-Here:hover {
+.Add-Input-Here:hover {
   opacity: 1;
 }
-.Add-Here section {
+.Add-Input-Here section {
   width: 7rem;
   height: 1.9rem;
   background-color: #a377a9;
@@ -141,7 +141,7 @@
   cursor: pointer;
   pointer-events: visible;
 }
-.Add-Here section img {
+.Add-Input-Here section img {
   height: 70%;
   z-index: 2;
   opacity: 0.8;

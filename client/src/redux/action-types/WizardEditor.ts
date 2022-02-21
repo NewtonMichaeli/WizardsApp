@@ -1,27 +1,8 @@
 // Action types for User
 
-import { InputTypes, ValidInputType, WizardFormat, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat";
+import { ValidInputType, WizardFormat, WizardSectionFormat } from "../../interfaces/WizardFormat";
+import { ElementTypes, QuestionTypes } from "../types";
 
-
-export enum QuestionTypes {
-  LABEL = "Label",
-  TEXT = "Text",
-  CHECKBOX = "Checkbox",
-  IMAGE = "Image",
-  TEXTAREA = "Textarea",
-  SECURED_INPUT = "SecuredInput",
-  RADIOBOX_LIST = "Radiobox List",
-  CHECKBOX_LIST = "Checkbox List",
-  LISTS_LIST = "Lists List",
-  RANGE = "Range",
-  RADIOBOX = "Radiobox",
-}
-
-export enum ElementTypes {
-  PAGE = "PAGE",
-  SECTION = "SECTION",
-  QUESTION = "QUESTION"
-}
 
 export enum WizardEditorActionTypes {
   EXTRACT_WIZARD = "EXTRACT_WIZARD",
@@ -34,10 +15,8 @@ export enum WizardEditorActionTypes {
   // Enter/abort modifying mode
   ADD_ELEMENT = "ADD_ELEMENT",
   REMOVE_ELEMENT = "REMOVE_ELEMENT",
-  // Modifying Element Properties
   MODIFY_ELEMENT = "MODIFY_ELEMENT",
-  // ELEMENT_PROP_REQUIRED = "ELEMENT_PROP_REQUIRED",
-  // RELOCATE_ELEMENT = "RELOCATE_ELEMENT",
+  SAVE_CHANGES = "SAVE_CHANGES"
 }
 
 
@@ -123,7 +102,8 @@ export type RemoveElementAction = RemoveQuestionAction | RemoveSectionAction | R
 
 /** Change Element Property */
 
-type OptionalProperties<T, K extends keyof T> = Omit<T, K> & Partial<T>
+// Makes all (given) key properties optional
+export type OptionalProperties<T, K extends keyof T> = Omit<T, K> & Partial<T>
 export type ValidInputTypeProps = OptionalProperties<ValidInputType, 'name' | 'title'>
 // Modify Question Action (with optional properties to change)
 export interface ModifyQuestionAction {
@@ -173,6 +153,10 @@ interface RelocatingElementAction {
 interface AbortElementModeAction {
   type: WizardEditorActionTypes.ABORT_ELEMENT_MODE
 }
+// Save Changes
+interface SaveChangesAction {
+  type: WizardEditorActionTypes.SAVE_CHANGES
+}
 
 
 
@@ -186,4 +170,4 @@ export type WizardEditorAction = ExtractWizardAction
   | AddingElementAction       // changing mode
   | RelocatingElementAction   // changing mode
   | AbortElementModeAction    // changing mode (abort)
-  
+  | SaveChangesAction         // save changes

@@ -1,7 +1,7 @@
 // Interfaces for Wizard structure formatting
 
 import { Url } from "url"
-import { QuestionTypes } from "../redux/action-types/WizardEditor"
+import { QuestionTypes } from "../redux/types"
 
 
 // All Input types for a Wizard to have

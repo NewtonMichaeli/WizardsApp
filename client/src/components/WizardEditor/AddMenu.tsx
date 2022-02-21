@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 // Styles:
 import Styles from '../../styles/components/WizardEditor/AddMenu.module.css'
 import { getStyles } from '../../controllers'
-import { ElementTypes, QuestionTypes, WizardEditorAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { ElementTypes, QuestionTypes } from '../../redux/types'
+import { WizardEditorAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
 import { AddingElementMode } from '../../redux/action-creators/WizardEditor'
 import { RootState } from '../../redux'
 import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
@@ -16,13 +17,23 @@ import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 
 const AddMenu: React.FC = () => {
 
+  // Store:
+  const { ActionType, Page: Sections, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
   // States:
   const [ElementsListState, setElementsListState] = useState(false)
-  // Store:
-  const { ActionType } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const isZeroPages = WizardState?.pages.length ? false : true
+  const isZeroSections = Sections?.length ? false : true
   // Dispatch:
   const dispatch = useDispatch<Dispatch<WizardEditorAction>>()
-  const AddingMode = (question_type: QuestionTypes) => dispatch(
+  // Handlers
+  // dispatch type:ADDING_ELEMENT_MODE:PAGE
+  const AddingPageMode = () =>
+    !isZeroPages && dispatch(AddingElementMode(ElementTypes.PAGE))
+  // dispatch type:ADDING_ELEMENT_MODE:SECTION
+  const AddingSectionMode = () => 
+    !isZeroSections && dispatch(AddingElementMode(ElementTypes.SECTION))
+  // dispatch type:ADDING_ELEMENT_MODE:INPUT
+  const AddingInputMode = (question_type: QuestionTypes) => dispatch(
     AddingElementMode(ElementTypes.QUESTION, question_type)
   )
 
@@ -30,18 +41,18 @@ const AddMenu: React.FC = () => {
   const ElementsList: React.FC = () => {
     return (
       <ul className={Styles["ElementsList"]}>
-        <li onClick={()=>AddingMode(QuestionTypes.LABEL)}>Label</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXT)}>Textbox</li>
-        <li onClick={()=>AddingMode(QuestionTypes.CHECKBOX)}>Checkbox</li>
-        <li onClick={()=>AddingMode(QuestionTypes.IMAGE)}>Image</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Textarea</li>
-        <li onClick={()=>AddingMode(QuestionTypes.SECURED_INPUT)}>Secured Input</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Textarea</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Radiobox List</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Checkbox List</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Lists List</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>Range</li>
-        <li onClick={()=>AddingMode(QuestionTypes.TEXTAREA)}>RadioBox</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.LABEL)}>Label</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.TEXT)}>Textbox</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.CHECKBOX)}>Checkbox</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.IMAGE)}>Image</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Textarea</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.SECURED_INPUT)}>Secured Input</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Text</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.RADIOBOX_LIST)}>Radiobox List</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.CHECKBOX_LIST)}>Checkbox List</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.LISTS_LIST)}>Lists List</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.RANGE)}>Range</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.RADIOBOX)}>RadioBox</li>
       </ul>
     )
   }
@@ -53,12 +64,16 @@ const AddMenu: React.FC = () => {
       ? 'adding-mode-active'
       : ''}`)}>
       {/* add new page */}
-      <button className={Styles['prim-add-btn']}>
+      <button className={getStyles(Styles, `prim-add-btn ${isZeroPages
+        ? "add-disabled"
+        : ""}`)} onClick={AddingPageMode}>
         <img src={NewPage} alt="New Page" title='New Page' />
         <span>New Page</span>
       </button>
       {/* add new section */}
-      <button className={Styles['prim-add-btn']}>
+      <button className={getStyles(Styles, `prim-add-btn ${isZeroSections
+        ? "add-disabled"
+        : ""}`)} onClick={AddingSectionMode}>
         <img src={NewPage} alt="New Section" title='New Section' />
         <span>New Section</span>
       </button>
