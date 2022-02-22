@@ -6,7 +6,7 @@ import React from "react"
 import { Dispatch } from "redux"
 import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 import { UIAction, UIActionTypes } from "../action-types/UI"
-import { SetFeedback, ClearFeedback } from './UI'
+import { PushFeedback, ClearFeedback } from './UI'
 // Server configs:
 import { SERVER_SIGNIN_URL, SERVER_SIGNUP_URL } from "../../configs/_server"
 
@@ -20,12 +20,12 @@ export const SignIn = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
   // Validate inputs
   if (email.length > 32 || email.length < 6) {
     // Set error feedback - short email
-    dispatch(SetFeedback(false, "Email length should be between 6 - 32 characters"))
+    dispatch(PushFeedback(false, "Email length should be between 6 - 32 characters"))
     return
   }
   if (password.length > 32 || password.length < 6) {
     // Set error feedback - short email
-    dispatch(SetFeedback(false, "Password length should be between 6 - 32 characters"))
+    dispatch(PushFeedback(false, "Password length should be between 6 - 32 characters"))
     return
   }
 
@@ -40,8 +40,8 @@ export const SignIn = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
         token: res.data['token']
       }
     })
-    // Clear UI feedback
-    dispatch(ClearFeedback())
+    // // Clear UI feedback
+    dispatch(PushFeedback(true, "Logged in successfully"))
   }
   catch (err: any) {
     // Login Failed
@@ -49,7 +49,7 @@ export const SignIn = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
       type: AuthActionTypes.LOGIN_FAIL
     })
     // Set error feedback
-    dispatch(SetFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
+    dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
   }
 }
 
@@ -65,17 +65,17 @@ export const SignUp = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
   // Validate inputs
   if (name.length > 32 || name.length < 6) {
     // Set error feedback - short email
-    dispatch(SetFeedback(false, "Username length should be between 6 - 32 characters"))
+    dispatch(PushFeedback(false, "Username length should be between 6 - 32 characters"))
     return
   }
   if (email.length > 32 || email.length < 6) {
     // Set error feedback - short email
-    dispatch(SetFeedback(false, "Email length should be between 6 - 32 characters"))
+    dispatch(PushFeedback(false, "Email length should be between 6 - 32 characters"))
     return
   }
   if (password.length > 32 || password.length < 6) {
     // Set error feedback - short email
-    dispatch(SetFeedback(false, "Password length should be between 6 - 32 characters"))
+    dispatch(PushFeedback(false, "Password length should be between 6 - 32 characters"))
     return
   }
 
@@ -90,7 +90,7 @@ export const SignUp = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
       }
     })
     // Clear UI feedback
-    dispatch(ClearFeedback())
+    // dispatch(ClearFeedback())
   }
   catch (err: any) {
     // Register Failed
@@ -98,6 +98,6 @@ export const SignUp = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: 
       type: AuthActionTypes.LOGIN_FAIL
     })
     // Set error feedback
-    dispatch(SetFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
+    dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
   }
 }

@@ -11,9 +11,10 @@ import { user_state_type } from '../../redux/types/reducerStateTypes'
 export const GetUserDetails: React.FC<{children: JSX.Element}> = ({children}) => {
   // Get UserData
   const { isAuthed } = useSelector<RootState, user_state_type>(state => state.user)
-  const { LoadUser } = bindActionCreators(UserActions, useDispatch())
+  const { LoadUser } = bindActionCreators<unknown, typeof UserActions>
+    (UserActions, useDispatch())
   useEffect(() => {
-    if (!isAuthed) LoadUser()
+    LoadUser()
   }, [])
   return children
 }

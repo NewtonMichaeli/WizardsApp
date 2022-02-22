@@ -148,6 +148,3 @@ export const InputStruct: InputStruct__props = ({element, path}) => {
     </div>
   )
 }
-
-
-

@@ -4,11 +4,13 @@ import Admin_User_Img from '../assets/user-status/User-admin.png'
 import WizardCreator_User_Img from '../assets/user-status/User-wizard.creator.png'
 // Redux:
 import { RootState } from '../redux'
-// Styles:
-import Styles from '../styles/components/ProfileWindow.module.css'
 import { useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AuthAction, AuthActionTypes } from '../redux/action-types/Auth'
+import { PushFeedback } from '../redux/action-creators/UI'
+import { UIAction } from '../redux/action-types/UI'
+// Styles:
+import Styles from '../styles/components/ProfileWindow.module.css'
 
 
 // Profile Window props type
@@ -17,8 +19,12 @@ type ProfileWindow__props = React.FC<{UserData: RootState['user']['UserData']}>
 // Profile window component - used in <Navbar.tsx>
 const ProfileWindow: ProfileWindow__props = ({UserData}) => {
 
-  const dispatch: Dispatch<AuthAction> = useDispatch()
-
+  const dispatch: Dispatch<AuthAction | UIAction> = useDispatch()
+  // Handlers
+  const signOutHandler = () => {
+    dispatch({type: AuthActionTypes.LOGOUT_SUCCESS})
+    dispatch(PushFeedback(true, "Logged out successfully"))
+  }
 
   return (
     <div className={Styles["ProfileWindow"]}>
@@ -36,7 +42,7 @@ const ProfileWindow: ProfileWindow__props = ({UserData}) => {
           <h2 className={Styles["user-status"]}>{UserData?.role}</h2>
           <a href='/' className={Styles["learn-more"]}>Learn More</a>
         </div>
-        <button onClick={() => dispatch({type: AuthActionTypes.LOGOUT_SUCCESS})} className={Styles["sign-out-btn"]}>
+        <button onClick={signOutHandler} className={Styles["sign-out-btn"]}>
           <span>Sign Out</span>
         </button>
       </section>

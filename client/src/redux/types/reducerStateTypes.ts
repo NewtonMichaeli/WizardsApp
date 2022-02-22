@@ -16,8 +16,12 @@ export interface auth_state_type
 
 // UI state type
 export interface ui_state_type {
-  status: boolean
-  msg: string | null
+  notifications: {
+    status: boolean
+    msg: string
+    id: number
+  }[]
+  ui_counter: number
 }
 
 // User state type

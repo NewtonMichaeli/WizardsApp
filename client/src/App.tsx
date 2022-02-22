@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 // Utils:
 import { GetUserDetails } from './utils/middlewares/GetUserDetails'
 import { GoToDashboard } from './utils/GotoDashboard'
+import UINotifications from './utils/UINotifications'
 // Components:
 import Navbar from './components/Navbar'
 // Pages:
@@ -18,7 +19,10 @@ const App: React.FC = () => {
   
   return (
     <div className="App">
+      {/* navbar */}
       <Navbar />
+      {/* UINotifications */}
+      <UINotifications />
       <Routes>
         <Route 
           path="/signin"

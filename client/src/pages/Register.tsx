@@ -5,17 +5,15 @@ import UserImg from "../assets/user.png"
 import EmailImg from "../assets/email.png"
 import PwdImg from "../assets/password.png"
 // Redux:
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { bindActionCreators } from "redux"
 // Utils:
-import { AuthActions, RootState } from "../redux"
-import { ui_state_type } from "../redux/types/reducerStateTypes"
+import { AuthActions } from "../redux"
 import { TOKEN_NAME } from "../configs/_storage"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
 import { getStyles } from "../controllers"
 // Components:
-import Feedback from "../components/Feedback"
 
 
 // Login Page
@@ -26,7 +24,7 @@ const Register: React.FC = () => {
 
     const { SignUp } = bindActionCreators(AuthActions, useDispatch())
     
-    const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
+    // const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
 
     return (
         <div className={Styles["Login"]}>
@@ -71,7 +69,7 @@ const Register: React.FC = () => {
                 </div>
                 <button className={Styles["login-submit-btn"]}>SIGN UP</button>
                 {/* feedback - position absolute */}
-                <Feedback status={feedback.status} msg={feedback.msg} />
+                {/* <Feedback status={feedback.status} msg={feedback.msg} /> */}
                 </form>
             </div>
         </div>

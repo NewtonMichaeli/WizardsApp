@@ -2,15 +2,15 @@
 
 // Action types
 export enum UIActionTypes {
-  SET_FEEDBACK = "SET_FEEDBACK",
+  PUSH_FEEDBACK = "PUSH_FEEDBACK",
   CLEAR_FEEDBACK = "CLEAR_FEEDBACK"
 }
 
-interface SetFeedbackAction {
-  type: UIActionTypes.SET_FEEDBACK
+interface PushFeedbackAction {
+  type: UIActionTypes.PUSH_FEEDBACK
   payload: {
     status: boolean,
-    msg: string | null
+    msg: string
   }
 }
 
@@ -21,4 +21,4 @@ interface ClearFeedbackAction {
 
 // Action types for UI Action
 export type UIAction = 
-  SetFeedbackAction | ClearFeedbackAction
+  PushFeedbackAction | ClearFeedbackAction

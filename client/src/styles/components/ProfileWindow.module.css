@@ -6,7 +6,6 @@
   transform: translateY(-1rem);
   opacity: 0;
   animation: onEnterWindow 0.2s forwards;
-
   width: 16rem;
   height: 16rem;
   background-color: #fff;
@@ -22,6 +21,7 @@
   position: absolute;
   top: calc(var(--navbar_height) - 1rem);
   right: 1.2rem;
+  z-index: 20;
 }
 
 /* profile top section */

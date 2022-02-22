@@ -91,7 +91,7 @@ button.remove-section {
   position: absolute;
   top: 0.6rem;
   right: 0.6rem;
-  z-index: 9;
+  /* z-index: 9; */
   /* layout */
   display: flex;
   align-items: center;

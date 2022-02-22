@@ -14,6 +14,8 @@ import { RenderInitInput, RenderInitPage, RenderInitSection } from "../../utils/
 // Actions:
 import { AddElementAction, ModifyElementAction, ModifyQuestionAction, ModifySectionAction, RemoveElementAction, ValidInputTypeProps, WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { SERVER_UPDATE_WIZARD } from "../../configs/_server"
+import { PushFeedback } from "./UI"
+import { UIAction } from "../action-types/UI"
 
 
 // Move Page Action
@@ -106,7 +108,7 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
   
   if (isLoading === false && !CurrWizard && isAuthed) {
     // -- wizard not found - gen. auth_fail
-    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
+    dispatch({type: WizardEditorActionTypes.WIZARD_NOT_FOUND})
     return
   }
   console.log(CurrWizard);
@@ -121,7 +123,7 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
 
 // Save Changes
 export const SaveChanges = (wizard_id: string) => async (
-  dispatch: Dispatch<WizardEditorAction>, getState: () => RootState
+  dispatch: Dispatch<WizardEditorAction | UIAction>, getState: () => RootState
 ): Promise<void> => {
 
   // Send Changes to server
@@ -132,18 +134,18 @@ export const SaveChanges = (wizard_id: string) => async (
 
     // save data in localstorage temporarly
     localStorage.setItem('data', JSON.stringify(new_wizard))
-    return
 
     // const res = await axios.post(SERVER_UPDATE_WIZARD + wizard_id, {
     //   // new wizard details
     //   // ...new_wizard
     // })
+
+    // Success feedback
+    dispatch(PushFeedback(true, "Data has been Saved Successfully"))
   }
   catch (err: any) {
-    // Login Failed
-    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
     // Set error feedback
-    // dispatch(SetFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
+    dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "An error has occured"))
   }
 
   // Extract wizard on success - save to global state

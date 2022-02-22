@@ -7,6 +7,7 @@ import { ElementTypes, QuestionTypes } from "../types";
 export enum WizardEditorActionTypes {
   EXTRACT_WIZARD = "EXTRACT_WIZARD",
   AUTH_FAIL = "AUTH_FAIL",
+  WIZARD_NOT_FOUND = "WIZARD_NOT_FOUND",
   MOVE_PAGE = "MOVE_PAGE",
   // Status Indicators
   ADDING_ELEMENT = "ADDING_ELEMENT",  // adding mode
@@ -157,6 +158,10 @@ interface AbortElementModeAction {
 interface SaveChangesAction {
   type: WizardEditorActionTypes.SAVE_CHANGES
 }
+// Wizard not fuond
+interface WizardNotFoundAction {
+  type: WizardEditorActionTypes.WIZARD_NOT_FOUND
+}
 
 
 
@@ -171,3 +176,4 @@ export type WizardEditorAction = ExtractWizardAction
   | RelocatingElementAction   // changing mode
   | AbortElementModeAction    // changing mode (abort)
   | SaveChangesAction         // save changes
+  | WizardNotFoundAction      // wizard not found
