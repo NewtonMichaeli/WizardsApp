@@ -17,7 +17,7 @@ import { RootState } from '../../redux'
 import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 import { ElementTypes } from '../../redux/types'
 import { AddElementAction, ModifyElementAction, RemoveElementAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
-import { AddElement, ModifyElement, RemoveElement } from '../../redux/action-creators/WizardEditor'
+import { AddElement, ModifyElement, RemoveElement } from '../../redux/actions/WizardEditor'
 
 
 // Input controllers field

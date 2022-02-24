@@ -1,8 +1,11 @@
 // User Data reducer file
 
+// Server configs:
 import { TOKEN_NAME } from "../../configs/_storage"
-import { UserAction } from "../action-types/User"
+// Types:
 import { user_state_type } from "../types/reducerStateTypes"
+// Actions:
+import { UserAction } from "../action-types/User"
 
 
 const initState: user_state_type = {

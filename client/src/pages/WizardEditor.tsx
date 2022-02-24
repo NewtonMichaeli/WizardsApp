@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, WizardEditorActions } from '../redux'
 import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
-import { AddElement, MovePage, RemoveElement } from '../redux/action-creators/WizardEditor'
+import { AddElement, MovePage, RemoveElement } from '../redux/actions/WizardEditor'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
 import { getStyles } from '../controllers'
@@ -19,7 +19,7 @@ import AddMenu from '../components/WizardEditor/AddMenu'
 import { BtnAdd, BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 import { ElementTypes } from '../redux/types'
 import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
-import { PushFeedback } from '../redux/action-creators/UI'
+import { PushFeedback } from '../redux/actions/UI'
 
 
 // Add Page in a certain index (path)

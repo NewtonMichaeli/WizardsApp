@@ -9,7 +9,7 @@ import { ui_state_type } from '../redux/types/reducerStateTypes'
 // Styles:
 import Styles from '../styles/Utils/UINotifications.module.css'
 import { getStyles } from '../controllers'
-import { ClearFeedback } from '../redux/action-creators/UI'
+import { ClearFeedback } from '../redux/actions/UI'
 
 
 // Sub component

@@ -11,7 +11,7 @@ import { RootState, UserActions } from '../../redux'
 import { user_state_type } from '../../redux/types/reducerStateTypes'
 // Styles:
 import Styles from '../../styles/components/Dashboard/DashboardAddWizardInput.module.css'
-import { PushFeedback } from '../../redux/action-creators/UI'
+import { PushFeedback } from '../../redux/actions/UI'
 
 // Dashboard - Add Wizard Input component
 const DashboardAddWizardInput: React.FC = () => {

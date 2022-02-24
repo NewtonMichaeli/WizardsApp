@@ -1,5 +1,5 @@
 export * as AuthActions from './action-creators/Auth'
-export * as UIActions from './action-creators/UI'
+export * as UIActions from './actions/UI'
 export * as UserActions from './action-creators/User'
 export * as WizardEditorActions from './action-creators/WizardEditor'
 export * from './store'

@@ -10,7 +10,7 @@ import { fake_wizard, WizardFormat } from "../../interfaces/WizardFormat"
 import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 import { AbortAddingWizard } from "../actions/User"
-import { PushFeedback } from "./UI"
+import { PushFeedback } from "../actions/UI"
 
 
 // Load User Action creator, called directly from <App> component

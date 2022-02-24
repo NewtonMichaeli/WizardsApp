@@ -5,10 +5,11 @@ import React from "react"
 // Types:
 import { Dispatch } from "redux"
 import { AuthAction, AuthActionTypes } from "../action-types/Auth"
-import { UIAction, UIActionTypes } from "../action-types/UI"
-import { PushFeedback, ClearFeedback } from './UI'
+import { UIAction } from "../action-types/UI"
+import { PushFeedback } from '../actions/UI'
 // Server configs:
 import { SERVER_SIGNIN_URL, SERVER_SIGNUP_URL } from "../../configs/_server"
+
 
 // Sign In Action creator, called directly from <Login> component
 export const SignIn = (e: React.FormEvent<HTMLFormElement>) => async (dispatch: Dispatch<AuthAction | UIAction>): Promise<void> =>

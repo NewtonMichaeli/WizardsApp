@@ -11,7 +11,7 @@ import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 import { ElementTypes } from '../../redux/types'
 import { ModifySectionAction, RemoveElementAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
 import { AddElementAction } from '../../redux/action-types/WizardEditor'
-import { AddElement, ModifyElement, RemoveElement } from '../../redux/action-creators/WizardEditor'
+import { AddElement, ModifyElement, RemoveElement } from '../../redux/actions/WizardEditor'
 // Styles:
 import Styles from '../../styles/components/WizardEditor/Wizard.Section.module.css'
 import { getStyles } from '../../controllers'

@@ -5,24 +5,25 @@ import NewPage from '../../assets/wizard-controllers/new_page.png'
 import NewElement from '../../assets/wizard-controllers/add-white.png'
 // Redux:
 import { useDispatch, useSelector } from 'react-redux'
+// Types:
+import { ElementTypes, QuestionTypes } from '../../redux/types'
+import { WizardEditorAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { AddingElementMode } from '../../redux/actions/WizardEditor'
+import { RootState } from '../../redux'
+import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 // Styles:
 import Styles from '../../styles/components/WizardEditor/AddMenu.module.css'
 import { getStyles } from '../../controllers'
-import { ElementTypes, QuestionTypes } from '../../redux/types'
-import { WizardEditorAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
-import { AddingElementMode } from '../../redux/action-creators/WizardEditor'
-import { RootState } from '../../redux'
-import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 
 
 const AddMenu: React.FC = () => {
 
   // Store:
-  const { ActionType, Page: Sections, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const { ActionType, Page, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
   // States:
   const [ElementsListState, setElementsListState] = useState(false)
   const isZeroPages = WizardState?.pages.length ? false : true
-  const isZeroSections = Sections?.length ? false : true
+  const isZeroSections = Page?.length ? false : true
   // Dispatch:
   const dispatch = useDispatch<Dispatch<WizardEditorAction>>()
   // Handlers
@@ -58,7 +59,7 @@ const AddMenu: React.FC = () => {
   }
 
   return (
-    <div className={getStyles(Styles, `AddMenu ${ElementsListState
+    <div className={getStyles(Styles, `AddMenu ${ElementsListState && !isZeroSections
       ? 'show-elements-list'
       : ''} ${ActionType === WizardEditorActionTypes.ADDING_ELEMENT
       ? 'adding-mode-active'
@@ -78,7 +79,10 @@ const AddMenu: React.FC = () => {
         <span>New Section</span>
       </button>
       {/* add new element (from list) */}
-      <button className={Styles['prim-add-btn']} onClick={() => setElementsListState(s=>!s)}>
+      <button onClick={() => setElementsListState(s=> !s && !isZeroSections)}
+        className={getStyles(Styles, `prim-add-btn ${isZeroSections
+          ? "add-disabled"
+          : ""}`)} >
         <img src={NewElement} alt="New Element" title='New Element' />
         <span>New Element</span>
       </button>

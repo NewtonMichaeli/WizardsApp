@@ -1,8 +1,10 @@
 // User Data reducer file
 
-import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../action-creators/WizardEditor"
-import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
+// Types:
 import { wizard_editor_state_type } from "../types/reducerStateTypes"
+import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
+// Reducer helpers:
+import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../reducer_helpers/User"
 
 
 const initState: wizard_editor_state_type = {

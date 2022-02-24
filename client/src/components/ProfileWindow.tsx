@@ -7,7 +7,7 @@ import { RootState } from '../redux'
 import { useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AuthAction, AuthActionTypes } from '../redux/action-types/Auth'
-import { PushFeedback } from '../redux/action-creators/UI'
+import { PushFeedback } from '../redux/actions/UI'
 import { UIAction } from '../redux/action-types/UI'
 // Styles:
 import Styles from '../styles/components/ProfileWindow.module.css'
