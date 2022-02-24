@@ -110,6 +110,7 @@ const Section: React.FC<{
       </section>
       {/* right section - info */}
       <section className={Styles["info-section"]}>
+        {/* input parser */}
         {section.elements.map((element, i) => 
           <ParseElement 
             key={element.name}

@@ -1,0 +1,21 @@
+/* Styles for Q-Controllers utilities */
+
+.Q-controllers-btn {
+  width: 1.1rem;
+  height: 1.1rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  /* position */
+  margin-right: 0.3rem;
+  /* mouse */
+  cursor: pointer;
+}
+/* button image */
+.Q-controllers-btn img {
+  height: 100%;
+  opacity: 0.7;
+}
+.Q-controllers-btn img:hover {
+  opacity: 1;
+}

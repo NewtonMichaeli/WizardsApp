@@ -73,16 +73,15 @@ export const RemoveElement = {
 
 
 // Modify Section Action type
-  
 export const ModifyElement = {
   // Section
   Section: (
     path: section_path_type, 
     properties: string
-    ): ModifySectionAction => ({
-      type: WizardEditorActionTypes.MODIFY_ELEMENT,
-      payload: { element: ElementTypes.SECTION, name: properties, path }
-    }),
+  ): ModifySectionAction => ({
+    type: WizardEditorActionTypes.MODIFY_ELEMENT,
+    payload: { element: ElementTypes.SECTION, name: properties, path }
+  }),
   // Question
   Question: (
     path: input_path_type, 

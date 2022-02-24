@@ -22,6 +22,10 @@ const DashboardWizard: DashboardWizard__props = ({wizard}) => {
     const { DeleteWizard } = bindActionCreators(UserActions, dispatch)
     const editHandler = () =>
         window.location.href = '/edit/' + wizard.id
+    const deleteHandler = () => {
+        if (window.confirm("Are you sure you wanna delete " + wizard.name + '?'))
+            DeleteWizard(wizard.id)
+    }
     
     return (
         <div className={Styles["DashboardWizard"]}>
@@ -42,7 +46,7 @@ const DashboardWizard: DashboardWizard__props = ({wizard}) => {
                 <img draggable='false' src={Edit} onClick={editHandler} alt="Edit Wizard" title="Edit Wizard" />
 
                 <img draggable='false' src={Delete}
-                onClick={() => DeleteWizard(wizard.id)}
+                onClick={deleteHandler}
                 alt="Delete Wizard" title="Delete Wizard" />
             </section>
         </div>

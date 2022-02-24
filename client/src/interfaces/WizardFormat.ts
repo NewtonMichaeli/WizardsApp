@@ -179,7 +179,27 @@ export const fake_wizard: WizardFormat[] = [
                 },
                 {
                     name: "Section 3",
-                    elements: []
+                    elements: [
+                        {
+                            type: QuestionTypes.CHECKBOX_LIST,
+                            name: "xxwqeocwoe",
+                            title: "Checkbox List title",
+                            elements: [
+                                {
+                                    type: QuestionTypes.CHECKBOX,
+                                    name: "ciwq4cee",
+                                    alreadyChecked: false,
+                                    title: "Checkbox 1",
+                                },
+                                {
+                                    type: QuestionTypes.CHECKBOX,
+                                    name: "ciwq4cedewqe",
+                                    alreadyChecked: false,
+                                    title: "Checkbox 2",
+                                },
+                            ]
+                        }
+                    ]
                 }
             ],
             // page 2

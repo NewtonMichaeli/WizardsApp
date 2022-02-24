@@ -12,11 +12,11 @@ import { Dispatch } from 'redux'
 import Styles from '../../styles/components/WizardEditor/WizardInput.module.css'
 import { getStyles } from '../../controllers'
 // Types:
-import { ValidInputType } from '../../interfaces/WizardFormat'
+import { InputTypes, ValidInputType } from '../../interfaces/WizardFormat'
 import { RootState } from '../../redux'
 import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
-import { ElementTypes } from '../../redux/types'
-import { AddElementAction, ModifyElementAction, RemoveElementAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { ElementTypes, QuestionTypes } from '../../redux/types'
+import { AddElementAction, ModifyElementAction, RemoveElementAction, ValidInputTypeProps, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
 import { AddElement, ModifyElement, RemoveElement } from '../../redux/actions/WizardEditor'
 
 
@@ -74,6 +74,19 @@ export const AddInputHere: React.FC<{
 }
 
 
+
+export type list_input_path_type = {
+  page: number,
+  section: number,
+  question: number,
+  option: number
+}
+export type sub_input_path_type = {
+  page: number,
+  section: number,
+  question: number,
+  option: number
+}
 export type input_path_type = {
   page: number,
   section: number,
@@ -92,21 +105,30 @@ export const InputStruct: InputStruct__props = ({element, path}) => {
     ?.elements[Page[path.section]?.elements.length - 1]?.name === element.name
 
   // Dispatch
-  const dispatch_modify = useDispatch<Dispatch<ModifyElementAction>>()
-  const dispatch_remove = useDispatch<Dispatch<RemoveElementAction>>()
+  const dispatch = useDispatch<Dispatch<RemoveElementAction | ModifyElementAction>>()
   // Handlers:
-  const removeInputHandler = () => dispatch_remove(RemoveElement.Question(path))
+  const removeInputHandler = () => dispatch(RemoveElement.Question(path))
 
   // Modifying handlers Object
   const Modify = {
     Title: (e: React.ChangeEvent<HTMLInputElement>) =>
-      dispatch_modify(ModifyElement.Question(path, {type: element.type, title: e.target.value})),
+      dispatch(ModifyElement.Question(path, {type: element.type, title: e.target.value})),
     Require: (e: React.ChangeEvent<HTMLInputElement>) =>
-      dispatch_modify(ModifyElement.Question(path, {
+      dispatch(ModifyElement.Question(path, {
         type: element.type,
-        
       })),
   }
+  
+  // const elem = Page && Page[path.section].elements[path.question]
+  // const a: InputTypes[typeof element.type] = {...element}
+  // Object.keys(a).map(key => {
+  //   let a: ValidInputTypeProps = {
+  //     type: QuestionTypes.IMAGE,
+
+  //   }
+    
+  // })
+    
 
   return (
     <div className={Styles["Wizard-Input"]}>

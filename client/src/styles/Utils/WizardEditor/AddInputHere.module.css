@@ -1,0 +1,77 @@
+/* Styles for Add Here component */
+
+.Add-Input-Here {
+  width: 100%;
+  height: fit-content;
+  border-top: 2px solid #a377a9;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 3px;
+  opacity: 0.5;
+  /* layout */
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  /* position */
+  position: absolute;
+  top: -1rem;
+  left: 0.5rem;
+  z-index: 9;
+  /* animation */
+  transition: all 0.15s ease;
+  animation: onEnterAddHere 0.15s 0s forwards;
+  /* mouse */
+  pointer-events: none;
+  /* init state */
+  left: 3rem;
+}
+/* Add Here modes (last element, empty section) */
+.Add-Input-Here.last-element {
+  top: unset;
+  bottom: -1.2rem;
+  transform: rotateX(180deg);
+}
+.Add-Input-Here.no-elements {
+  position: relative;
+  top: 0.2rem;
+  border-top: none;
+}
+
+/* Add Here Plus section */
+.Add-Input-Here.no-elements section {
+  border-radius: 5px;
+}
+.Add-Input-Here:hover {
+  opacity: 1;
+}
+.Add-Input-Here section {
+  width: 7rem;
+  height: 1.9rem;
+  background-color: #a377a9;
+  border-radius: 0 5px 5px 5px;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* mouse */
+  cursor: pointer;
+  pointer-events: visible;
+}
+.Add-Input-Here section img {
+  height: 70%;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+/* animations */
+
+@keyframes onEnterQ {
+  to {
+    border-left: 2px solid #4a416499;
+  }
+}
+
+@keyframes onEnterAddHere {
+  to {
+    left: 0;
+  }
+}
