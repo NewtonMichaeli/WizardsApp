@@ -3,7 +3,7 @@
 import { v4 as uuidv4 } from 'uuid'
 // Types:
 import { RootState } from "../../redux"
-import { ValidInputType, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat"
+import { ValidInputType, WizardFormat, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat"
 import { QuestionTypes } from "../../redux/types"
 
 

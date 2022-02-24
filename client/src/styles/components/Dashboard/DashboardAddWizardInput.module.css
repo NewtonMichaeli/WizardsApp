@@ -78,6 +78,11 @@
 .DashboardAddWizardInput .controllers > img:hover {
   transform: scale(1.05);
 }
+.DashboardAddWizardInput .controllers > img.btn-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: red;
+}
 
 /* animations */
 

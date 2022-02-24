@@ -88,6 +88,35 @@
   overflow-x: hidden;
 }
 
+/* delete page button - bottom-right */
+.container-body .delete-page {
+  height: 3rem;
+  width: 3rem;
+  background-color: #eee;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position */
+  position: absolute;
+  left: -3rem;
+  top: 0;
+  top: 50%;
+  /* transform: translateY(-50%); */
+  /* mouse */
+  cursor: pointer;
+}
+.container-body .delete-page img {
+  height: 55%;
+  opacity: 0.5;
+}
+.container-body:hover .delete-page img {
+  opacity: 1;
+}
+
 /* Styles for Add-Page-Here component */
 
 .Add-Page-Here {

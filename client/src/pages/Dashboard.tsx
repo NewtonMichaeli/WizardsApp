@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
@@ -12,7 +12,6 @@ import DashboardWizard from '../components/Dashboard/DashboardWizard'
 import DashboardAddWizardBtn from '../components/Dashboard/DashboardAddWizardBtn'
 import DashboardAddWizardInput from '../components/Dashboard/DashboardAddWizardInput'
 // static wizards data
-import { fake_wizard } from '../interfaces/WizardFormat'
 import { user_state_type } from '../redux/types/reducerStateTypes'
 
 
@@ -20,23 +19,14 @@ import { user_state_type } from '../redux/types/reducerStateTypes'
 // Access Roles: Admin, Wizard-creator.
 const Dashboard: React.FC = (/* user's wizards data */) => {
 
-    // adding wizard mode state
-    const [addingWizard, toggleAddingWizard] = useState(false)
-
-    const { UserData } = useSelector<RootState, user_state_type>((state: RootState) => state.user)
-
-    const SetData = (callback: () => any) => {
-        // -- for now
-        console.log(callback());
-    }
+    const { UserData } = useSelector<RootState, user_state_type>(state => state.user)
 
     const RenderDashboardContents = () => 
     <>
-        {UserData?.wizards.map(wizard => <DashboardWizard SetData={SetData} wizard={wizard} key={wizard.name} />)}
+        {UserData?.wizards.map(wizard => <DashboardWizard wizard={wizard} key={wizard.name} />)}
         {/* last element - add wizards: */}
-        {addingWizard && <DashboardAddWizardInput toggleAddingWizard={toggleAddingWizard}
-        SetData={SetData} />}
-        <DashboardAddWizardBtn toggleAddingWizard={toggleAddingWizard} />
+        {UserData?.isAddingWizard && <DashboardAddWizardInput />}
+        <DashboardAddWizardBtn />
     </>
 
     return ( 
@@ -55,7 +45,7 @@ const Dashboard: React.FC = (/* user's wizards data */) => {
             {/* btm section - wizards counter */}
             <section className={Styles["wizards-counter"]}>
                 <h2 className={Styles["wizards-counter-id"]}>
-                    {fake_wizard.length}
+                    {UserData?.wizards.length}
                 </h2>
             </section>
         </div>

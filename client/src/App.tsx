@@ -23,6 +23,7 @@ const App: React.FC = () => {
       <Navbar />
       {/* UINotifications */}
       <UINotifications />
+      {/* routes */}
       <Routes>
         <Route 
           path="/signin"

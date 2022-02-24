@@ -11,7 +11,7 @@ const initState: user_state_type = {
   UserData: null
 }
 
-export default (state = initState, action: UserAction) => {
+export default (state = initState, action: UserAction): user_state_type => {
   switch (action.type) {
     // case '':
     case 'TRY_LOAD_USER':
@@ -34,6 +34,28 @@ export default (state = initState, action: UserAction) => {
         isAuthed: true,
         UserData: action.payload.UserData
       }
+    case 'ADDING_WIZARD':
+      if (state.UserData)
+        // -- set isAddingWizard state to true
+        state.UserData.isAddingWizard = true
+      return { ...state }
+    case 'ABORT_ADDING_WIZARD':
+      if (state.UserData)
+        // -- set isAddingWizard state to false
+        state.UserData.isAddingWizard = false
+      return { ...state }
+    case 'DELETE_WIZARD':
+      if (state.UserData?.wizards)
+        state.UserData.wizards = state.UserData?.wizards.filter(
+          wizard => wizard.id !== action.payload.wizard_id
+        ) ?? []
+      return { ...state }
+    case 'ADD_WIZARD_SUCCESS':
+      if (state.UserData?.wizards) {
+        state.UserData.wizards.push(action.payload.new_wizard)
+        state.UserData.isAddingWizard = false
+      }
+      return { ...state }
     default:
       return state
   }

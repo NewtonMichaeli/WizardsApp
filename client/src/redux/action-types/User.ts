@@ -6,7 +6,12 @@ import { WizardFormat } from "../../interfaces/WizardFormat";
 export enum UserActionTypes {
     TRY_LOAD_USER = "TRY_LOAD_USER",
     LOAD_USER_SUCCESS = "LOAD_USER_SUCCESS",
-    AUTH_FAIL = "AUTH_FAIL"
+    AUTH_FAIL = "AUTH_FAIL",
+    // wizard
+    DELETE_WIZARD = "DELETE_WIZARD",
+    ADD_WIZARD_SUCCESS = "ADD_WIZARD_SUCCESS",
+    ADDING_WIZARD = "ADDING_WIZARD",
+    ABORT_ADDING_WIZARD = "ABORT_ADDING_WIZARD",
 }
 
 export enum UserRoleTypes {
@@ -29,6 +34,7 @@ interface LoadUserSuccessAction {
                 | UserRoleTypes.USER
                 | UserRoleTypes.WIZARD_CREATOR
             wizards: WizardFormat[]
+            isAddingWizard: false       // false on load-success
         }
     }
 }
@@ -37,8 +43,36 @@ interface TryLoadUserAction {
     type: UserActionTypes.TRY_LOAD_USER
 }
 
+interface DeleteWizardAction {
+    type: UserActionTypes.DELETE_WIZARD,
+    payload: {
+        wizard_id: string
+    }
+}
+
+interface AddingWizardAction {
+    type: UserActionTypes.ADDING_WIZARD
+}
+
+interface AbortAddingWizardAction {
+    type: UserActionTypes.ABORT_ADDING_WIZARD
+}
+
+interface AddWizardAction {
+    type: UserActionTypes.ADD_WIZARD_SUCCESS,
+    payload: {
+        new_wizard: WizardFormat
+    }
+}
+
   
 // Action types for UI Action
 export type UserAction = 
-    TryLoadUserAction | LoadUserSuccessAction | AuthFailAction
+    TryLoadUserAction | 
+    LoadUserSuccessAction | 
+    AuthFailAction | 
+    DeleteWizardAction |    // remove wizard action
+    AddWizardAction |       // add wizard action
+    AbortAddingWizardAction |       // abort add wizard action
+    AddingWizardAction      // adding wizard state
   

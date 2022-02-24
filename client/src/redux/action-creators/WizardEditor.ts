@@ -73,6 +73,10 @@ export const RemoveElement = {
   Section: (path: section_path_type): RemoveElementAction => ({
     type: WizardEditorActionTypes.REMOVE_ELEMENT,
     payload: { element: ElementTypes.SECTION, path }
+  }),
+  Page: (page_idx: number): RemoveElementAction => ({
+    type: WizardEditorActionTypes.REMOVE_ELEMENT,
+    payload: { element: ElementTypes.PAGE, path: { page: page_idx } }
   })
 }
 
@@ -258,6 +262,18 @@ export const RemoveElementFromState = (
       
       // return state without removed element & reinitiate other states
       return ClearStateSideStats(state);
+    }
+    case ElementTypes.PAGE: {
+      const { page } = action.payload.path
+      state.WizardState?.pages
+        .splice(state.PageIdx, 1)
+      // dec current page idx
+      if (state.PageIdx && state.PageIdx === state.WizardState?.pages?.length)
+        state.PageIdx--
+      // update current page
+      state.Page = state.WizardState?.pages[state.PageIdx] ?? null
+      // return state without removed element & reinitiate other states
+      return ClearStateSideStats(state)
     }
     default: 
       return state

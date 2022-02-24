@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 // Assets:
 import Add from '../assets/wizard-controllers/add-white.png'
 import Loading from '../assets/loading-1.gif'
+import Delete from '../assets/Q-controllers/no-grey.png'
 // Redux:
 import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, WizardEditorActions } from '../redux'
 import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
-import { AddElement, MovePage } from '../redux/action-creators/WizardEditor'
+import { AddElement, MovePage, RemoveElement } from '../redux/action-creators/WizardEditor'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
 import { getStyles } from '../controllers'
@@ -18,6 +19,7 @@ import AddMenu from '../components/WizardEditor/AddMenu'
 import { BtnAdd, BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 import { ElementTypes } from '../redux/types'
 import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
+import { PushFeedback } from '../redux/action-creators/UI'
 
 
 // Add Page in a certain index (path)
@@ -78,9 +80,13 @@ const WizardEditor: React.FC = () => {
       setElementsListMode(false)
     }
   }
+  const deletePageHandler = () => {
+    dispatch(RemoveElement.Page(PageIdx))
+    dispatch(PushFeedback(true, "Page removed successfully."))
+  }
 
   // Curent page & wizard:
-  const { ActionTrigger, ActionType, WizardState, Page: Sections, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const { ActionTrigger, ActionType, WizardState, Page, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
 
   if (WizardState) return (
     <div className={Styles["WizardStats"]}>
@@ -107,7 +113,7 @@ const WizardEditor: React.FC = () => {
         <section className={Styles["container-body"]}>
 
           {/* Add Page here (if 0 pages found) */}
-          { !Sections
+          { !Page
             && <AddPageHere page_idx={0} noElements />}
 
           {/* Add page here */}
@@ -115,18 +121,26 @@ const WizardEditor: React.FC = () => {
             && ActionTrigger.Type === ElementTypes.PAGE 
             && <AddPageHere page_idx={PageIdx} />}
           {/* Add sections here (if 0 sections exist) */}
-          { Sections
-            && !Sections?.length
+          { Page
+            && !Page?.length
             && <AddSectionHere path={{page: PageIdx, section: 0}} noElements />}
 
           {/* map through sections */}
-          {Sections?.map((section, i) => 
+          {Page?.map((section, i) => 
             <Section 
               key={i}
               page_idx={PageIdx} 
               section_idx={i}
               section={section} />
           )}
+
+          {/* delete page button */}
+          {
+            Page &&
+            <button className={Styles["delete-page"]} title="Delete Page" onClick={deletePageHandler}>
+              <img src={Delete} alt="Delete Page" />
+            </button>
+          }
 
         </section>
       </div>
