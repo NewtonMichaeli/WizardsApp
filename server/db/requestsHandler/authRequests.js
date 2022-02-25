@@ -1,5 +1,6 @@
 const con = require('../connection')
 const {promisify} = require('util')
+const mysql = require('mysql')
 
 const asyncQuery = promisify(con.query.bind(con));
 
