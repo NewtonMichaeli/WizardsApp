@@ -43,6 +43,8 @@ export const SaveChanges = (wizard_id: string) => async (
   try {
     const new_wizard = getState().wizard_editor.WizardState
 
+    console.log(new_wizard);
+    
     // save data in localstorage temporarly
     localStorage.setItem('data', JSON.stringify(new_wizard))
 

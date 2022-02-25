@@ -1,8 +1,8 @@
 // Actions for WizardEditor
 
 // Types:
-import { input_path_type } from "../../components/WizardEditor/Wizard.Input"
 import { section_path_type } from "../../components/WizardEditor/Wizard.Section"
+import { input_path_type, list_input_path_type, sub_input_path_type } from "../../utils/WizardEditor/types"
 import { AddElementAction, ModifyQuestionAction, ModifySectionAction, RemoveElementAction, ValidInputTypeProps, WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { ElementTypes, QuestionTypes } from "../types"
 
@@ -36,6 +36,16 @@ export const RelocatingElementMode = (element: ElementTypes): WizardEditorAction
 
 // Adding elements to a Wizard
 export const AddElement = {
+  // Add SubQuestion
+  SubQuestion: (path: sub_input_path_type): AddElementAction => ({
+    type: WizardEditorActionTypes.ADD_ELEMENT,
+    payload: { element: ElementTypes.SUB_QUESTION, path }
+  }),
+  // Add QuestionList
+  QuestionList: (path: list_input_path_type): AddElementAction => ({
+    type: WizardEditorActionTypes.ADD_ELEMENT,
+    payload: { element: ElementTypes.QUESTION_LIST, path }
+  }),
   // Add Question
   Question: (path: input_path_type): AddElementAction => ({
     type: WizardEditorActionTypes.ADD_ELEMENT,
@@ -55,6 +65,16 @@ export const AddElement = {
 
 // Removing elements from a Wizard
 export const RemoveElement = {
+  // Remove SubQuestion
+  SubQuestion: (path: sub_input_path_type): RemoveElementAction => ({
+    type: WizardEditorActionTypes.REMOVE_ELEMENT,
+    payload: { element: ElementTypes.SUB_QUESTION, path }
+  }),
+  // Remove QuestionList
+  QuestionList: (path: list_input_path_type): RemoveElementAction => ({
+    type: WizardEditorActionTypes.REMOVE_ELEMENT,
+    payload: { element: ElementTypes.QUESTION_LIST, path }
+  }),
   // Remove Question
   Question: (path: input_path_type): RemoveElementAction => ({
     type: WizardEditorActionTypes.REMOVE_ELEMENT,

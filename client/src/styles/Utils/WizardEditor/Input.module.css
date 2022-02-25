@@ -20,7 +20,6 @@
   border-left: 2px solid #4ef;
 }
 .Input .upper-section {
-  /* background-color: lightgreen; */
   height: 1.7rem;
   /* layout */
   display: flex;
@@ -73,7 +72,8 @@
 .Input.Input-Partial {
   border-left: none !important;
   flex-direction: row;
-  /* margin: 0.3rem 0 0.3rem 1rem; */
+  /* background-color: red; */
+  width: 100%;
   margin: 0.2rem 0;
 }
 .Input.Input-Partial .upper-section {
@@ -96,7 +96,7 @@
 
 /* List Input : Checkbox-List, Radiobox-List, Lists-List */
 .Input.Input-List {
-  margin: 0.9rem 0;
+  margin: 1rem 0;
   padding: 0.4rem 1rem;
   height: max-content;
   /* layout */
@@ -110,7 +110,8 @@
 }
 .Input.Input-List > .btm-section {
   height: max-content;
-  width: fit-content;
+  /* width: fit-content; */
+  width: 90%;
   /* layout */
   display: flex;
   flex-direction: column;

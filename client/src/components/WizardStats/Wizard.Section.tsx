@@ -27,14 +27,14 @@ const Section: Section__props = ({section, page_idx, section_idx}) => {
       {/* right section - info */}
       <section className={Styles["info-section"]}>
 
-        {section.elements.map((element, i) => 
+        {/* {section.elements.map((element, i) => 
           <ParseElement 
             key={element.name}
             page={page_idx}
             section={section_idx}
             question={i}
             element={element} />
-        )}
+        )} */}
         
       </section>
     </div>

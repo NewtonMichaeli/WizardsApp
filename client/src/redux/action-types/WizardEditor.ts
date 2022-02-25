@@ -1,6 +1,7 @@
 // Action types for User
 
 import { ValidInputType, WizardFormat, WizardSectionFormat } from "../../interfaces/WizardFormat";
+import { input_path_type, list_input_path_type, sub_input_path_type } from "../../utils/WizardEditor/types";
 import { ElementTypes, QuestionTypes } from "../types";
 
 
@@ -43,16 +44,28 @@ interface MovePageAction {
 
 /** Add Element Types */
 
-// Add-Element Action
+// Add-Question-List Action
+interface AddQuestionListAction {
+  type: WizardEditorActionTypes.ADD_ELEMENT
+  payload: {
+    element: ElementTypes.QUESTION_LIST
+    path: list_input_path_type
+  }
+}
+// Add-Question Action
 interface AddQuestionAction {
   type: WizardEditorActionTypes.ADD_ELEMENT
   payload: {
     element: ElementTypes.QUESTION
-    path: {
-      page: number
-      section: number
-      question: number
-    }
+    path: input_path_type
+  }
+}
+// Add-Sub-Question Action
+interface AddSubQuestionAction {
+  type: WizardEditorActionTypes.ADD_ELEMENT
+  payload: {
+    element: ElementTypes.SUB_QUESTION
+    path: sub_input_path_type
   }
 }
 // Add-Section Action
@@ -77,15 +90,33 @@ interface AddPageAction {
   }
 }
 // Add Element - Question / Section / Page
-export type AddElementAction = AddQuestionAction | AddPageAction | AddSectionAction
+export type AddElementAction = 
+  AddQuestionAction | AddPageAction | AddSectionAction | AddQuestionListAction | AddSubQuestionAction
 
 
 /** Remove Element Types */
 
+// Remove-Question-List Action
+interface RemoveQuestionListAction {
+  type: WizardEditorActionTypes.REMOVE_ELEMENT,
+  payload: {
+    element: ElementTypes.QUESTION_LIST
+    path: list_input_path_type
+  }
+}
 // Remove-Element Action
 interface RemoveQuestionAction {
   type: WizardEditorActionTypes.REMOVE_ELEMENT
   payload: AddQuestionAction['payload']
+}
+
+// Remove-Sub-Question Action
+interface RemoveSubQuestionAction {
+  type: WizardEditorActionTypes.REMOVE_ELEMENT
+  payload: {
+    element: ElementTypes.SUB_QUESTION
+    path: sub_input_path_type
+  }
 }
 // Remove-Section Action
 interface RemoveSectionAction {
@@ -98,7 +129,8 @@ interface RemovePageAction {
   payload: AddPageAction['payload']
 }
 // Remove Element - Question / Section / Page
-export type RemoveElementAction = RemoveQuestionAction | RemoveSectionAction | RemovePageAction
+export type RemoveElementAction = 
+  RemoveQuestionAction | RemoveSectionAction | RemovePageAction | RemoveQuestionListAction | RemoveSubQuestionAction
 
 
 /** Change Element Property */

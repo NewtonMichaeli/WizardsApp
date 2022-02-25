@@ -1,22 +1,25 @@
 // Inputs
 
 // Types:
-import { input_path_type } from "../../components/WizardEditor/Wizard.Input"
 import { InputTypes } from "../../interfaces/WizardFormat"
+import { QuestionTypes } from "../../redux/types"
+import { InputChange, input_path_type, list_input_path_type, sub_input_path_type } from "./types"
 // Styles:
 import Styles from '../../styles/Utils/WizardEditor/Input.module.css'
 import { getStyles } from "../../controllers"
 // Utils:
-import { AddInputHere, DeleteInputBtn, OptionsBtn, RequiredBtn } from "./InputUtils"
-
-
-export type InputChange = React.ChangeEvent<HTMLInputElement>
+import { AddInputHere, AddListHere, AddSubInputHere, DeleteInputBtn, OptionsBtn, RequiredBtn } from "./InputUtils"
+import { useDispatch } from "react-redux"
+import { RemoveElement } from "../../redux/actions/WizardEditor"
 
 
 export const Label: React.FC<{
   element: InputTypes['Label'],
   path: input_path_type,
 }> = ({element, path}) => {
+
+  // Dispatch
+  const dispatch = useDispatch()
 
   return (
     <div className={getStyles(Styles, "Input Input-Label")}>
@@ -25,13 +28,16 @@ export const Label: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Enter your Title" />
         <div className={Styles["q-controllers"]}>
-          <DeleteInputBtn onClick={()=>2} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
         </div>
       </div>
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -42,6 +48,8 @@ export const Text: React.FC<{
   path: input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
   return (
     <div className={getStyles(Styles, "Input Input-Text")}>
       <div className={Styles["upper-section"]}>
@@ -49,9 +57,14 @@ export const Text: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Textbox Title" />
         <div className={Styles["q-controllers"]}>
-          <DeleteInputBtn onClick={()=>2} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
+          <OptionsBtn 
+            min={{initValue: element.min, onClick: min => element.min = min}}
+            max={{initValue: element.max, onClick: max => element.max = max}}
+            regex={{initValue: element.regex, onClick: regex => element.regex = regex}} />
         </div>
       </div>
       <h1 className={Styles["btm-section"]}>
@@ -59,6 +72,8 @@ export const Text: React.FC<{
       </h1>
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -69,6 +84,9 @@ export const Textarea: React.FC<{
   path: input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
+
   return (
     <div className={getStyles(Styles, "Input Input-Textarea")}>
       <div className={Styles["upper-section"]}>
@@ -76,9 +94,15 @@ export const Textarea: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Textarea Title" />
         <div className={Styles["q-controllers"]}>
-          <DeleteInputBtn onClick={()=>2} />
+        <RequiredBtn onClick={() => element.required= !element.required} isRequired={element.required} />
+        <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
+        <OptionsBtn 
+          min={{initValue: element.min, onClick: min => element.min = min}}
+          max={{initValue: element.max, onClick: max => element.max = max}}
+          regex={{initValue: element.regex, onClick: regex => element.regex = regex}} />
         </div>
       </div>
       <h1 className={Styles["btm-section"]}>
@@ -86,6 +110,8 @@ export const Textarea: React.FC<{
       </h1>
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -96,6 +122,9 @@ export const SecuredInput: React.FC<{
   path: input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
+
   return (
     <div className={getStyles(Styles, "Input Input-SecuredInput")}>
       <div className={Styles["upper-section"]}>
@@ -103,11 +132,15 @@ export const SecuredInput: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Secured-Input Title" />
         <div className={Styles["q-controllers"]}>
-        <RequiredBtn onClick={()=>2} />
-          <DeleteInputBtn onClick={()=>2} />
-          <OptionsBtn onClick={()=>2} />
+          <RequiredBtn onClick={() => element.required = !element.required} isRequired={element.required} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
+          <OptionsBtn 
+            min={{initValue: element.min, onClick: min => element.min = min}}
+            max={{initValue: element.max, onClick: max => element.max = max}}
+            regex={{initValue: element.regex, onClick: regex => element.regex = regex}} />
         </div>
       </div>
       <h1 className={Styles["btm-section"]}>
@@ -115,6 +148,8 @@ export const SecuredInput: React.FC<{
       </h1>
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -125,6 +160,9 @@ export const Range: React.FC<{
   path: input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
+  
   return (
     <div className={getStyles(Styles, "Input Input-Range")}>
       <div className={Styles["upper-section"]}>
@@ -132,11 +170,14 @@ export const Range: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Range Title" />
         <div className={Styles["q-controllers"]}>
-          <RequiredBtn onClick={()=>2} />
-          <DeleteInputBtn onClick={()=>2} />
-          <OptionsBtn onClick={()=>2} />
+          <RequiredBtn onClick={() => element.required = !element.required} isRequired={element.required} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
+          <OptionsBtn 
+            min={{initValue: element.min, onClick: min => element.min = min}}
+            max={{initValue: element.max, onClick: max => element.max = max}} />
         </div>
       </div>
       <h1 className={Styles["btm-section"]}>
@@ -144,6 +185,8 @@ export const Range: React.FC<{
       </h1>
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -151,25 +194,40 @@ export const Range: React.FC<{
 
 export const Checkbox: React.FC<{
   element: InputTypes['Checkbox'],
-  path: input_path_type,
-}> = ({element, path}) => {
+  path: sub_input_path_type,
+  name: string,
+  isChecked: boolean,
+  addCheckedInput: (name: string) => void,
+  removeCheckedInput: (name: string) => void
+}> = ({element, path, name, isChecked, addCheckedInput, removeCheckedInput}) => {
+
+  // Dispatch
+  const dispatch = useDispatch()
+  // Handlers
+  const checkHandle = (e: InputChange) => {
+    if (e.target.checked) addCheckedInput(element.name)
+    else removeCheckedInput(element.name)
+  }
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
       <div className={Styles["upper-section"]}>
-        <input type="checkbox" title="Mark as Default Check" />
+        {/* check button - sets input's name as ONE OF the checked states */}
+        <input type="checkbox" title="Mark as Default Check" name={name} defaultChecked={isChecked}
+          onChange={checkHandle} />
+        {/* title */}
         <input onChange={(e: InputChange) => element.title = e.target.value}
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Checkbox Title" />
         <div className={Styles["q-controllers"]}>
-          <DeleteInputBtn onClick={()=>2} />
-          <OptionsBtn onClick={()=>2} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.SubQuestion(path))} />
         </div>
       </div>
       {/* add input here */}
-      <AddInputHere path={path} />
+      <AddSubInputHere path={path} list_type={QuestionTypes.CHECKBOX} />
     </div>
   )
 }
@@ -177,7 +235,7 @@ export const Checkbox: React.FC<{
 
 export const Image: React.FC<{
   element: InputTypes['Image'],
-  path: input_path_type,
+  path: sub_input_path_type,
 }> = ({element, path}) => {
 
   return (
@@ -189,6 +247,8 @@ export const Image: React.FC<{
         className="fake-box" />
       {/* add input here */}
       <AddInputHere path={path} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -196,8 +256,13 @@ export const Image: React.FC<{
 
 export const RadioboxList: React.FC<{
   element: InputTypes['Radiobox List'],
-  path: input_path_type,
+  path: list_input_path_type,
 }> = ({element, path}) => {
+
+  // Handlers
+  const setCheckedInput = (name: string) => {
+    element.checkedInput = name
+  }
 
   return (
     <div className={getStyles(Styles, "Input Input-List Input-RadioboxList")}>
@@ -206,14 +271,23 @@ export const RadioboxList: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Radiobox-List Title" />
       </div>
       <div className={Styles["btm-section"]}>
+        {/* render radioboxes */}
         {element.elements.map((_element, i) => 
-          <Radiobox element={_element} path={path} />)}
+          <Radiobox key={_element.name} 
+            element={_element} 
+            name={element.name} 
+            isChecked={element.checkedInput === _element.name}
+            setCheckedInput={setCheckedInput} 
+            path={{...path, option: i, list: path.option}} />)}
       </div>
       {/* add input here */}
-      <AddInputHere path={path} />
+      {path.option !== undefined ? '' : <AddInputHere path={path as input_path_type} />}
+      {/* add list here */}
+      {path.option === undefined ? '' : <AddListHere path={path} />}
     </div>
   )
 }
@@ -221,8 +295,16 @@ export const RadioboxList: React.FC<{
 
 export const CheckboxList: React.FC<{
   element: InputTypes['Checkbox List'],
-  path: input_path_type,
+  path: list_input_path_type,
 }> = ({element, path}) => {
+
+  // Handlers
+  const addCheckedInput = (name: string) => {
+    element.checkedInputs = [...element.checkedInputs, name]
+  }
+  const removeCheckedInput = (name: string) => {
+    element.checkedInputs = element.checkedInputs.filter(input_name => input_name !== name)
+  }
 
   return (
     <div className={getStyles(Styles, "Input Input-List Input-CheckboxList")}>
@@ -231,14 +313,23 @@ export const CheckboxList: React.FC<{
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Checkbox-List Title" />
       </div>
       <div className={Styles["btm-section"]}>
         {element.elements.map((_element, i) => 
-          <Checkbox element={_element} path={path} />)}
+          <Checkbox key={_element.name} 
+            element={_element} 
+            name={element.name}
+            isChecked={element.checkedInputs.includes(_element.name)}
+            addCheckedInput={addCheckedInput}
+            removeCheckedInput={removeCheckedInput}
+            path={{...path, option: i, list: path.option}} />)}
       </div>
       {/* add input here */}
-      <AddInputHere path={path} />
+      {path.option !== undefined ? '' : <AddInputHere path={path as input_path_type} />}
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -251,12 +342,33 @@ export const ListsList: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-List Input-ListsList")}>
-      <input onChange={(e: InputChange) => element.title = e.target.value}
-        className="title"
-        type="text" />
-      {}
+      <div className={Styles["upper-section"]}>
+        <input onChange={(e: InputChange) => element.title = e.target.value}
+          className={Styles["title"]}
+          type="text"
+          name={element.name}
+          defaultValue={element.title}
+          placeholder="Lists-List Title" />
+      </div>
+      <div className={Styles["btm-section"]}>
+        {/* map through elements */}
+        {element.elements.map((_element, i) => {
+          if (_element.type === QuestionTypes.CHECKBOX_LIST)
+            return <CheckboxList key={_element.name} element={_element} path={{
+              ...path,
+              option: i
+            }} />
+          else if (_element.type === QuestionTypes.RADIOBOX_LIST) 
+            return <RadioboxList key={_element.name} element={_element} path={{
+              ...path,
+              option: i
+          }} />
+        })}
+      </div>
       {/* add input here */}
-      <AddInputHere path={path} />
+      <AddInputHere path={path as input_path_type} />
+      {/* add list here */}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -264,25 +376,34 @@ export const ListsList: React.FC<{
 
 export const Radiobox: React.FC<{
   element: InputTypes['Radiobox'],
-  path: input_path_type,
-}> = ({element, path}) => {
+  path: sub_input_path_type,
+  name: string,
+  isChecked: boolean,
+  setCheckedInput: (name: string) => void
+}> = ({element, path, name, isChecked, setCheckedInput}) => {
+
+  // Dispatch
+  const dispatch = useDispatch()
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Radiobox")}>
       <div className={Styles["upper-section"]}>
-        <input type="radio" title="Mark as Default Check" />
+        {/* radio button - sets input's name as the checked state */}
+        <input type="radio" title="Mark as Default Check" name={name} defaultChecked={isChecked} 
+          onClick={() => setCheckedInput(element.name)} />
+        {/* title input */}
         <input onChange={(e: InputChange) => element.title = e.target.value}
           className={Styles["title"]}
           type="text"
           name={element.name}
+          defaultValue={element.title}
           placeholder="Enter your Title" />
         <div className={Styles["q-controllers"]}>
-          <DeleteInputBtn onClick={()=>2} />
-          <OptionsBtn onClick={()=>2} />
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.SubQuestion(path))} />
         </div>
       </div>
       {/* add input here */}
-      <AddInputHere path={path} />
+      <AddSubInputHere path={path} list_type={QuestionTypes.RADIOBOX} />
     </div>
   )
 }

@@ -14,8 +14,7 @@ export interface InputTypes {
     "Checkbox": {
         type: QuestionTypes.CHECKBOX,
         title: string,
-        name: string,
-        alreadyChecked: boolean
+        name: string
     },
     "Text": {
         type: QuestionTypes.TEXT,
@@ -46,8 +45,7 @@ export interface InputTypes {
     "Radiobox": {
         type: QuestionTypes.RADIOBOX,
         title: string,
-        name: string,
-        alreadyChecked: boolean
+        name: string
     },
     "SecuredInput": {
         type: QuestionTypes.SECURED_INPUT,
@@ -68,12 +66,14 @@ export interface InputTypes {
         type: QuestionTypes.RADIOBOX_LIST,
         name: string,
         title: string,
+        checkedInput: string | null,
         elements: InputTypes['Radiobox'][]
     },
     "Checkbox List": {
         type: QuestionTypes.CHECKBOX_LIST,
         name: string,
         title: string,
+        checkedInputs: string[]
         elements: InputTypes['Checkbox'][]
     },
     "Lists List": {
@@ -99,6 +99,18 @@ export type ValidInputType =
     InputTypes['Radiobox List'] |
     InputTypes['Lists List'] | 
     InputTypes['Image']
+
+// Wizard : page : section : Input-List
+export type ValidInputListType =
+    InputTypes['Checkbox List'] |
+    InputTypes['Radiobox List'] |
+    InputTypes['Lists List']
+
+// Wizard : page : section : Input-List
+export type ValidSubInputType =
+    InputTypes['Checkbox'] |
+    InputTypes['Radiobox']
+
 
 // Wizard : page : section - Format
 export type WizardSectionFormat = {
@@ -182,23 +194,85 @@ export const fake_wizard: WizardFormat[] = [
                     elements: [
                         {
                             type: QuestionTypes.CHECKBOX_LIST,
-                            name: "xxwqeocwoe",
+                            name: "xxwqeocwoqwxwqe",
                             title: "Checkbox List title",
+                            checkedInputs: [],
                             elements: [
                                 {
                                     type: QuestionTypes.CHECKBOX,
                                     name: "ciwq4cee",
-                                    alreadyChecked: false,
                                     title: "Checkbox 1",
                                 },
                                 {
                                     type: QuestionTypes.CHECKBOX,
                                     name: "ciwq4cedewqe",
-                                    alreadyChecked: false,
                                     title: "Checkbox 2",
                                 },
                             ]
-                        }
+                        },
+                        {
+                            type: QuestionTypes.RADIOBOX_LIST,
+                            name: "xxwqeoccheckwoe",
+                            title: "Radiobox List title",
+                            checkedInput: "ciwq4ceeaa",
+                            elements: [
+                                {
+                                    type: QuestionTypes.RADIOBOX,
+                                    name: "ciwq4ceeaa",
+                                    title: "Radiobox 1",
+                                },
+                                {
+                                    type: QuestionTypes.RADIOBOX,
+                                    name: "ciwq4cedewqcdae",
+                                    title: "Radiobox 2",
+                                },
+                            ]
+                        },
+                        {
+                            type: QuestionTypes.LISTS_LIST,
+                            name: "xxwqeocwoe",
+                            title: "Checkbox List title",
+                            elements: [
+                                {
+                                    name: "list-wexqiwaeuv",
+                                    title: "List 1 @ Lists List",
+                                    type: QuestionTypes.CHECKBOX_LIST,
+                                    checkedInputs: [],
+                                    elements: [
+                                        {
+                                            type: QuestionTypes.CHECKBOX,
+                                            name: "wexqiwaeuv",
+                                            title: "Checkbox 1",
+                                        },  
+                                        {
+                                            type: QuestionTypes.CHECKBOX,
+                                            name: "Ssxqiw231uUeuv",
+                                            title: "Checkbox 2",
+                                        },
+
+                                    ]
+                                },
+                                {
+                                    name: "list-ajwrvnb9ur",
+                                    title: "List 2 @ Lists List",
+                                    type: QuestionTypes.RADIOBOX_LIST,
+                                    checkedInput: null,
+                                    elements: [
+                                        {
+                                            type: QuestionTypes.RADIOBOX,
+                                            name: "ajwrvnb9ur",
+                                            title: "Radiobox 1",
+                                        },  
+                                        {
+                                            type: QuestionTypes.RADIOBOX,
+                                            name: "cur4Xasnrsvb",
+                                            title: "Radiobox 2",
+                                        },
+
+                                    ]
+                                }
+                            ]
+                        },
                     ]
                 }
             ],

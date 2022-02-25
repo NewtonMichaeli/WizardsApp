@@ -80,21 +80,23 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
       return {
         type: QuestionTypes.CHECKBOX_LIST,
         name: uuidv4(),
-        title: "New List",
+        title: "New Checkbox List",
+        checkedInputs: [],
         elements: []
       }
     case QuestionTypes.RADIOBOX_LIST:
       return {
         type: QuestionTypes.RADIOBOX_LIST,
         name: uuidv4(),
-        title: "New List",
+        title: "New Radiobox List",
+        checkedInput: null,
         elements: []
       }
     case QuestionTypes.LISTS_LIST:
       return {
         type: QuestionTypes.LISTS_LIST,
         name: uuidv4(),
-        title: "New List",
+        title: "New Lists List",
         elements: []
       }
     case QuestionTypes.LABEL:

@@ -8,6 +8,7 @@
   border: none;
   /* position */
   margin-right: 0.3rem;
+  position: relative;
   /* mouse */
   cursor: pointer;
 }
@@ -18,4 +19,39 @@
 }
 .Q-controllers-btn img:hover {
   opacity: 1;
+}
+
+/* individual styles */
+
+.Q-controllers-btn.options span {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.Q-controllers-btn.options .options-container.open {
+  height: fit-content;
+  width: 9rem;
+  background-color: var(--app_def_color);
+  background-color: #f04f4fcc;
+  border-radius: 0 5px;
+  padding: 0.3rem 0;
+  /* position */
+  position: absolute;
+  top: 142%;
+  right: 0;
+}
+.Q-controllers-btn.options .options-container.open input {
+  border: none !important;
+  outline: none;
+  width: 100%;
+  height: 1.7rem;
+  color: #fff;
+  border-top: 2px solid var(--app_def_color);
+}
+.Q-controllers-btn.options .options-container.open input:focus,
+.Q-controllers-btn.options .options-container.open input:hover {
+  background-color: #00000044;
 }

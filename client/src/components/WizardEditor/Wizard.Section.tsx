@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch } from 'react'
 // Assets:
 import Add from '../../assets/wizard-controllers/add-white.png'
 import Delete from '../../assets/Q-controllers/no-grey.png'
@@ -6,18 +6,19 @@ import Delete from '../../assets/Q-controllers/no-grey.png'
 import { useDispatch, useSelector } from 'react-redux'
 // Types:
 import { RootState } from '../../redux'
-import { WizardSectionFormat } from '../../interfaces/WizardFormat'
+import { ValidInputListType, ValidInputType, ValidSubInputType, WizardSectionFormat } from '../../interfaces/WizardFormat'
 import { wizard_editor_state_type } from '../../redux/types/reducerStateTypes'
 import { ElementTypes } from '../../redux/types'
-import { ModifySectionAction, RemoveElementAction, WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { WizardEditorActionTypes } from '../../redux/action-types/WizardEditor'
+import { InputChange, input_path_type, list_input_path_type, sub_input_path_type } from '../../utils/WizardEditor/types'
 import { AddElementAction } from '../../redux/action-types/WizardEditor'
-import { AddElement, ModifyElement, RemoveElement } from '../../redux/actions/WizardEditor'
 // Styles:
 import Styles from '../../styles/components/WizardEditor/Wizard.Section.module.css'
 import { getStyles } from '../../controllers'
 // Utils:
+import { AddElement, ModifyElement, RemoveElement } from '../../redux/actions/WizardEditor'
 import ParseElement from '../../utils/WizardEditor/ParseElement'
-import { AddInputHere } from './Wizard.Input'
+import { AddInputHere, AddListHere } from '../../utils/WizardEditor/InputUtils'
 
 
 // Add Section in a certain index (path)
@@ -27,9 +28,9 @@ export const AddSectionHere: React.FC<{
   noElements?: boolean
 }> = ({path, lastOne, noElements}) => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<Dispatch<AddElementAction>>()
   // Dispatch Actions
-  const addHereHandler = (lastAddHere?: boolean) => dispatch<AddElementAction>(
+  const addHereHandler = (lastAddHere?: boolean) => dispatch(
     AddElement.Section({
       ...path,
       section: path.section + (lastAddHere ? 1 : 0)
@@ -79,21 +80,9 @@ const Section: React.FC<{
     page: page_idx,
     section: section_idx
   }, IsLastElement = section_idx + 1 === WizardState?.pages[page_idx].length
+  
   // Dispatch
   const dispatch = useDispatch()
-  // Handlers
-  const deleteSectionHandler = () => dispatch<RemoveElementAction>(
-    RemoveElement.Section(path)
-  )
-  // Modifying Handlers
-  const modifySectionName = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch<ModifySectionAction>(
-      ModifyElement.Section(
-        {page: page_idx, section: section_idx},
-        e.target.value
-      )
-    )
-
 
   return (
     <div className={Styles["Section-container"]}>
@@ -105,7 +94,7 @@ const Section: React.FC<{
             type="text"
             defaultValue={section.name}
             placeholder="Enter Section Name"
-            onChange={modifySectionName} />
+            onChange={(e: InputChange) => dispatch(ModifyElement.Section(path, e.target.value))} />
         </h3>
       </section>
       {/* right section - info */}
@@ -117,26 +106,35 @@ const Section: React.FC<{
             page={page_idx}
             section={section_idx}
             question={i}
-            element={element} />
+            element={element} />  // passing object reference - can be changed in question
         )}
+
         {/* Add question here (if 0 questions exist) */}
         {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
           && ActionTrigger.Type === ElementTypes.QUESTION 
           && !section.elements.length
           && <AddInputHere path={{...path, question: 0}} noElements />}
+
+        {/* Add question-list here (if 0 question-lists exist) */}
+        {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
+          && ActionTrigger.Type === ElementTypes.QUESTION_LIST
+          && !section.elements.length
+          && <AddListHere path={{...path, question: 0}} noElements />}
+
         {/* Add section here */}
         {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
           && ActionTrigger.Type === ElementTypes.SECTION 
           && <AddSectionHere path={path} />}
+
         {/* Add section here (last element identifier) */}
         {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
           && ActionTrigger.Type === ElementTypes.SECTION 
           && IsLastElement 
-          && <AddSectionHere path={path} lastOne />
-        }
+          && <AddSectionHere path={path} lastOne />}
+
         {/* remove section */}
         { !IsAction &&
-          <button className={Styles["remove-section"]} onClick={deleteSectionHandler}>
+          <button className={Styles["remove-section"]} onClick={() => dispatch(RemoveElement.Section(path))}>
             <img src={Delete} alt="Delete Section" title='Remove Section' />
           </button>}
       </section>

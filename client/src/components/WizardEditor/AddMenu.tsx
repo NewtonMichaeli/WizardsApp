@@ -34,26 +34,29 @@ const AddMenu: React.FC = () => {
   const AddingSectionMode = () => 
     !isZeroSections && dispatch(AddingElementMode(ElementTypes.SECTION))
   // dispatch type:ADDING_ELEMENT_MODE:INPUT
-  const AddingInputMode = (question_type: QuestionTypes) => dispatch(
-    AddingElementMode(ElementTypes.QUESTION, question_type)
-  )
+  const AddingInputMode = (question_type: QuestionTypes) => dispatch(AddingElementMode(ElementTypes.QUESTION, question_type))
+  // dispatch type:ADDING_ELEMENT_MODE:INPUT_LIST
+  const AddingListMode = (question_type: QuestionTypes) => dispatch(AddingElementMode(ElementTypes.QUESTION_LIST, question_type))
+  // dispatch type:ADDING_ELEMENT_MODE:SUB_INPUT
+  const AddingSubInputMode = (question_type: QuestionTypes) => dispatch(AddingElementMode(ElementTypes.SUB_QUESTION, question_type))
 
   // Elements list
   const ElementsList: React.FC = () => {
     return (
       <ul className={Styles["ElementsList"]}>
+        <li onClick={()=>AddingSubInputMode(QuestionTypes.CHECKBOX)}>Checkbox</li>
+        <li onClick={()=>AddingListMode(QuestionTypes.CHECKBOX_LIST)}>Checkbox List</li>
+        <li onClick={()=>AddingSubInputMode(QuestionTypes.IMAGE)}>Image</li>
+        <li onClick={()=>AddingSubInputMode(QuestionTypes.IMAGE)}>Image List</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.LABEL)}>Label</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.TEXT)}>Textbox</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.CHECKBOX)}>Checkbox</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.IMAGE)}>Image</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Textarea</li>
+        <li onClick={()=>AddingListMode(QuestionTypes.LISTS_LIST)}>Lists List</li>
+        <li onClick={()=>AddingSubInputMode(QuestionTypes.RADIOBOX)}>RadioBox</li>
+        <li onClick={()=>AddingListMode(QuestionTypes.RADIOBOX_LIST)}>Radiobox List</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.RANGE)}>Range</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.SECURED_INPUT)}>Secured Input</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Text</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.RADIOBOX_LIST)}>Radiobox List</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.CHECKBOX_LIST)}>Checkbox List</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.LISTS_LIST)}>Lists List</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.RANGE)}>Range</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.RADIOBOX)}>RadioBox</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Textarea</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.TEXT)}>Textbox</li>
       </ul>
     )
   }

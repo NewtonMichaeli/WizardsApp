@@ -62,6 +62,19 @@
   opacity: 0.8;
 }
 
+/* AddInputHere variations */
+
+.Add-Input-Here.Sub-Input {
+  top: -0.3rem;
+}
+.Add-Input-Here.Sub-Input.last-element {
+  top: unset;
+  bottom: -0.6rem;
+}
+.Add-Input-Here.Sub-Input section {
+  height: 1.5rem;
+}
+
 /* animations */
 
 @keyframes onEnterQ {

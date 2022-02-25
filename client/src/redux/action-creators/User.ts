@@ -59,10 +59,10 @@ export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<
           email: user['email'],
           role: user['role'],
           isAddingWizard: false,
-          wizards: fake_wizard   // load fake wizards for now
-          // wizards: wizard_data
-          //   ? [JSON.parse(wizard_data)]
-          //   : fake_wizard
+          // wizards: fake_wizard   // load fake wizards for now
+          wizards: wizard_data
+            ? [JSON.parse(wizard_data)]
+            : fake_wizard
           // load fake wizards for now
         }
       }

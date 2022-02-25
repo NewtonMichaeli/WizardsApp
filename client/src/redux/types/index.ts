@@ -18,6 +18,8 @@ export enum QuestionTypes {
 export enum ElementTypes {
   PAGE = "PAGE",
   SECTION = "SECTION",
-  QUESTION = "QUESTION"
+  QUESTION = "QUESTION",
+  QUESTION_LIST = "QUESTION_LIST",
+  SUB_QUESTION = "SUB_QUESTION"
 }
 

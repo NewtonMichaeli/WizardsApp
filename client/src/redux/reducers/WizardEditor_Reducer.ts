@@ -4,7 +4,7 @@
 import { wizard_editor_state_type } from "../types/reducerStateTypes"
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 // Reducer helpers:
-import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../reducer_helpers/User"
+import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../reducer_helpers/WizardEditor"
 
 
 const initState: wizard_editor_state_type = {

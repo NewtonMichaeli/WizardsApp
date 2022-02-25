@@ -3,8 +3,8 @@
 // Utils:
 import { RenderInitInput, RenderInitPage, RenderInitSection } from "../../utils/WizardEditor/RenderInitElement";
 // Types:
-import { input_path_type } from "../../components/WizardEditor/Wizard.Input";
-import { InputTypes, ValidInputType } from "../../interfaces/WizardFormat";
+import { input_path_type } from '../../utils/WizardEditor/types'
+import { InputTypes, ValidInputListType, ValidInputType, ValidSubInputType } from "../../interfaces/WizardFormat";
 import { ElementTypes } from "../types";
 import { wizard_editor_state_type } from "../types/reducerStateTypes";
 // Actions:
@@ -36,14 +36,12 @@ export const AddElementToState = (
 
       // Add Question inside given path
       const {page, section, question} = action.payload.path
-      
       // insert new element to the given path inside wizard tree
       state.WizardState?.pages[page][section].elements.splice(
         question, 
         0, 
         init_props ?? RenderInitInput(state.ActionTrigger)
       )
-      
       // insert new state with new element & reinitiate other states
       return ClearStateSideStats(state);
     }
@@ -54,16 +52,15 @@ export const AddElementToState = (
       // 0 pages - abort
       if (!state.WizardState?.pages)
         return state
-
       const new_element = RenderInitSection();
       const {page, section} = action.payload.path
       // insert new element to the given path inside wizard tree
       state.WizardState?.pages[page]
         .splice(section, 0, new_element)
-      
       // insert new state with new element & reinitiate other states
       return ClearStateSideStats(state);
     }
+
     // Adding Page
     case ElementTypes.PAGE: {
       const new_element = RenderInitPage();
@@ -72,13 +69,66 @@ export const AddElementToState = (
       // update 'PageIdx state
       state.PageIdx +=
         (page === state.PageIdx || !state.WizardState?.pages.length) ? 0 : 1
-
       // insert new element to the given path inside wizard tree
       state.WizardState?.pages.splice(page, 0, new_element)
-          
       // update 'Page' state
       state.Page = state.WizardState?.pages[state.PageIdx] ?? null
+      // insert new state with new element & reinitiate other states
+      return ClearStateSideStats(state);
+    }
 
+    // Adding question-List
+    case ElementTypes.QUESTION_LIST: {
+      
+      // Add Question inside given path
+      const {page, section, question, option} = action.payload.path
+      // option is undefined - adding question-list as a normal input
+      if (option === undefined) {
+        // insert new element to the given path inside wizard tree
+        state.WizardState?.pages[page][section].elements.splice(
+          question, 
+          0, 
+          init_props ?? RenderInitInput(state.ActionTrigger)
+        )
+      }
+      // option is defined - adding question-list inside a given list (path)
+      else {
+        const CurrentList = state.WizardState?.pages[page][section].elements[question] as ValidInputListType
+        CurrentList.elements.splice(
+          option, 
+          0, 
+          init_props as any ?? RenderInitInput(state.ActionTrigger)
+        )
+      }
+      // insert new state with new element & reinitiate other states
+      return ClearStateSideStats(state);
+    }
+
+    // Adding Sub-Question
+    case ElementTypes.SUB_QUESTION: {
+
+      // Add Question inside given path
+      const {page, section, question, option, list} = action.payload.path
+      console.log(action.payload.path)
+      // list is undefined - adding sub-question inside a normal question-list
+      if (list === undefined) {
+        // insert new element to the given path inside wizard tree
+        (state.WizardState?.pages[page][section].elements[question] as ValidInputListType)
+        .elements.splice(
+          option, 
+          0, 
+          init_props as any ?? RenderInitInput(state.ActionTrigger)
+        )
+      }
+      // list is defined - adding sub-question inside a lists-list
+      else {
+        const CurrentList = ((state.WizardState?.pages[page][section].elements[question] as InputTypes['Lists List']).elements[list])
+        CurrentList?.elements.splice(
+          option, 
+          0, 
+          init_props as any ?? RenderInitInput(state.ActionTrigger)
+        )
+      }
       // insert new state with new element & reinitiate other states
       return ClearStateSideStats(state);
     }
@@ -156,6 +206,8 @@ export const ModifyElementInState = (
   switch (action.payload.element) {   // -- same as (state.ActionTriger.Type)
     case ElementTypes.QUESTION: {
 
+      console.log(action.payload.properties);
+      
       // Modify Question in given path
       const { path, properties } = action.payload
       const {page, section, question} = path
