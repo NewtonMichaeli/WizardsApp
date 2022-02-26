@@ -1,14 +1,15 @@
 const con = require('../connection')
 const {promisify} = require('util')
+const mysql = require('mysql')
 
 const asyncQuery = promisify(con.query.bind(con));
 
 const createUser = async (user) => {
 
     const {name, email, password, role} = user
-    const query = `INSERT INTO users (id, name, email, password, role) VALUES (NULL, '${name}', '${email}', '${password}', '${role}')`
+    const query = mysql.format(`INSERT INTO users (id, name, email, password, role) VALUES (NULL, ?, ?, ?, ?)`, [name, email, password, role])
     try {
-        const result = await asyncQuery(query)
+        await asyncQuery(query)
         return true
     }
     catch {
@@ -18,9 +19,9 @@ const createUser = async (user) => {
 
 const deleteUser = async (id) => {
 
-    const query = `DELETE FROM users WHERE id = ${id}`
+    const query = mysql.format(`DELETE FROM users WHERE id = ?`, [id])
     try {
-        const result = await asyncQuery(query)
+        await asyncQuery(query)
         return true
     }
     catch {
@@ -31,9 +32,9 @@ const deleteUser = async (id) => {
 const updateUser = async (newUser, id) => {
 
     const {name, email, password, role} = newUser
-    const query = `UPDATE users SET name = '${name}', email = '${email}', password = '${password}', role = '${role}' WHERE users.id = ${id}`
+    const query = mysql.format(`UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE users.id = ?`, [name, email, password, role, id])
     try {
-        const result = await asyncQuery(query)
+        await asyncQuery(query)
         return true
     }
     catch {
@@ -43,7 +44,7 @@ const updateUser = async (newUser, id) => {
 
 const getUserByEmail = async (email) => {
 
-    const query = `SELECT * FROM users WHERE email = '${email}'`
+    const query = mysql.format(`SELECT * FROM users WHERE email = ?`, [email])
     try {
         const result = await asyncQuery(query)
         return result[0]
@@ -54,7 +55,7 @@ const getUserByEmail = async (email) => {
 }
 
 const getUserById = async (id) => {
-    const query = `SELECT * FROM users WHERE id = ${id}`
+    const query = mysql.format(`SELECT * FROM users WHERE id = ?`, [id])
     try {
         const result = await asyncQuery(query)
         return result[0]
