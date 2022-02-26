@@ -7,7 +7,7 @@ const createWizard = async (req, res) => {
     //data extracting
     let wizard = req.body
     const {user} = req
-    
+
     //continue only if the role is wizardCreator or admin
     if(!(req.user.role === "admin" || req.user.role === "wizardCreator")) return resHandler.accessDeniedErr(res)
 
@@ -18,7 +18,7 @@ const createWizard = async (req, res) => {
     //upload wizard
     const result = await wizardRequests.createWizard(wizard, user.id)
     if(!result) return resHandler.internalServerErr(res)
-    return resHandler.wizardCreatedSuccessfuly(res)
+    return resHandler.wizardCreatedSuccessfuly(res, result)
 }
 
 const deleteWizard = async (req, res) => {
