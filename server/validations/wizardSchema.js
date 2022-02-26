@@ -172,18 +172,16 @@ const itemSchema = Joi.object().valid(
 
 const wizardSchema = Joi.object({
     name: Joi.string().required(),
-    title: Joi.string().min(2).max(300).required(),
     pages: Joi.array().items(
         {
-            title: Joi.string().required(),
             sections: Joi.array().items(
                 {
                     title: Joi.string().min(2).required(),
-                    content: Joi.array().items(
+                    elements: Joi.array().items(
                             itemSchema
-                    ).required()
+                    )
                 }
-        ).required()
+        )
         }
     )
 })
@@ -193,15 +191,14 @@ const filledWizardSchema = Joi.object({
     data: Joi.object({
         pages: Joi.array().items(
             {
-                title: Joi.string().required(),
                 sections: Joi.array().items(
                     {
                         title: Joi.string().min(2).required(),
-                        content: Joi.array().items(
+                        elements: Joi.array().items(
                                 filledItemSchema
-                        ).required()
+                        )
                     }
-                ).required()
+                )
             }
         ).required()
     }).required()
