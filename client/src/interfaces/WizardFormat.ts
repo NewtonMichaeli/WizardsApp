@@ -231,7 +231,7 @@ export const fake_wizard: WizardFormat[] = [
                         {
                             type: QuestionTypes.LISTS_LIST,
                             name: "xxwqeocwoe",
-                            title: "Checkbox List title",
+                            title: "Lists List title",
                             elements: [
                                 {
                                     name: "list-wexqiwaeuv",

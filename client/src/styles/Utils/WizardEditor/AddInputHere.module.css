@@ -64,6 +64,7 @@
 
 /* AddInputHere variations */
 
+/* Sub-Input */
 .Add-Input-Here.Sub-Input {
   top: -0.3rem;
 }
@@ -72,6 +73,22 @@
   bottom: -0.6rem;
 }
 .Add-Input-Here.Sub-Input section {
+  height: 1.5rem;
+}
+.Add-Input-Here.Sub-Input.no-elements {
+  top: unset;
+  bottom: -0.6rem;
+  justify-content: flex-start;
+}
+
+/* Input-List */
+.Add-Input-Here.Input-List.no-elements-in-list {
+  /* background-color: green; */
+  justify-content: flex-start;
+  top: 0rem;
+  padding-left: 0.5rem;
+}
+.Add-Input-Here.Input-List.no-elements-in-list section {
   height: 1.5rem;
 }
 
