@@ -13,7 +13,7 @@ const userUpdatedSuccessfuly = res => res.status(200).send("user updated success
 const userSentSuccessfuly = (res, user) => res.status(200).json({user}) //get the user with res.data.user
 
 //Wizard responses:
-const wizardNotFoundErr = res => res.status(404).send("wizard not found.")
+const wizardNotFoundErr = res => res.status(404).send("wizards not found.")
 
 const wizardCreatedSuccessfuly = res => res.status(200).send("wizard created successfuly.")
 

@@ -58,11 +58,9 @@ const signin = async (req, res) => {
 }
 
 const getUserDetails = async (req, res) => {
-
-    //get the data with the id that we recived from the auth middleware
     
     //return it
-    return resHandler.userSentSuccessfuly(res, req.user.id)
+    return resHandler.userSentSuccessfuly(res, req.user)
 }
 
 const deleteUser = async (req, res) => {
