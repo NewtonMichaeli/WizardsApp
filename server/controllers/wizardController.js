@@ -53,7 +53,7 @@ const updateWizard = async (req, res) => {
     if(!(isCreator || role === "admin")) return resHandler.accessDeniedErr(res)
 
     //update the wizard
-    const result = await wizardRequests.deleteWizard(wizardId, newWizard)
+    const result = await wizardRequests.updateWizard(wizardId, newWizard)
     if(!result) return resHandler.internalServerErr(res)
     return resHandler.wizardDeletedSuccessfuly(res)
 }
@@ -61,7 +61,7 @@ const updateWizard = async (req, res) => {
 const fillWizard = async (req, res) => {
     
     //data extracting
-    const {id, role} = req.user
+    const {role} = req.user
     const {wizardId, filledWizard} = req.body
 
     //continue only if you're user
@@ -72,29 +72,37 @@ const fillWizard = async (req, res) => {
     if(error) return resHandler.fieldsErr(res, error.details[0].message)
     
     //upload to db
-    const result = await wizardRequests.fillWizard(id, wizardId, filledWizard)
+    const result = await wizardRequests.fillWizard(wizardId, filledWizard)
     if(!result) return resHandler.wizardFilledSuccessfuly(res)
 
 }
 
 const getWizard = async (req, res) => {
-
-    let fullAccess = false
     
     //data extracting
-    const {role} = req.user
     const {wizardId} = req.body
     
     //get the wizard
     const wizard = await wizardRequests.getWizard(wizardId)
     if(!wizard) return resHandler.wizardNotFoundErr(res)
 
-    //check if you're the creator or the admin - have full access
-    const isCreator = wizard.creator === id
-    if(isCreator || role === "admin") fullAccess = true
-    
-    if(fullAccess) return resHandler.wizardSentSuccessfuly(res, wizard)
     return resHandler.wizardSentSuccessfuly(res, wizard.content)
 }
 
-module.exports = {getWizard, createWizard, deleteWizard, updateWizard, fillWizard}
+
+const getWizards = async (req, res) => {
+    
+    //data extracting
+    const {role, id} = req.user
+    let wizards
+
+    //get the wizards
+    if(role === "admin") wizards = await wizardRequests.getWizards()
+    else wizards = await wizardRequests.getWizardsById(id)
+
+    if(!wizards) return resHandler.wizardNotFoundErr(res)
+
+    return resHandler.wizardSentSuccessfuly(res, wizards)
+}
+
+module.exports = {getWizard, getWizards, createWizard, deleteWizard, updateWizard, fillWizard}

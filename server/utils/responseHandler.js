@@ -21,7 +21,7 @@ const wizardDeletedSuccessfuly = res => res.status(200).send("wizard deleted suc
 
 const wizardUpdatedSuccessfuly = res => res.status(200).send("wizard updated successfuly.")
 
-const wizardSentSuccessfuly = res => res.status(200).send("wizard sent successfuly")
+const wizardSentSuccessfuly = (res, wizard) => res.status(200).json({results: wizard})
 
 const wizardFilledSuccessfuly = res => res.status(200).send("wizard filled successfuly")
 

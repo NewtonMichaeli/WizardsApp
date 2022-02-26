@@ -74,4 +74,26 @@ const getWizard = async (wizardId) => {
     }
 }
 
-module.exports = {getWizard, createWizard, deleteWizard, updateWizard, fillWizard}
+const getWizardsById = async (wizardId) => {
+    const query = mysql.format(`SELECT * FROM wizards WHERE creator = ?`, [userId])
+    try {
+        const result = await asyncQuery(query)
+        return result[0]
+    }
+    catch {
+        return false
+    }
+}
+
+const getWizards = async () => {
+    const query = `SELECT * FROM wizards`
+    try {
+        const result = await asyncQuery(query)
+        return result[0]
+    }
+    catch {
+        return false
+    }
+}
+
+module.exports = {getWizard, getWizards, getWizardsById, createWizard, deleteWizard, updateWizard, fillWizard}

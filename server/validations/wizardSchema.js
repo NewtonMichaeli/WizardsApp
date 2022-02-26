@@ -50,13 +50,13 @@ const filledItemSchema = Joi.object().valid(
     type: Joi.string().valid("RadioBoxList").required(),
     title: Joi.string().min(2).max(300).required(),
     checkedInput: Joi.string(),
-    elements: Joi.array([
+    elements: Joi.array().items(
         {
             type: Joi.string().valid("RadioBox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required()
         }
-    ]).required()
+    ).required()
 },
 {
     type: Joi.string().valid("CheckBoxList").required(),
@@ -64,13 +64,13 @@ const filledItemSchema = Joi.object().valid(
     checkedInputs: Joi.array(),
     name: Joi.string().required(),
     required: Joi.boolean(),
-    elements: Joi.array([
+    elements: Joi.array().items(
         {
             type: Joi.string().valid("Checkbox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required()
         }
-    ]).required()
+    ).required()
 })
 
 
@@ -145,65 +145,65 @@ const itemSchema = Joi.object().valid(
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     required: Joi.boolean(),
-    elements: Joi.array([
+    elements: Joi.array().items(
         {
             type: Joi.string().valid("RadioBox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required(),
             checked: Joi.boolean()
         }
-    ]).required()
+    ).required()
 },
 {
     type: Joi.string().valid("CheckBoxList").required(),
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     required: Joi.boolean(),
-    elements: Joi.array([
+    elements: Joi.array().items(
         {
             type: Joi.string().valid("CheckBox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required(),
             checked: Joi.boolean()
         }
-    ]).required()
+    ).required()
 })
 
 
 const wizardSchema = Joi.object({
     name: Joi.string().required(),
     title: Joi.string().min(2).max(300).required(),
-    pages: Joi.array([
+    pages: Joi.array().items(
         {
             title: Joi.string().required(),
-            sections: Joi.array([
+            sections: Joi.array().items(
                 {
                     title: Joi.string().min(2).required(),
-                    content: Joi.array([
-                            ...itemSchema
-                    ]).required()
+                    content: Joi.array().items(
+                            itemSchema
+                    ).required()
                 }
-        ]).required()
+        ).required()
         }
-    ])
+    )
 })
 
 const filledWizardSchema = Joi.object({
     id: Joi.number().required(),
     data: Joi.object({
-        pages: Joi.array([
+        pages: Joi.array().items(
             {
                 title: Joi.string().required(),
-                sections: Joi.array([
+                sections: Joi.array().items(
                     {
                         title: Joi.string().min(2).required(),
-                        content: Joi.array([
-                                ...filledItemSchema
-                        ]).required()
+                        content: Joi.array().items(
+                                filledItemSchema
+                        ).required()
                     }
-                ]).required()
+                ).required()
             }
-        ]).required()
+        ).required()
     }).required()
 })
 module.exports = {wizardSchema, filledWizardSchema}
