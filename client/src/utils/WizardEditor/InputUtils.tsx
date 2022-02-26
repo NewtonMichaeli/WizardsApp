@@ -6,6 +6,7 @@ import Add_img from '../../assets/wizard-controllers/add-white.png'
 import Required_True_img from '../../assets/Q-controllers/required-true.png'
 import Required_False_img from '../../assets/Q-controllers/required-false.png'
 import Remove_img from '../../assets/Q-controllers/no-grey.png'
+import Remove_list_img from '../../assets/Q-controllers/no-white.png'
 import Options_img from '../../assets/Q-controllers/options.png'
 // Redux:
 import { useDispatch, useSelector } from "react-redux"
@@ -79,14 +80,18 @@ export const AddInputHere: React.FC<{
 // Add List in a certain index (path)
 export const AddListHere: React.FC<{
   path: list_input_path_type,
-  lastOne?: boolean,
-  noElements?: boolean
-}> = ({path, lastOne, noElements}) => {
+  noElements?: boolean,
+  isInsideList?: true
+}> = ({path, noElements, isInsideList}) => {
 
   // Dispatch
   const dispatch = useDispatch()
   // States
   const {ActionType, ActionTrigger, Page} = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  // Prevent inserting a lists-list element into a list element
+  const Prevent_Inserting_ListsList_Into_List = (ActionTrigger.QuestionType !== QuestionTypes.LISTS_LIST
+    || ActionTrigger.QuestionType === QuestionTypes.LISTS_LIST && path.option === undefined)
+  // Is Last Element
   let IsLastElement = false
   if (Page) {
     const CurrentList = Page[path.section]?.elements[path.question] as ValidInputListType
@@ -95,13 +100,14 @@ export const AddListHere: React.FC<{
     else
       IsLastElement = Page[path.section].elements.length === path.question + 1
   }
-
   // Handlers
   const addHereHandler = (lastAddHere?: boolean) => dispatch<AddElementAction>(
     AddElement.QuestionList({
       ...path,
-      question: path.question,
-      option: path.option 
+      question: path.option
+        ? path.question
+        : path.question + (lastAddHere ? 1 : 0),
+      option: path.option !== undefined
         ? path.option + (lastAddHere ? 1 : 0) 
         : path.option
     })
@@ -116,6 +122,9 @@ export const AddListHere: React.FC<{
       : ""} 
       ${isEmptySection
       ? "no-elements"
+      : ""} 
+      ${isEmptySection && isInsideList
+      ? "no-elements-in-list"
       : ""}`)}>
       <section title='Add Here' onClick={()=>addHereHandler(isLastElement)}>
         <img src={Add_img} alt="Add Here" />
@@ -124,14 +133,16 @@ export const AddListHere: React.FC<{
 
   return (
     <>
-      {/* Add question here */}
+      {/* Add question-list here */}
       {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
         && ActionTrigger.Type === ElementTypes.QUESTION_LIST 
+        && Prevent_Inserting_ListsList_Into_List
         && <AddHereSection isEmptySection={noElements} />}
 
-      {/* Add question here (last element identifier) */}
+      {/* Add question-list here (last element identifier) */}
       {ActionType === WizardEditorActionTypes.ADDING_ELEMENT 
         && ActionTrigger.Type === ElementTypes.QUESTION_LIST 
+        && Prevent_Inserting_ListsList_Into_List
         && IsLastElement
         && <AddHereSection isLastElement />
       }
@@ -144,10 +155,9 @@ export const AddListHere: React.FC<{
 export const AddSubInputHere: React.FC<{
   path: sub_input_path_type,
   isInsideList?: boolean,
-  lastOne?: boolean,
   noElements?: boolean
   list_type: QuestionTypes.CHECKBOX | QuestionTypes.RADIOBOX
-}> = ({path, lastOne, noElements, list_type}) => {
+}> = ({path, noElements, list_type}) => {
 
   // Dispatch
   const dispatch = useDispatch<Dispatch<AddElementAction>>()
@@ -230,9 +240,18 @@ export const RequiredBtn: React.FC<{
   
 
 // Delete Question controller
-export const DeleteInputBtn: React.FC<{onClick: () => any}> = ({onClick}) =>
-  <button className={Q_Controllers_Styles["Q-controllers-btn"]} onClick={onClick}>
-    <img src={Remove_img} alt="Delete" title='Delete Question' />
+export const DeleteInputBtn: React.FC<{
+  onClick: () => any,
+  isDeleteList?: true
+}> = ({onClick, isDeleteList}) =>
+  <button className={getStyles(Q_Controllers_Styles, `Q-controllers-btn ${isDeleteList
+    ? 'delete-list'
+    : ''}`)} onClick={onClick}>
+    <img src={isDeleteList 
+      ? Remove_list_img 
+      : Remove_img} alt="Delete" title={isDeleteList 
+        ? 'Delete List'
+        : 'Delete Question'} />
   </button>
   
 
@@ -286,9 +305,3 @@ export const OptionsBtn: React.FC<{
     </div>
   </button>
 }
-
-
-export const Options = {
-
-}
-

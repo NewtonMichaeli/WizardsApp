@@ -259,6 +259,8 @@ export const RadioboxList: React.FC<{
   path: list_input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
   // Handlers
   const setCheckedInput = (name: string) => {
     element.checkedInput = name
@@ -273,6 +275,8 @@ export const RadioboxList: React.FC<{
           name={element.name}
           defaultValue={element.title}
           placeholder="Radiobox-List Title" />
+        {/* delete list */}
+        <DeleteInputBtn onClick={() => dispatch(RemoveElement.QuestionList(path))} isDeleteList />
       </div>
       <div className={Styles["btm-section"]}>
         {/* render radioboxes */}
@@ -286,8 +290,13 @@ export const RadioboxList: React.FC<{
       </div>
       {/* add input here */}
       {path.option !== undefined ? '' : <AddInputHere path={path as input_path_type} />}
+      {/* add sub-input here (if no elements exists) */}
+      {element.elements.length ? '' : 
+        <AddSubInputHere 
+          path={{...path, list: path.option, option: 0}} 
+          list_type={QuestionTypes.RADIOBOX} noElements />}
       {/* add list here */}
-      {path.option === undefined ? '' : <AddListHere path={path} />}
+      <AddListHere path={path} />
     </div>
   )
 }
@@ -298,6 +307,8 @@ export const CheckboxList: React.FC<{
   path: list_input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
   // Handlers
   const addCheckedInput = (name: string) => {
     element.checkedInputs = [...element.checkedInputs, name]
@@ -315,6 +326,8 @@ export const CheckboxList: React.FC<{
           name={element.name}
           defaultValue={element.title}
           placeholder="Checkbox-List Title" />
+        {/* delete list */}
+        <DeleteInputBtn onClick={() => dispatch(RemoveElement.QuestionList(path))} isDeleteList />
       </div>
       <div className={Styles["btm-section"]}>
         {element.elements.map((_element, i) => 
@@ -328,6 +341,11 @@ export const CheckboxList: React.FC<{
       </div>
       {/* add input here */}
       {path.option !== undefined ? '' : <AddInputHere path={path as input_path_type} />}
+      {/* add sub-input here (if no elements exists) */}
+      {element.elements.length ? '' :
+        <AddSubInputHere path={{...path, list: path.option, option: 0}} 
+          list_type={QuestionTypes.CHECKBOX} 
+          noElements />}
       {/* add list here */}
       <AddListHere path={path} />
     </div>
@@ -340,6 +358,9 @@ export const ListsList: React.FC<{
   path: input_path_type,
 }> = ({element, path}) => {
 
+  // Dispatch
+  const dispatch = useDispatch()
+
   return (
     <div className={getStyles(Styles, "Input Input-List Input-ListsList")}>
       <div className={Styles["upper-section"]}>
@@ -349,6 +370,8 @@ export const ListsList: React.FC<{
           name={element.name}
           defaultValue={element.title}
           placeholder="Lists-List Title" />
+        {/* delete list */}
+        <DeleteInputBtn onClick={() => dispatch(RemoveElement.QuestionList(path))} isDeleteList />
       </div>
       <div className={Styles["btm-section"]}>
         {/* map through elements */}
@@ -367,6 +390,9 @@ export const ListsList: React.FC<{
       </div>
       {/* add input here */}
       <AddInputHere path={path as input_path_type} />
+      {/* add sub-list here */}
+      {element.elements.length ? '' : 
+        <AddListHere path={{...path, option: 0}} noElements isInsideList />}
       {/* add list here */}
       <AddListHere path={path} />
     </div>

@@ -80,6 +80,7 @@ export const AddElementToState = (
     // Adding question-List
     case ElementTypes.QUESTION_LIST: {
       
+      console.log(action.payload)
       // Add Question inside given path
       const {page, section, question, option} = action.payload.path
       // option is undefined - adding question-list as a normal input
@@ -147,6 +148,35 @@ export const RemoveElementFromState = (
 
   // Remove en element
   switch (action.payload.element) {   // -- same as (state.ActionTriger.Type)
+
+    case ElementTypes.SUB_QUESTION: {
+      // Remove Question from given path
+      const {page, section, question, option, list} = action.payload.path
+      // List is undefined - remove sub-question from a normal list
+      if (list === undefined)
+        (state.WizardState?.pages[page][section].elements[question] as ValidInputListType)
+          .elements.splice(option, 1)
+      // List is defined - remove sub-question from a nested list
+      else (state.WizardState?.pages[page][section].elements[question] as InputTypes['Lists List'])
+        .elements[list].elements.splice(option, 1)
+      
+      // return new state without removed element & reinitiate other states
+      return ClearStateSideStats(state);
+    }
+    case ElementTypes.QUESTION_LIST: {
+      // Remove Question from given path
+      const {page, section, question, option} = action.payload.path
+      // Option is undefined - remove list from a section
+      if (option === undefined)
+        state.WizardState?.pages[page][section].elements
+          .splice(question, 1)
+      // Option is defined - remove list from a list
+      else (state.WizardState?.pages[page][section].elements[question] as ValidInputListType).elements
+        .splice(option, 1)
+      
+      // return new state without removed element & reinitiate other states
+      return ClearStateSideStats(state);
+    }
     case ElementTypes.QUESTION: {
       // Remove Question from given path
       const {page, section, question} = action.payload.path
