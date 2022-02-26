@@ -23,7 +23,7 @@ const Dashboard: React.FC = (/* user's wizards data */) => {
 
     const RenderDashboardContents = () => 
     <>
-        {UserData?.wizards.map(wizard => <DashboardWizard wizard={wizard} key={wizard.name} />)}
+        {UserData?.wizards.map(wizard => <DashboardWizard wizard={wizard} key={wizard.id} />)}
         {/* last element - add wizards: */}
         {UserData?.isAddingWizard && <DashboardAddWizardInput />}
         <DashboardAddWizardBtn />

@@ -57,6 +57,16 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
 }
 
 
+const ExtractDataToWizards = (server_wizard: any): WizardFormat => {
+  const wizard_content = JSON.parse(server_wizard.content)
+  return {
+    name: (wizard_content.name as string),
+    id: (server_wizard.id as string),
+    pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
+  }
+}
+
+
 // Get Wizards (optional id = specific wizard)
 export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
 
@@ -76,14 +86,7 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
     const data: any[] = server_res.data.results
     console.log(data)
     // Extract server_res data to valid format
-    let wizards: WizardFormat[] = [...data.map(wizard => {
-      const wizard_content = JSON.parse(wizard.content)
-      return {
-        name: (wizard_content.name as string),
-        id: (wizard.id as string),
-        pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
-      }
-    })]
+    let wizards: WizardFormat[] = [...data.map(wizard => ExtractDataToWizards(wizard))]
     console.log(wizards)
     // Load wizards success
     dispatch<UserAction>({ 
@@ -168,13 +171,15 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
     )
 
     // add wizard from response
-    console.log(server_res.data);
-    
-    const {id, content, results} = server_res.data
+    const returned_wizard = ExtractDataToWizards(server_res.data.results)
+    const {id, name, pages} = returned_wizard
+    // Dispatch success
     dispatch({
       type: UserActionTypes.ADD_WIZARD_SUCCESS,
       payload: {
-        new_wizard: server_res.data
+        new_wizard: {
+          id, name, pages
+        }
       }
     })
     // good feedback
@@ -182,6 +187,7 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
   }
   catch (err: any) {
     // abort adding wizard
+    console.log(err)
     dispatch(AbortAddingWizard())
     // error feedback
     dispatch(PushFeedback(false, 

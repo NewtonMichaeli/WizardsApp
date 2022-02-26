@@ -71,10 +71,12 @@ export default (state = initState, action: UserAction): user_state_type => {
         ) ?? []
       return { ...state }
     case 'ADD_WIZARD_SUCCESS':
+      console.log('success')
       if (state.UserData?.wizards) {
         state.UserData.wizards.push(action.payload.new_wizard)
         state.UserData.isAddingWizard = false
       }
+      console.log(state.UserData?.wizards)
       return { ...state }
     default:
       return state
