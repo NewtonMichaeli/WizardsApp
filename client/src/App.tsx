@@ -43,11 +43,7 @@ const App: React.FC = () => {
           />
         <Route 
           path="/edit/:id"
-          element={
-            <GetUserWizard>
-              <GetUserDetails children={<WizardEditor />} />
-            </GetUserWizard> 
-          } />
+          element={<GetUserWizard children={<WizardEditor />} />} />
         <Route 
           path="*"
           element={<GoToDashboard />}

@@ -17,14 +17,14 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
   
   // Extract wizard from wizards list at <user>
   const { UserData, isLoading, isAuthed } = getState().user
-  const CurrWizard = UserData?.wizards?.filter(wizard => wizard.id === id)[0] ?? null
+  const CurrWizard = UserData?.wizards?.filter(wizard => wizard.id.toString() === id)[0] ?? null
+  console.log(CurrWizard)
   
   if (isLoading === false && !CurrWizard && isAuthed) {
     // -- wizard not found - gen. auth_fail
     dispatch({type: WizardEditorActionTypes.WIZARD_NOT_FOUND})
     return
   }
-  console.log(CurrWizard);
   
   // Extract wizard on success - save to global state
   dispatch({

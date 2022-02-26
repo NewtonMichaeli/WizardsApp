@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 // Redux:
 import { bindActionCreators } from 'redux'
-import { RootState, WizardEditorActions } from '../../redux'
+import { RootState, UserActions, WizardEditorActions } from '../../redux'
 import { useDispatch } from 'react-redux'
 
 
@@ -13,9 +13,16 @@ export const GetUserWizard: React.FC<{children: JSX.Element}> = ({children}) => 
   // Get UserData
   const { id } = useParams();
   const { ExtractWizard } = bindActionCreators<RootState, any>(WizardEditorActions, useDispatch())
+  const { LoadUser, GetWizards } = bindActionCreators(UserActions, useDispatch())
+  // Handlers
+  const LoadUserAndSpecificWizard = async (id: string) => {
+    await LoadUser()
+    await GetWizards()
+    await ExtractWizard(id)
+  }
   useEffect(() => {
     if (id)
-      ExtractWizard(id)
+      LoadUserAndSpecificWizard(id)
     else
       window.location.href = '/dashboard'
   }, [])

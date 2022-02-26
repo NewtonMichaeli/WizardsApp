@@ -6,7 +6,7 @@ import { Dispatch } from "redux"
 import { RootState } from ".."
 // Server configs:
 import { SERVER_CREATE_WIZARD_URL, SERVER_DELETE_WIZARD, SERVER_GET_WIZARDS_URL, SERVER_USERDETAILS_URL } from "../../configs/_server"
-import { fake_wizard, WizardFormat } from "../../interfaces/WizardFormat"
+import { fake_wizard, WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat"
 import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 import { AbortAddingWizard } from "../actions/User"
@@ -73,19 +73,31 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
       }
     })
     
+    const data: any[] = server_res.data.results
+    console.log(data)
+    // Extract server_res data to valid format
+    let wizards: WizardFormat[] = [...data.map(wizard => {
+      const wizard_content = JSON.parse(wizard.content)
+      return {
+        name: (wizard_content.name as string),
+        id: (wizard.id as string),
+        pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
+      }
+    })]
+    console.log(wizards)
     // Load wizards success
-    dispatch({ 
+    dispatch<UserAction>({ 
       type: UserActionTypes.LOAD_WIZARDS_SUCCESS,
       payload: {
         UserData: {
-          wizards: server_res.data.results
+          wizards
         }
       }
     })
   }
   catch (err: any) {
     console.log(err)
-    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    // dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
   
 }
@@ -156,6 +168,9 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
     )
 
     // add wizard from response
+    console.log(server_res.data);
+    
+    const {id, content, results} = server_res.data
     dispatch({
       type: UserActionTypes.ADD_WIZARD_SUCCESS,
       payload: {
