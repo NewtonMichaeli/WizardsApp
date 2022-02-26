@@ -15,11 +15,11 @@ const userSentSuccessfuly = (res, user) => res.status(200).json({user}) //get th
 //Wizard responses:
 const wizardNotFoundErr = res => res.status(404).send("wizards not found.")
 
-const wizardCreatedSuccessfuly = res => res.status(200).send("wizard created successfuly.")
+const wizardCreatedSuccessfuly = res => res.status(200).json({results})
 
 const wizardDeletedSuccessfuly = res => res.status(200).send("wizard deleted successfuly.")
 
-const wizardUpdatedSuccessfuly = res => res.status(200).send("wizard updated successfuly.")
+const wizardUpdatedSuccessfuly = res => res.status(200).json({results})
 
 const wizardSentSuccessfuly = (res, wizard) => res.status(200).json({results: wizard})
 
