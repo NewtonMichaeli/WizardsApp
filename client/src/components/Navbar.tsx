@@ -8,7 +8,7 @@ import { getStyles } from '../controllers'
 // Styles:
 import Styles from "../styles/components/Navbar.module.css"
 import ProfileWindow from './ProfileWindow'
-import { profile } from 'console'
+
 
 const Navbar:React.FC = () => {
     // Profile window status - closed/opened

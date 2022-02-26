@@ -16,9 +16,9 @@ export enum UserActionTypes {
 }
 
 export enum UserRoleTypes {
-    USER = "User",
-    WIZARD_CREATOR = "Wizard Creator",
-    ADMIN = "Admin"
+    USER = "user",
+    WIZARD_CREATOR = "wizard Creator",
+    ADMIN = "admin"
 }
   
 interface AuthFailAction {

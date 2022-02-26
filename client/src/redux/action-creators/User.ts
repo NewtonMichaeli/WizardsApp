@@ -6,7 +6,7 @@ import { Dispatch } from "redux"
 import { RootState } from ".."
 // Server configs:
 import { SERVER_CREATE_WIZARD_URL, SERVER_DELETE_WIZARD, SERVER_GET_WIZARDS_URL, SERVER_USERDETAILS_URL } from "../../configs/_server"
-import { fake_wizard, WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat"
+import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat"
 import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 import { AbortAddingWizard } from "../actions/User"
@@ -100,7 +100,7 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
   }
   catch (err: any) {
     console.log(err)
-    // dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
   
 }
