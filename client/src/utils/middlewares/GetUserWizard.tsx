@@ -12,12 +12,11 @@ import { useDispatch } from 'react-redux'
 export const GetUserWizard: React.FC<{children: JSX.Element}> = ({children}) => {
   // Get UserData
   const { id } = useParams();
-  const { ExtractWizard } = bindActionCreators<RootState, any>
-    (WizardEditorActions, useDispatch())
+  const { ExtractWizard } = bindActionCreators<RootState, any>(WizardEditorActions, useDispatch())
   useEffect(() => {
     if (id)
       ExtractWizard(id)
-    else 
+    else
       window.location.href = '/dashboard'
   }, [])
   return children

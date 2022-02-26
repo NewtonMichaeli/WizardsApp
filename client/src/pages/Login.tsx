@@ -22,8 +22,6 @@ const Login: React.FC = () => {
 
     const { SignIn } = bindActionCreators(AuthActions, useDispatch())
 
-    // const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
-
     return (
         <div className={Styles["Login"]}>
             <div className={Styles["login-container"]}>

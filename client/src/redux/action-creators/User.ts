@@ -5,7 +5,7 @@ import axios from "axios"
 import { Dispatch } from "redux"
 import { RootState } from ".."
 // Server configs:
-import { SERVER_CREATE_WIZARD_URL, SERVER_DELETE_WIZARD } from "../../configs/_server"
+import { SERVER_CREATE_WIZARD_URL, SERVER_DELETE_WIZARD, SERVER_GET_WIZARDS_URL, SERVER_USERDETAILS_URL } from "../../configs/_server"
 import { fake_wizard, WizardFormat } from "../../interfaces/WizardFormat"
 import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
@@ -14,7 +14,7 @@ import { PushFeedback } from "../actions/UI"
 
 
 // Load User Action creator, called directly from <App> component
-export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
+export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
   // Try receiving user data
   const token = getState().auth.token
   dispatch({ type: UserActionTypes.TRY_LOAD_USER })   // set loading to true
@@ -25,45 +25,27 @@ export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<
       dispatch({ type: UserActionTypes.AUTH_FAIL })
       return
     }
-    
-    // --- [ln 6-40] Uncomment/Comment if server responds
-    const res = {
-      data: {
-        user: {
-            name: "CloudKid",
-            email: "kid@cloud.com",
-            role: UserRoleTypes.ADMIN
-        }
-      }
-    }
 
-    // // if id is null - get all wizards
-    // const server_res = await axios.get(
-    //   id ? SERVER_USERDETAILS_URL : SERVER_SPECIFIC_WIZARD_URL + id,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "auth-token": token
-    //     }
-    // })
+    const server_res = await axios.get(SERVER_USERDETAILS_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token
+      }
+    })
     
-    const wizard_data = localStorage.getItem('data')
     // extract user details from response
-    const user = res.data.user
-    // fake init dispatch - testing
+    const {name, email, role} = server_res.data.user
+    console.log("%s%s%s", name, email, role);
+    
     dispatch({
       type: UserActionTypes.LOAD_USER_SUCCESS,
       payload: {
         UserData: {
-          username: user['name'],
-          email: user['email'],
-          role: user['role'],
+          username: name,
+          email,
+          role,
           isAddingWizard: false,
-          // wizards: fake_wizard   // load fake wizards for now
-          wizards: wizard_data
-            ? [JSON.parse(wizard_data)]
-            : fake_wizard
-          // load fake wizards for now
+          wizards: []
         }
       }
     })
@@ -72,6 +54,40 @@ export const LoadUser = (id: string | null = null) => async (dispatch: Dispatch<
     console.log(err)
     dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
+}
+
+
+// Get Wizards (optional id = specific wizard)
+export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
+
+  // Try receiving user wizards
+  const token = getState().auth.token ?? ""
+  try {
+
+    // Get wizards
+    const server_res = await axios.get(
+      SERVER_GET_WIZARDS_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token
+      }
+    })
+    
+    // Load wizards success
+    dispatch({ 
+      type: UserActionTypes.LOAD_WIZARDS_SUCCESS,
+      payload: {
+        UserData: {
+          wizards: server_res.data.results
+        }
+      }
+    })
+  }
+  catch (err: any) {
+    console.log(err)
+    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+  }
+  
 }
 
 
@@ -138,17 +154,12 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
         }
       }
     )
-    
-    const wizard_data: WizardFormat = {
-      name: "New Wizard",
-      id: "ckjwoecwer",
-      pages: []
-    }
+
     // add wizard from response
     dispatch({
       type: UserActionTypes.ADD_WIZARD_SUCCESS,
       payload: {
-        new_wizard: server_res?.data ?? wizard_data
+        new_wizard: server_res.data
       }
     })
     // good feedback

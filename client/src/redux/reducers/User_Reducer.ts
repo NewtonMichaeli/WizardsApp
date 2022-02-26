@@ -33,10 +33,27 @@ export default (state = initState, action: UserAction): user_state_type => {
     case 'LOAD_USER_SUCCESS':
       return {
         // ...state,
-        isLoading: false,
+        isLoading: true,
         isAuthed: true,
         UserData: action.payload.UserData
       }
+    case 'LOAD_WIZARDS_SUCCESS':
+      if (state.UserData) return {
+        ...state,
+        isLoading: false,
+        UserData: {
+          ...state.UserData,
+          wizards: action.payload.UserData.wizards
+        }
+      }
+      else return {
+        ...state,
+        UserData: null,
+        isAuthed: false,
+        isLoading: false
+      }
+      
+    // Wizard functionallity:
     case 'ADDING_WIZARD':
       if (state.UserData)
         // -- set isAddingWizard state to true
