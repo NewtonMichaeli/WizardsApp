@@ -5,12 +5,12 @@ const mysql = require('mysql')
 const asyncQuery = promisify(con.query.bind(con));
 
 const createWizard = async (wizard, userId) => {
-    const query = mysql.format(`INSERT INTO wizards (id, createdBy, filled, content, results) VALUES (NULL, ?, ?, ?, ?)`, [userId, 0, JSON.parse(wizard), JSON.parse([])])
+    const query = mysql.format(`INSERT INTO wizards (id, createdBy, filled, content, results) VALUES (NULL, ?, ?, ?, ?)`, [userId, 0, JSON.stringify(wizard), JSON.stringify([])])
     try {
         await asyncQuery(query)
         return true
     }
-    catch {
+    catch(err) {
         return false
     }
 }
@@ -29,7 +29,7 @@ const deleteWizard = async (wizardId) => {
 
 const updateWizard = async (wizardId, newWizard) => {
 
-    const query = mysql.format(`UPDATE wizards SET content = ?, WHERE wizards.id = ?`, [JSON.parse(newWizard), wizardId])
+    const query = mysql.format(`UPDATE wizards SET content = ?, WHERE wizards.id = ?`, [JSON.stringify(newWizard), wizardId])
     try {
         await asyncQuery(query)
         return true

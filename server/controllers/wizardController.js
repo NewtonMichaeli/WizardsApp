@@ -5,9 +5,9 @@ const wizardRequests = require('../db/requestsHandler/wizardRequests')
 const createWizard = async (req, res) => {
 
     //data extracting
-    let {wizard} = req.body
+    let wizard = req.body
     const {user} = req
-
+    
     //continue only if the role is wizardCreator or admin
     if(!(req.user.role === "admin" || req.user.role === "wizardCreator")) return resHandler.accessDeniedErr(res)
 
