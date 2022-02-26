@@ -1,5 +1,6 @@
 const resHandler = require('../utils/responseHandler')
 const {wizardSchema, filledWizardSchema} = require('../validations/wizardSchema')
+const wizardRequests = require('../db/requestsHandler/wizardRequests')
 
 const createWizard = async (req, res) => {
 
