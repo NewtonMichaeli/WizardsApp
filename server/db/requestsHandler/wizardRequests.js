@@ -93,7 +93,7 @@ const getWizards = async () => {
     const query = `SELECT * FROM wizards`
     try {
         const result = await asyncQuery(query)
-        return result[0]
+        return result
     }
     catch {
         return false
