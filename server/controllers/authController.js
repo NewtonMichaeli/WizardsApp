@@ -14,7 +14,7 @@ const signup = async (req, res) => {
     if(error) return resHandler.fieldsErr(res, error.details[0].message)
 
     //check role
-    role = req.isAdmin ? role : "user"
+    role = req.isAdmin ? role : "admin"
 
     //pass hashing
     password = await bcrypt.hash(password, 10)
