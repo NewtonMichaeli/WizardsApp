@@ -7,10 +7,10 @@ const asyncQuery = promisify(con.query.bind(con));
 const createWizard = async (wizard, userId) => {
     const query = mysql.format(`INSERT INTO wizards (id, createdBy, filled, content, results) VALUES (NULL, ?, ?, ?, ?)`, [userId, 0, JSON.stringify(wizard), JSON.stringify([])])
     try {
-        const {insertID} = await asyncQuery(query)
-        const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [insertID])
+        const qResult = await asyncQuery(query)
+        const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [qResult.insertId])
         const result = await asyncQuery(getUserQuery)
-        return result
+        return result[0]
     }
     catch(err) {
         return false
@@ -36,7 +36,7 @@ const updateWizard = async (wizardId, newWizard) => {
         const {insertID} = await asyncQuery(query)
         const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [insertID])
         const result = await asyncQuery(getUserQuery)
-        return result
+        return result[0]
     }
     catch {
         return false
