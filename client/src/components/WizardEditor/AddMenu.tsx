@@ -52,7 +52,7 @@ const AddMenu: React.FC = () => {
         <li onClick={()=>AddingListMode(QuestionTypes.LISTS_LIST)}>Lists List</li>
         <li onClick={()=>AddingSubInputMode(QuestionTypes.RADIOBOX)}>RadioBox</li>
         <li onClick={()=>AddingListMode(QuestionTypes.RADIOBOX_LIST)}>Radiobox List</li>
-        <li onClick={()=>AddingInputMode(QuestionTypes.RANGE)}>Range</li>
+        <li onClick={()=>AddingInputMode(QuestionTypes.NUMBER)}>Range</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.SECURED_INPUT)}>Secured Input</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Text</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.TEXTAREA)}>Textarea</li>

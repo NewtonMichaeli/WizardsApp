@@ -1,0 +1,138 @@
+/* Styles for WizardEditor : Input modules */
+
+/* Global styling for all inputs */
+.Input {
+  width: 100%;
+  height: fit-content;
+  /* position */
+  position: relative;
+  padding: 0.6rem 1rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 1rem 0;
+  /* animation */
+  animation: onEnterQ 0.6s 0.4s forwards;
+  /* init state */
+  border-left: 2px solid #4ef;
+}
+.Input .upper-section {
+  height: 1.7rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+/* input */
+.Input .upper-section input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 2px solid #4a416466;
+  padding: 0.25rem 0.4rem;
+  width: 11rem;
+  height: 90%;
+  /* text */
+  font-weight: 300;
+  color: #555;
+}
+/* question controllers */
+.Input .upper-section .q-controllers {
+  height: 100%;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 0.5rem;
+}
+/* question controllers */
+.Input h1.btm-section {
+  height: 1.8rem;
+  width: 11rem;
+  background-color: #ccc;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  margin-top: 0.2rem;
+  /* text */
+  color: #888;
+  font-weight: 300;
+  font-family: "Lato", sans-serif;
+  font-size: 0.8rem;
+  /* mouse */
+  cursor: default;
+}
+
+/* Partial Input : Checkbox, Radiobox, (partial inputs...) */
+.Input.Input-Partial {
+  border-left: none !important;
+  flex-direction: row;
+  /* background-color: red; */
+  width: 100%;
+  margin: 0.2rem 0;
+}
+.Input.Input-Partial .upper-section {
+  /* layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 0.3rem;
+  background-color: transparent;
+}
+.Input.Input-Partial .upper-section .title {
+  width: 9rem;
+}
+.Input.Input-Partial .upper-section input[type="radio"],
+.Input.Input-Partial .upper-section input[type="checkbox"] {
+  width: 0.9rem;
+  margin-right: 0.7rem;
+}
+
+/* List Input : Checkbox-List, Radiobox-List, Lists-List */
+.Input.Input-List {
+  margin: 1rem 0;
+  padding: 0.4rem 1rem;
+  height: max-content;
+  /* layout */
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.Input.Input-List > .upper-section {
+  margin-right: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+.Input.Input-List > .btm-section {
+  height: max-content;
+  /* width: fit-content; */
+  width: 90%;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/*// TEXT
+// TEXTAREA
+// SECURED_INPUT
+// RANGE
+// CHECKBOX
+// IMAGE
+// RADIOBOX_LIST
+// CHECKBOX_LIST
+// LISTS_LIST
+// RADIOBOX */
+
+/* animations */
+
+@keyframes onEnterQ {
+  to {
+    border-left: 2px solid #4a416499;
+  }
+}

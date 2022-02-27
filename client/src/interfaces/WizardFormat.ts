@@ -2,6 +2,7 @@
 
 import { Url } from "url"
 import { QuestionTypes } from "../redux/types"
+import { WizardServerFormFormat } from "./WizardFormat_Server"
 
 
 // All Input types for a Wizard to have
@@ -34,8 +35,8 @@ export interface InputTypes {
         min: number,
         max: number
     },
-    "Range": {
-        type: QuestionTypes.RANGE,
+    "Number": {
+        type: QuestionTypes.NUMBER,
         title: string,
         name: string,
         required: boolean,
@@ -91,7 +92,7 @@ export type ValidInputType =
     InputTypes['Label'] |
     InputTypes['Checkbox'] |
     InputTypes['Radiobox'] |
-    InputTypes['Range'] |
+    InputTypes['Number'] |
     InputTypes['SecuredInput'] |
     InputTypes['Text'] |
     InputTypes['Textarea'] |
@@ -328,38 +329,120 @@ export const fake_wizard: WizardFormat[] = [
 ]
 
 
-// const wizardSchema = Joi.object({
-//     name: Joi.string().required(),
-//     title: Joi.string().min(2).max(300).required(),
-//     pages: Joi.array([
-//         {
-//             title: Joi.string().required(),
-//             sections: Joi.array([
-//                 {
-//                     title: Joi.string().min(2).required(),
-//                     content: Joi.array([
-//                             ...itemSchema
-//                     ]).required()
-//                 }
-//         ]).required()
-//         }
-//     ])
-// })
-
-// const filledWizardSchema = Joi.object({
-//     id: Joi.number().required(),
-//     data: Joi.object({
-//         pages: Joi.array([
-//             {
-//                 title: Joi.string().required(),
-//                 sections: Joi.array([
-//                     {
-//                         title: Joi.string().min(2).required(),
-//                         content: Joi.array([
-//                                 ...filledItemSchema
-//                         ]).required()
-//                     }
-//                 ]).required()
-//             }
-//         ]).required()
-//     }).required()
+// Valid Answer struct
+export const fake_answer: WizardServerFormFormat[] = [
+    {
+        name: "Wizard 1.0",
+        id: "j18cn63ng98hHi9",
+        pages: [
+            // page 1
+            [
+                // section 1
+                {
+                    name: "Section 1",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "1",
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "2",
+                            value: ""
+                        },
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "3",
+                        },
+                        {
+                            type: QuestionTypes.SECURED_INPUT,
+                            name: "4",
+                            value: ""
+                        },
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "5",
+                        },
+                        {
+                            type: QuestionTypes.TEXTAREA,
+                            name: "6",
+                            value: ""
+                        },
+                    ]
+                },
+                {
+                    name: "Section 2",
+                    elements: []
+                },
+                {
+                    name: "Section 3",
+                    elements: [
+                        {
+                            type: QuestionTypes.CHECKBOX_LIST,
+                            name: "xxwqeocwoqwxwqe",
+                            checkedElements: ["xoZerpxqixwq2"],
+                        },
+                        {
+                            type: QuestionTypes.RADIOBOX_LIST,
+                            name: "xxwqeoccheckwoe",
+                            checkedElement: "ciwq4ceeaa",
+                        },
+                        {
+                            type: QuestionTypes.LISTS_LIST,
+                            name: "xxwqeocwoe",
+                            elements: [
+                                {
+                                    name: "list-wexqiwaeuv",
+                                    type: QuestionTypes.CHECKBOX_LIST,
+                                    checkedElements: []
+                                },
+                                {
+                                    name: "list-ajwrvnb9ur",
+                                    type: QuestionTypes.RADIOBOX_LIST,
+                                    checkedElement: ""
+                                }
+                            ]
+                        },
+                    ]
+                }
+            ],
+            // page 2
+            [
+                // section 1
+                {
+                    name: "Section 4",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "7"
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "8",
+                            value: ""
+                        }
+                    ]
+                },
+                {
+                    name: "Section 5",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "9"
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "10",
+                            value: ""
+                        }
+                    ]
+                }
+            ]      
+        ]
+    },
+    {
+        name: "Wizard 2.0",
+        id: "X18HZ63YgX8hH01",
+        pages: []
+    },
+]

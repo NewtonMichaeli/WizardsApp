@@ -13,6 +13,8 @@ import Dashboard from './pages/Dashboard'
 import WizardStats from './pages/WizardStats'
 import WizardEditor from './pages/WizardEditor'
 import { GetUserWizard } from './utils/middlewares/GetUserWizard'
+import { GetUserWizardForm } from './utils/middlewares/GetUserWizardForm'
+import WizardForm from './pages/WizardForm'
 
 
 const App: React.FC = () => {
@@ -28,7 +30,7 @@ const App: React.FC = () => {
         <Route 
           path="/signin"
           element={<Login />}
-        />
+          />
         <Route 
           path="/signup"
           element={<Register />}
@@ -39,12 +41,16 @@ const App: React.FC = () => {
           />
         <Route 
           path="/view/:id"
-          element={<GetUserDetails children={<WizardStats />} />}
+          element={<GetUserWizard children={<WizardStats />} />}
           />
         <Route 
           path="/edit/:id"
-          element={<GetUserWizard children={<WizardEditor />} />} />
-        
+          element={<GetUserWizard children={<WizardEditor />} />} 
+          />
+        <Route 
+          path="/wizard/:id"
+          element={<GetUserWizardForm children={<WizardForm />} />} 
+          />
         <Route 
           path="*"
           element={<GoToDashboard />}

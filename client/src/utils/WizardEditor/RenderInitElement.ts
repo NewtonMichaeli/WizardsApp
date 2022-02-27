@@ -57,9 +57,9 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
         required: false,
         title: "New SecuredInput field",
       }
-    case QuestionTypes.RANGE:
+    case QuestionTypes.NUMBER:
       return {
-        type: QuestionTypes.RANGE,
+        type: QuestionTypes.NUMBER,
         min: 6,
         max: 16,
         name: uuidv4(),

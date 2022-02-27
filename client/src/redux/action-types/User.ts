@@ -35,6 +35,7 @@ interface LoadUserSuccessAction {
                 | UserRoleTypes.USER
                 | UserRoleTypes.WIZARD_CREATOR
             wizards: WizardFormat[]
+            results: WizardFormat[]
             isAddingWizard: false       // false on load-success
         }
     }
@@ -45,6 +46,7 @@ interface LoadWizardsSuccessAction {
     payload: {
         UserData: {
             wizards: WizardFormat[]
+            results: WizardFormat[]
         }
     }
 }

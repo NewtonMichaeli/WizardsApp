@@ -43,7 +43,8 @@ export default (state = initState, action: UserAction): user_state_type => {
         isLoading: false,
         UserData: {
           ...state.UserData,
-          wizards: action.payload.UserData.wizards
+          wizards: action.payload.UserData.wizards,
+          results: action.payload.UserData.results,
         }
       }
       else return {

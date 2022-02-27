@@ -79,7 +79,7 @@ const Section: React.FC<{
   const path: section_path_type = {
     page: page_idx,
     section: section_idx
-  }, IsLastElement = section_idx + 1 === WizardState?.pages[page_idx].length
+  }, IsLastElement = section_idx + 1 === WizardState?.pages[page_idx]?.length
   
   // Dispatch
   const dispatch = useDispatch()

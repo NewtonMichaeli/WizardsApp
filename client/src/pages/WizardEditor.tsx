@@ -16,7 +16,7 @@ import { getStyles } from '../controllers'
 // Components:
 import Section, { AddSectionHere } from '../components/WizardEditor/Wizard.Section'
 import AddMenu from '../components/WizardEditor/AddMenu'
-import { BtnAdd, BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { BtnAdd, BtnFinish, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 import { ElementTypes } from '../redux/types'
 import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
 import { PushFeedback } from '../redux/actions/UI'
@@ -104,6 +104,7 @@ const WizardEditor: React.FC = () => {
           <div className={Styles["page-controllers"]}>
             <BtnPageBack onClick={()=>dispatch(MovePage('BACK'))} />
             <BtnPageNext onClick={()=>dispatch(MovePage('NEXT'))} />
+            <BtnLeave />
             <BtnFinish onClick={SaveChanges} />
             <BtnAdd focus={ElementsListMode} onClick={closeAddMenuHandler} />
             { ElementsListMode && <AddMenu /> }

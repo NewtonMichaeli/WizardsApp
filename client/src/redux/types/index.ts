@@ -11,7 +11,7 @@ export enum QuestionTypes {
   RADIOBOX_LIST = "Radiobox List",
   CHECKBOX_LIST = "Checkbox List",
   LISTS_LIST = "Lists List",
-  RANGE = "Range",
+  NUMBER = "Number",
   RADIOBOX = "Radiobox",
 }
 

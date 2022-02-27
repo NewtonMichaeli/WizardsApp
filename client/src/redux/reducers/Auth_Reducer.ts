@@ -18,7 +18,7 @@ export default (state = initState, action: AuthAction) => {
     case 'LOGIN_SUCCESS':
     case 'REGISTER_SUCCESS':
       localStorage.setItem(TOKEN_NAME, action.payload.token)  // insert token to localStorage
-      window.location.href = "/dashboard"   // redirect to dashboard
+      // window.location.href = "/dashboard"   // redirect to dashboard
       return {
         ...state,
         isAuthed: true,

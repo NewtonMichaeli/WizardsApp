@@ -12,6 +12,7 @@ import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardStats/Wizard.Section'
 import { BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
 
 
 // Stats mode type - <stats> option or <results> option:
@@ -26,32 +27,22 @@ const WizardStats: React.FC = () => {
   const { id } = useParams();
 
   const { UserData, isLoading, isAuthed } = useSelector<RootState, RootState['user']>(state => state.user)
+  const { Page, PageIdx, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
 
-  const CurrWizard = UserData?.wizards.filter(wizard => wizard.id === id)[0] ?? null
   // State for viewing mode - <stats> option or <results> option:
-  const [StatsMode, setStatsMode] = useState<StatsMode_type>(
-    StatsMode_types.STATS
-  )
-  // Current page index
-  const [PageIdx, changePageIdx] = useState(1)
-  // Current page
-  const Page = CurrWizard?.pages[0]
+  const [StatsMode, setStatsMode] = useState<StatsMode_type>(StatsMode_types.STATS)
 
-  if (isLoading === false && !CurrWizard && isAuthed)
-    // -- wizard not found
-    window.location.href = '/dashboard'
-
-  if (CurrWizard) return (
+  if (!isLoading) return (
     <div className={Styles["WizardStats"]}>
       <div className={Styles["wizard-content-container"]}>
         {/* header */}
         <section className={Styles["container-header"]}>
           <section className={Styles["header-top"]}>
             <h1 className={Styles["wizard-title"]}>
-              Currently Viewing: {CurrWizard?.name}
+              Currently Viewing: {WizardState?.name}
             </h1>
             <h5 className={Styles["page-counter"]}>
-              Page {PageIdx} out of {CurrWizard?.pages.length}
+              Page {PageIdx} out of {WizardState?.pages.length}
             </h5>
             <div className={Styles["page-controllers"]}>
               <BtnPageBack onClick={()=>2} />

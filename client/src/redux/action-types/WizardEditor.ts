@@ -1,4 +1,4 @@
-// Action types for User
+// Action types for WizardEditor
 
 import { ValidInputType, WizardFormat, WizardSectionFormat } from "../../interfaces/WizardFormat";
 import { input_path_type, list_input_path_type, sub_input_path_type } from "../../utils/WizardEditor/types";

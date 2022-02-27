@@ -27,8 +27,8 @@ const ParseElement: ParseElement__props = ({element, question, page, section}) =
       return <Textarea element={element as InputTypes['Textarea']} path={path} />
     case QuestionTypes.SECURED_INPUT:
       return <SecuredInput element={element as InputTypes['SecuredInput']} path={path} />
-    case QuestionTypes.RANGE:
-      return <Range element={element as InputTypes['Range']} path={path} />
+    case QuestionTypes.NUMBER:
+      return <Range element={element as InputTypes['Number']} path={path} />
     // case QuestionTypes.IMAGE:
     //   return <Image element={element as InputTypes['Image']} path={path} />
     // case QuestionTypes.RADIOBOX:

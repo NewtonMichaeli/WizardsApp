@@ -8,8 +8,6 @@ import { RootState } from ".."
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
-import { SERVER_GET_WIZARDS_URL } from "../../configs/_server"
-import { UserAction, UserActionTypes } from "../action-types/User"
 
 
 // Load User Action creator, called directly from <App> component
@@ -69,4 +67,3 @@ export const SaveChanges = (wizard_id: string) => async (
   //   payload: CurrWizard
   // })
 }
-

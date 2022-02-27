@@ -156,7 +156,7 @@ export const SecuredInput: React.FC<{
 
 
 export const Range: React.FC<{
-  element: InputTypes['Range'],
+  element: InputTypes['Number'],
   path: input_path_type,
 }> = ({element, path}) => {
 

@@ -2,75 +2,82 @@ const Joi = require('@hapi/joi')
 
 const filledItemSchema = Joi.object().valid(
 {
+    name: Joi.string().required(),
     type: Joi.string().valid("Label").required(),
     title: Joi.string().min(2).max(300).required(),
-    name: Joi.string().required()
 },
 {
+    name: Joi.string().required(),
     type: Joi.string().valid("Checkbox").required(),
     title: Joi.string().min(2).max(300).required(),
-    name: Joi.string().required()
 },
 {
+    name: Joi.string().required(),
     type: Joi.string().valid("Text").required(),
     title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
 {
+    name: Joi.string().required(),
     type: Joi.string().valid("Number").required(),
     title: Joi.string().min(2).max(300).required(),
     value: Joi.number().required()
 },
 {
-    type: Joi.string().valid("TextArea").required(),
+    name: Joi.string().required(),
+    type: Joi.string().valid("Textarea").required(),
     title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
+// {
+//     name: Joi.string().required(),
+//     type: Joi.string().valid("Range").required(),
+//     title: Joi.string().min(2).max(300).required(),
+//     value: Joi.number()
+// },
 {
-    type: Joi.string().valid("Range").required(),
+    name: Joi.string().required(),
+    type: Joi.string().valid("Radiobox").required(),
     title: Joi.string().min(2).max(300).required(),
-    value: Joi.number()
 },
 {
-    type: Joi.string().valid("RadioBox").required(),
-    title: Joi.string().min(2).max(300).required(),
-    name: Joi.string().required()
-},
-{
+    name: Joi.string().required(),
     type: Joi.string().valid("SecuredInput").required(),
     title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
 {
+    name: Joi.string().required(),
     type: Joi.string().valid("Image").required(),
     title: Joi.string().min(2).max(300).required(),
     value: Joi.string()
 },
 {
-    type: Joi.string().valid("RadioBoxList").required(),
+    name: Joi.string().required(),
+    type: Joi.string().valid("Radiobox List").required(),
     title: Joi.string().min(2).max(300).required(),
     checkedInput: Joi.string(),
-    elements: Joi.array().items(
-        {
-            type: Joi.string().valid("RadioBox").required(),
-            title: Joi.string().min(2).max(300).required(),
-            name: Joi.string().required()
-        }
-    ).required()
+    // elements: Joi.array().items(
+    //     {
+    //         type: Joi.string().valid("RadioBox").required(),
+    //         title: Joi.string().min(2).max(300).required(),
+    //         name: Joi.string().required()
+    //     }
+    // ).required()
 },
 {
-    type: Joi.string().valid("CheckBoxList").required(),
+    type: Joi.string().valid("Checkbox List").required(),
     title: Joi.string().min(2).max(300).required(),
-    checkedInputs: Joi.array(),
     name: Joi.string().required(),
-    required: Joi.boolean(),
-    elements: Joi.array().items(
-        {
-            type: Joi.string().valid("Checkbox").required(),
-            title: Joi.string().min(2).max(300).required(),
-            name: Joi.string().required()
-        }
-    ).required()
+    checkedInputs: Joi.array(),
+    // required: Joi.boolean(),
+    // elements: Joi.array().items(
+    //     {
+    //         type: Joi.string().valid("Checkbox").required(),
+    //         title: Joi.string().min(2).max(300).required(),
+    //         name: Joi.string().required()
+    //     }
+    // ).required()
 })
 
 
@@ -104,7 +111,7 @@ const itemSchema = Joi.object().valid(
     required: Joi.boolean()
 },
 {
-    type: Joi.string().valid("TextArea").required(),
+    type: Joi.string().valid("Textarea").required(),
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     regex: Joi.string(),
@@ -112,15 +119,15 @@ const itemSchema = Joi.object().valid(
     max: Joi.number(),
     required: Joi.boolean(),
 },
+// {
+//     type: Joi.string().valid("Number").required(),
+//     title: Joi.string().min(2).max(300).required(),
+//     name: Joi.string().required(),
+//     range: Joi.number(),
+//     required: Joi.boolean()
+// },
 {
-    type: Joi.string().valid("Number").required(),
-    title: Joi.string().min(2).max(300).required(),
-    name: Joi.string().required(),
-    range: Joi.number(),
-    required: Joi.boolean()
-},
-{
-    type: Joi.string().valid("RadioBox").required(),
+    type: Joi.string().valid("Radiobox").required(),
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     required: Joi.boolean()
@@ -141,13 +148,13 @@ const itemSchema = Joi.object().valid(
     src: Joi.string().required()
 },
 {
-    type: Joi.string().valid("RadioBoxList").required(),
+    type: Joi.string().valid("Radiobox List").required(),
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     required: Joi.boolean(),
     elements: Joi.array().items(
         {
-            type: Joi.string().valid("RadioBox").required(),
+            type: Joi.string().valid("Radiobox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required(),
             checked: Joi.boolean()
@@ -155,13 +162,13 @@ const itemSchema = Joi.object().valid(
     ).required()
 },
 {
-    type: Joi.string().valid("CheckBoxList").required(),
+    type: Joi.string().valid("Checkbox List").required(),
     title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
     required: Joi.boolean(),
     elements: Joi.array().items(
         {
-            type: Joi.string().valid("CheckBox").required(),
+            type: Joi.string().valid("Checkbox").required(),
             title: Joi.string().min(2).max(300).required(),
             name: Joi.string().required(),
             checked: Joi.boolean()

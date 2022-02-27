@@ -2,6 +2,7 @@
 
 import { ElementTypes, QuestionTypes } from ".";
 import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
+import { WizardFormFormat, WizardFormPageFormat } from "../../interfaces/WizardFormat_Form";
 import { UserRoleTypes } from "../action-types/User";
 import { WizardEditorActionTypes } from "../action-types/WizardEditor";
 
@@ -14,6 +15,7 @@ export interface auth_state_type
   isLoading: boolean,
 }
 
+
 // UI state type
 export interface ui_state_type {
   notifications: {
@@ -24,6 +26,7 @@ export interface ui_state_type {
   ui_counter: number
 }
 
+
 // User state type
 export interface user_state_type {
   isLoading: boolean
@@ -33,9 +36,11 @@ export interface user_state_type {
     email: string,
     role: UserRoleTypes.USER | UserRoleTypes.WIZARD_CREATOR | UserRoleTypes.ADMIN,
     wizards: WizardFormat[],
+    results: WizardFormat[],
     isAddingWizard: boolean
   } | null
 }
+
 
 // Wizard_editor state type
 export interface wizard_editor_state_type {
@@ -49,6 +54,17 @@ export interface wizard_editor_state_type {
     WizardEditorActionTypes.RELOCATING_ELEMENT | null
   // current wizard state - questions, sections, etc.. :
   WizardState: WizardFormat | null
+  WizardResults: WizardFormat | null
   Page: WizardPageFormat | null
+  PageIdx: number
+}
+
+
+// Wizard_form state type
+export interface wizard_form_state_type {
+  // current wizard state - questions, sections, etc.. :
+  Wizard: WizardFormFormat | null
+  Answer: WizardFormFormat | null
+  Page: WizardFormPageFormat | null
   PageIdx: number
 }

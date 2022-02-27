@@ -11,6 +11,9 @@ import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 import { AbortAddingWizard } from "../actions/User"
 import { PushFeedback } from "../actions/UI"
+// Configs:
+import { ExtractDataToWizard } from "../../configs/_parser"
+import { _headers } from "../../configs/_headers"
 
 
 // Load User Action creator, called directly from <App> component
@@ -26,12 +29,10 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
       return
     }
 
-    const server_res = await axios.get(SERVER_USERDETAILS_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token
-      }
-    })
+    const server_res = await axios.get(
+      SERVER_USERDETAILS_URL, 
+      {headers: _headers(token)}
+    )
     
     // extract user details from response
     const {name, email, role} = server_res.data.user
@@ -45,7 +46,8 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
           email,
           role,
           isAddingWizard: false,
-          wizards: []
+          wizards: [],
+          results: []
         }
       }
     })
@@ -57,43 +59,38 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
 }
 
 
-const ExtractDataToWizards = (server_wizard: any): WizardFormat => {
-  const wizard_content = JSON.parse(server_wizard.content)
-  return {
-    name: (wizard_content.name as string),
-    id: (server_wizard.id as string),
-    pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
-  }
-}
-
-
 // Get Wizards (optional id = specific wizard)
 export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
 
   // Try receiving user wizards
-  const token = getState().auth.token ?? ""
+  const { token } = getState().auth
+  const { UserData } = getState().user
   try {
+
+    if (!token || UserData?.role === UserRoleTypes.USER) {
+      // no token
+      dispatch({type: UserActionTypes.AUTH_FAIL})
+      return
+    }
 
     // Get wizards
     const server_res = await axios.get(
-      SERVER_GET_WIZARDS_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token
-      }
-    })
+      SERVER_GET_WIZARDS_URL, 
+      {headers: _headers(token)}
+    )
     
     const data: any[] = server_res.data.results
     console.log(data)
     // Extract server_res data to valid format
-    let wizards: WizardFormat[] = [...data.map(wizard => ExtractDataToWizards(wizard))]
+    let wizards: WizardFormat[] = [...data.map(wizard => ExtractDataToWizard(wizard))]
     console.log(wizards)
     // Load wizards success
     dispatch<UserAction>({ 
       type: UserActionTypes.LOAD_WIZARDS_SUCCESS,
       payload: {
         UserData: {
-          wizards
+          wizards,
+          results: []
         }
       }
     })
@@ -109,21 +106,21 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
 // Delete Wizard
 export const DeleteWizard = (wizard_id: string) => async (dispatch: Dispatch<UserAction | UIAction>, getState: () => RootState): Promise<void> => {
   // Delete Wizard
-  const { token, isAuthed } = getState().auth
+  const { token } = getState().auth
+  const { isAuthed } = getState().user
   try 
   {
-    // if (token === null || !isAuthed) {
-    //   // -- auth failed - token doesn't exist
-    //   dispatch({ type: UserActionTypes.AUTH_FAIL })
-    //   return
-    // }
+    if (token === null || !isAuthed) {
+      // -- auth failed - token doesn't exist
+      dispatch({ type: UserActionTypes.AUTH_FAIL })
+      return
+    }
 
-    // const server_res = await axios.delete(SERVER_DELETE_WIZARD + wizard_id, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "auth-token": token ?? false
-    //   }
-    // })
+    // Try Deleting wizard
+    const server_res = await axios.delete(
+      SERVER_DELETE_WIZARD + wizard_id,
+      {headers: _headers(token)}
+    )
     
     // delete wizard action dispatch
     dispatch({
@@ -159,19 +156,12 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
     // if id is null - get all wizards
     const server_res = await axios.post(
       SERVER_CREATE_WIZARD_URL,
-      {
-        name: wizard_name
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": token
-        }
-      }
+      {name: wizard_name},
+      {headers: _headers(token)}
     )
 
     // add wizard from response
-    const returned_wizard = ExtractDataToWizards(server_res.data.results)
+    const returned_wizard = ExtractDataToWizard(server_res.data.results)
     const {id, name, pages} = returned_wizard
     // Dispatch success
     dispatch({

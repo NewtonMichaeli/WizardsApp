@@ -1,6 +1,7 @@
 // Types for Input 
 
 export type InputChange = React.ChangeEvent<HTMLInputElement>
+export type TextareaChange = React.ChangeEvent<HTMLTextAreaElement>
 // ChechboxList, RadioboxList, ..
 export type list_input_path_type = {
   page: number,
