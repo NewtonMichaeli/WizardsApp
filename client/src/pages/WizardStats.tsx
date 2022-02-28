@@ -12,7 +12,7 @@ import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardStats/Wizard.Section'
 import { BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
-import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
+import { wizard_editor_state_type, wizard_stats_state_type } from '../redux/types/reducerStateTypes'
 
 
 // Stats mode type - <stats> option or <results> option:
@@ -24,10 +24,7 @@ type StatsMode_type = StatsMode_types.RESULTS | StatsMode_types.STATS
 
 const WizardStats: React.FC = () => {
 
-  const { id } = useParams();
-
-  const { UserData, isLoading, isAuthed } = useSelector<RootState, RootState['user']>(state => state.user)
-  const { Page, PageIdx, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  const { Wizard, AllAnswers, isLoading } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
 
   // State for viewing mode - <stats> option or <results> option:
   const [StatsMode, setStatsMode] = useState<StatsMode_type>(StatsMode_types.STATS)
@@ -39,10 +36,10 @@ const WizardStats: React.FC = () => {
         <section className={Styles["container-header"]}>
           <section className={Styles["header-top"]}>
             <h1 className={Styles["wizard-title"]}>
-              Currently Viewing: {WizardState?.name}
+              Currently Viewing: {Wizard?.name}
             </h1>
             <h5 className={Styles["page-counter"]}>
-              Page {PageIdx} out of {WizardState?.pages.length}
+              Page {-1} out of {-999}
             </h5>
             <div className={Styles["page-controllers"]}>
               <BtnPageBack onClick={()=>2} />
@@ -71,7 +68,7 @@ const WizardStats: React.FC = () => {
         {/* {body */}
         <section className={Styles["container-body"]}>
           
-          {Page?.map((section, i) => <Section key={i} page_idx={PageIdx} section_idx={i} section={section} />)}
+          {/* {Wizard?.pages.map((page, i) => <Section key={i} page_idx={PageIdx} section_idx={i} section={section} />)} */}
         
         </section>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 // Utils:
-import { GetUserDetails } from './utils/middlewares/GetUserDetails'
+import { GetUserDetails } from './utils/middlewares/Dashboard.middleware'
 import { GoToDashboard } from './utils/GotoDashboard'
 import UINotifications from './utils/UINotifications'
 // Components:
@@ -12,9 +12,10 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import WizardStats from './pages/WizardStats'
 import WizardEditor from './pages/WizardEditor'
-import { GetUserWizard } from './utils/middlewares/GetUserWizard'
-import { GetUserWizardForm } from './utils/middlewares/GetUserWizardForm'
+import { GetUserWizard } from './utils/middlewares/WizardEditor.middleware'
+import { GetUserWizardForm } from './utils/middlewares/WizardForm.middleware'
 import WizardForm from './pages/WizardForm'
+import { GetWizardStatistics } from './utils/middlewares/WizardStats.middleware'
 
 
 const App: React.FC = () => {
@@ -41,7 +42,7 @@ const App: React.FC = () => {
           />
         <Route 
           path="/view/:id"
-          element={<GetUserWizard children={<WizardStats />} />}
+          element={<GetWizardStatistics children={<WizardStats />} />}
           />
         <Route 
           path="/edit/:id"

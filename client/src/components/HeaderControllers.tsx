@@ -46,7 +46,7 @@ export const BtnPageNext: BtnPageNext__props = ({onClick}) =>
 // Button - Finished
 export const BtnLeave = () =>
   <button className={Styles["btn-leave"]} title='Discrat changes' 
-    onClick={() => AreYouSure("You're about to Discrate changes", () => window.location.href = '/')}>
+    onClick={() => AreYouSure("You're about to Discrate changes", () => window.location.href = '/signin')}>
     <img src={Leave} alt="Leave" />
   </button>
 

@@ -1,5 +1,8 @@
 // All Types
 
+// Types:
+import { ValidServerFormInputType, WizardServerFormFormat } from "../../interfaces/WizardFormat_Server";
+
 
 export enum QuestionTypes {
   LABEL = "Label",
@@ -23,3 +26,16 @@ export enum ElementTypes {
   SUB_QUESTION = "SUB_QUESTION"
 }
 
+export type ServerResultsType = {
+  username: string,
+  email: string,
+  results: WizardServerFormFormat
+}
+
+export interface ResultQuestions {
+  [q_name: string]: ValidServerFormInputType
+}
+
+export interface MappedUserResultsType {
+  [username: string]: ResultQuestions
+}

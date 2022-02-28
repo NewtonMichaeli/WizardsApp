@@ -36,12 +36,12 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
     }
     // Form Auth failure
     case 'FORM_AUTH_FAIL': {
-      window.location.href = '/'
+      window.location.href = '/login'
       return state
     }
     // Auth failure
     case 'WIZARD_NOT_FOUND': {
-      window.location.href = '/'
+      window.location.href = '/dashboard'
       return state
     }
     // Move page next/back

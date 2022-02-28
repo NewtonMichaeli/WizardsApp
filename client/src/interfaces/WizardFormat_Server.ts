@@ -93,3 +93,4 @@ export type WizardServerFormFormat = {
   id: string,
   pages: WizardServerFormPageFormat[]
 }
+

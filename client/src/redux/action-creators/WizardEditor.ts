@@ -4,6 +4,7 @@ import axios from "axios"
 // Types:
 import { Dispatch } from "redux"
 import { RootState } from ".."
+import { UserRoleTypes } from "../action-types/User"
 // Actions:
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { PushFeedback } from "../actions/UI"
@@ -13,8 +14,17 @@ import { UIAction } from "../action-types/UI"
 // Load User Action creator, called directly from <App> component
 export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAction>, getState: () => RootState): void => {
   
-  // Extract wizard from wizards list at <user>
+  // States
   const { UserData, isLoading, isAuthed } = getState().user
+
+  // Auth check
+  if (UserData?.role !== UserRoleTypes.WIZARD_CREATOR) {
+    // no token
+    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
+    return
+  }
+
+  // Extract wizard from wizards list at <user>
   const CurrWizard = UserData?.wizards?.filter(wizard => wizard.id.toString() === id)[0] ?? null
   console.log(CurrWizard)
   

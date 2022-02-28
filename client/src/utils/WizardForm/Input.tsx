@@ -1,15 +1,13 @@
 // Inputs
 
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 // Types:
-import { InputChange, input_path_type, sub_input_path_type, TextareaChange } from "../WizardEditor/types"
+import { InputChange, TextareaChange } from "../WizardEditor/types"
 import { FormInputTypes } from "../../interfaces/WizardFormat_Form"
 // import { ServerFormInputTypes, ValidServerFormInputType } from "../../interfaces/WizardFormat_Server"
 // Styles:
 import Styles from '../../styles/Utils/WizardForm/Input.module.css'
 import { getStyles } from "../../controllers"
-import { RootState } from "../../redux"
-import { wizard_form_state_type } from "../../redux/types/reducerStateTypes"
 import { QuestionTypes } from "../../redux/types"
 
 
@@ -112,8 +110,8 @@ export const Checkbox: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
-      <input type="checkbox" name={name} onChange={checkHandle} defaultChecked={isChecked} />
-      <h3>{question.title}</h3>
+      <input type="checkbox" name={name} onChange={checkHandle} defaultChecked={isChecked} id={question.name} />
+      <label htmlFor={question.name}>{question.title}</label>
     </div>
   )
 }
@@ -218,8 +216,8 @@ export const Radiobox: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Radiobox")}>
-      <input type="radio" name={name} onChange={() => setCheckedInput(question.name)} defaultChecked={isChecked} />
-      <h3>{question.title}</h3>
+      <input type="radio" name={name} onChange={() => setCheckedInput(question.name)} defaultChecked={isChecked} id={question.name} />
+      <label htmlFor={question.name}>{question.title}</label>
     </div>
   )
 }

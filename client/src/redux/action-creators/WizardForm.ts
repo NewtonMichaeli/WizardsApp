@@ -12,14 +12,13 @@ import { WizardFormAction, WizardFormActionTypes } from "../action-types/WizardF
 // Configs:
 import { _headers } from "../../configs/_headers"
 import { fake_wizard } from "../../interfaces/WizardFormat"
-import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
 // Utils:
-import { ExtractDataToWizard } from "../../configs/_parser"
 import { RenderInitForm } from "../../utils/WizardForm/RenderInitFormElement"
 import { MovePageAction, SaveAnswerPageAction } from "../actions/WizardForm"
 import { RenderToServerFormPage } from "../../utils/WizardForm/RenderServerFormElement"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
+import { ExtractDataToWizard } from "../../configs/_parser"
 
 
 // Move Page action (if answers are valid till now)

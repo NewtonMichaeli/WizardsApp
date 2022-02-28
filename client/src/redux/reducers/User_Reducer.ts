@@ -23,7 +23,7 @@ export default (state = initState, action: UserAction): user_state_type => {
         isLoading: true
       }
     case 'AUTH_FAIL':
-      window.localStorage.removeItem(TOKEN_NAME)
+      // window.localStorage.removeItem(TOKEN_NAME)
       window.location.href = '/signin'   // auth failed - go to signin
       return {
         ...state,

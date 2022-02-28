@@ -1,7 +1,7 @@
 // Interfaces for Wizard structure formatting
 
 import { Url } from "url"
-import { QuestionTypes } from "../redux/types"
+import { QuestionTypes, ServerResultsType } from "../redux/types"
 import { WizardServerFormFormat } from "./WizardFormat_Server"
 
 
@@ -330,119 +330,119 @@ export const fake_wizard: WizardFormat[] = [
 
 
 // Valid Answer struct
-export const fake_answer: WizardServerFormFormat[] = [
+export const fake_server_answer: ServerResultsType[] = 
+[
     {
-        name: "Wizard 1.0",
-        id: "j18cn63ng98hHi9",
-        pages: [
-            // page 1
-            [
-                // section 1
-                {
-                    name: "Section 1",
-                    elements: [
-                        {
-                            type: QuestionTypes.LABEL,
-                            name: "1",
-                        },
-                        {
-                            type: QuestionTypes.TEXT,
-                            name: "2",
-                            value: ""
-                        },
-                        {
-                            type: QuestionTypes.LABEL,
-                            name: "3",
-                        },
-                        {
-                            type: QuestionTypes.SECURED_INPUT,
-                            name: "4",
-                            value: ""
-                        },
-                        {
-                            type: QuestionTypes.LABEL,
-                            name: "5",
-                        },
-                        {
-                            type: QuestionTypes.TEXTAREA,
-                            name: "6",
-                            value: ""
-                        },
-                    ]
-                },
-                {
-                    name: "Section 2",
-                    elements: []
-                },
-                {
-                    name: "Section 3",
-                    elements: [
-                        {
-                            type: QuestionTypes.CHECKBOX_LIST,
-                            name: "xxwqeocwoqwxwqe",
-                            checkedElements: ["xoZerpxqixwq2"],
-                        },
-                        {
-                            type: QuestionTypes.RADIOBOX_LIST,
-                            name: "xxwqeoccheckwoe",
-                            checkedElement: "ciwq4ceeaa",
-                        },
-                        {
-                            type: QuestionTypes.LISTS_LIST,
-                            name: "xxwqeocwoe",
-                            elements: [
-                                {
-                                    name: "list-wexqiwaeuv",
-                                    type: QuestionTypes.CHECKBOX_LIST,
-                                    checkedElements: []
-                                },
-                                {
-                                    name: "list-ajwrvnb9ur",
-                                    type: QuestionTypes.RADIOBOX_LIST,
-                                    checkedElement: ""
-                                }
-                            ]
-                        },
-                    ]
-                }
-            ],
-            // page 2
-            [
-                // section 1
-                {
-                    name: "Section 4",
-                    elements: [
-                        {
-                            type: QuestionTypes.LABEL,
-                            name: "7"
-                        },
-                        {
-                            type: QuestionTypes.TEXT,
-                            name: "8",
-                            value: ""
-                        }
-                    ]
-                },
-                {
-                    name: "Section 5",
-                    elements: [
-                        {
-                            type: QuestionTypes.LABEL,
-                            name: "9"
-                        },
-                        {
-                            type: QuestionTypes.TEXT,
-                            name: "10",
-                            value: ""
-                        }
-                    ]
-                }
-            ]      
-        ]
-    },
-    {
-        name: "Wizard 2.0",
-        id: "X18HZ63YgX8hH01",
-        pages: []
-    },
+        username: 'username1',
+        email: 'username1@gmail.com',
+        results: {
+            name: "Wizard 1.0",
+            id: "j18cn63ng98hHi9",
+            pages: [
+                // page 1
+                [
+                    // section 1
+                    {
+                        name: "Section 1",
+                        elements: [
+                            {
+                                type: QuestionTypes.LABEL,
+                                name: "aaa",
+                            },
+                            {
+                                type: QuestionTypes.TEXT,
+                                name: "2",
+                                value: "bbb"
+                            },
+                            {
+                                type: QuestionTypes.LABEL,
+                                name: "ccc",
+                            },
+                            {
+                                type: QuestionTypes.SECURED_INPUT,
+                                name: "ddd",
+                                value: ""
+                            },
+                            {
+                                type: QuestionTypes.LABEL,
+                                name: "eee",
+                            },
+                            {
+                                type: QuestionTypes.TEXTAREA,
+                                name: "6",
+                                value: ""
+                            },
+                        ]
+                    },
+                    {
+                        name: "Section 2",
+                        elements: []
+                    },
+                    {
+                        name: "Section 3",
+                        elements: [
+                            {
+                                type: QuestionTypes.CHECKBOX_LIST,
+                                name: "xxwqeocwoqwxwqe",
+                                checkedElements: ["xoZerpxqixwq2"],
+                            },
+                            {
+                                type: QuestionTypes.RADIOBOX_LIST,
+                                name: "xxwqeoccheckwoe",
+                                checkedElement: "ciwq4ceeaa",
+                            },
+                            {
+                                type: QuestionTypes.LISTS_LIST,
+                                name: "xxwqeocwoe",
+                                elements: [
+                                    {
+                                        name: "list-wexqiwaeuv",
+                                        type: QuestionTypes.CHECKBOX_LIST,
+                                        checkedElements: []
+                                    },
+                                    {
+                                        name: "list-ajwrvnb9ur",
+                                        type: QuestionTypes.RADIOBOX_LIST,
+                                        checkedElement: ""
+                                    }
+                                ]
+                            },
+                        ]
+                    }
+                ],
+                // page 2
+                [
+                    // section 1
+                    {
+                        name: "Section 4",
+                        elements: [
+                            {
+                                type: QuestionTypes.LABEL,
+                                name: "7"
+                            },
+                            {
+                                type: QuestionTypes.TEXT,
+                                name: "8",
+                                value: ""
+                            }
+                        ]
+                    },
+                    {
+                        name: "Section 5",
+                        elements: [
+                            {
+                                type: QuestionTypes.LABEL,
+                                name: "9"
+                            },
+                            {
+                                type: QuestionTypes.TEXT,
+                                name: "10",
+                                value: ""
+                            }
+                        ]
+                    }
+                ]      
+            ]
+        }
+    }
 ]

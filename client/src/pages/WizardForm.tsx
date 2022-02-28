@@ -7,13 +7,12 @@ import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, WizardEditorActions, WizardFormActions } from '../redux'
 import { wizard_form_state_type } from '../redux/types/reducerStateTypes'
-import { MovePage } from '../redux/action-creators/WizardForm'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
 import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardForm/Wizard.Section'
-import { BtnFinish, BtnFormNext, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { BtnFormNext, BtnLeave, BtnPageBack } from '../components/HeaderControllers'
 
 
 const WizardForm: React.FC = () => {
