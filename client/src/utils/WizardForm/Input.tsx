@@ -17,9 +17,6 @@ export const Label: React.FC<{
   question: FormInputTypes['Label']
 }> = ({question}) => {
 
-  // Dispatch
-  const dispatch = useDispatch()
-
   return (
     <div className={getStyles(Styles, "Input Input-Label")}>
       <h3>{question.title}</h3>
@@ -32,8 +29,6 @@ export const Text: React.FC<{
   question: FormInputTypes['Text']
 }> = ({question}) => {
 
-  // State
-  const { Wizard } = useSelector<RootState, wizard_form_state_type>(state => state.wizard_form)
   // Handlers
   const Write = (e: InputChange) => 
     // -- change value directly into state by reference:
@@ -42,7 +37,7 @@ export const Text: React.FC<{
   return (
     <div className={getStyles(Styles, "Input Input-Text")}>
       <h3>{question.title}</h3>
-      <input type="text" onChange={Write} />
+      <input type="text" onChange={Write} defaultValue={question.value} />
     </div>
   )
 }
@@ -60,7 +55,7 @@ export const Textarea: React.FC<{
   return (
     <div className={getStyles(Styles, "Input Input-Textarea")}>
       <h3>{question.title}</h3>
-      <textarea cols={30} rows={10} onChange={Write} />
+      <textarea cols={30} rows={10} onChange={Write} defaultValue={question.value} />
     </div>
   )
 }
@@ -78,7 +73,7 @@ export const SecuredInput: React.FC<{
   return (
     <div className={getStyles(Styles, "Input Input-SecuredInput")}>
       <h3>{question.title}</h3>
-      <input type="password" onChange={Write} />
+      <input type="password" onChange={Write} defaultValue={question.value} />
     </div>
   )
 }
@@ -95,7 +90,7 @@ export const Number: React.FC<{
   return (
     <div className={getStyles(Styles, "Input Input-Range")}>
       <h3>{question.title}</h3>
-      <input type="number" onChange={Write} />
+      <input type="number" onChange={Write} defaultValue={question.value} />
     </div>
   )
 }
@@ -117,7 +112,7 @@ export const Checkbox: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
-      <input type="checkbox" name={name} onChange={checkHandle} />
+      <input type="checkbox" name={name} onChange={checkHandle} defaultChecked={isChecked} />
       <h3>{question.title}</h3>
     </div>
   )
@@ -152,7 +147,7 @@ export const RadioboxList: React.FC<{
         {question.elements.map((input, i) => 
           <Radiobox key={input.name} 
             question={input} 
-            name={input.name}
+            name={question.name}
             isChecked={question.checkedInput === input.name}
             setCheckedInput={setCheckedInput} />)}
       </div>

@@ -16,6 +16,7 @@ type BtnPageNext__props = BtnPageBack__props
 type BtnFinish__props = BtnPageBack__props
 // type BtnLeave__props = BtnPageBack__props
 type BtnAdd__props = React.FC<{onClick: () => any, focus: boolean}>
+type BtnFormNext__props = React.FC<{onClick: () => any, isLastPage?: true}>
 
 
 // Handlers:
@@ -67,4 +68,11 @@ export const BtnAdd: BtnAdd__props = ({onClick, focus}) =>
     <img src={Add} alt="Finished" />
   </button>
 
+
+// Button - Next/Finished - state dependant
+export const BtnFormNext: BtnFormNext__props = ({onClick, isLastPage}) => 
+  <button className={Styles["btn-page-next"]} title='Next Page' onClick={onClick}>
+    <span>{isLastPage ? "Finish" : "Next"}</span>
+    <img src={isLastPage ? Finished : Next} alt="Next" />
+  </button>
 

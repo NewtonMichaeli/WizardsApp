@@ -2,9 +2,7 @@
 
 // Types:
 import { wizard_form_state_type } from "../types/reducerStateTypes"
-import { WizardEditorActionTypes } from "../action-types/WizardEditor"
 // Reducer helpers:
-import { AddElementToState, RemoveElementFromState, ModifyElementInState, ClearStateSideStats } from "../reducer_helpers/WizardEditor"
 import { WizardFormAction } from "../action-types/WizardForm"
 
 
@@ -23,7 +21,7 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
     // Extract wizard from user wizards
     case 'EXTRACT_WIZARD_FORM': {
       const PageIdx = 0
-      const wizard = action.payload.wizard
+      const wizard =   action.payload.wizard
       return {
         ...state,
         Wizard: action.payload.wizard,
@@ -66,6 +64,12 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
       }
     }
     // Send Form Answer Success
+    case 'SAVE_ANSWER': {
+      if (state.Answer)
+        // -- update state 
+        state.Answer.pages.splice(action.payload.answer_page_idx, 0, action.payload.answer_page)
+      return {...state}
+    }
     case 'SEND_ANSWER_SUCCESS': {
       return state
     }

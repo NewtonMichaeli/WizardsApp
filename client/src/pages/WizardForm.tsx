@@ -5,26 +5,27 @@ import Loading from '../assets/loading-1.gif'
 // Redux:
 import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, WizardEditorActions } from '../redux'
+import { RootState, WizardEditorActions, WizardFormActions } from '../redux'
 import { wizard_form_state_type } from '../redux/types/reducerStateTypes'
-import { MovePage } from '../redux/actions/WizardEditor'
+import { MovePage } from '../redux/action-creators/WizardForm'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
 import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardForm/Wizard.Section'
-import { BtnFinish, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { BtnFinish, BtnFormNext, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 
 
 const WizardForm: React.FC = () => {
   
   // Dispatch
   const dispatch = useDispatch()
-  // States:
-  const { SaveChanges } = bindActionCreators<RootState, any>(WizardEditorActions, dispatch)
-
-  // Curent page & wizard:
+  // States
+  const { SendAnswer } = bindActionCreators(WizardFormActions, dispatch)
   const { PageIdx, Wizard, Page } = useSelector<RootState, wizard_form_state_type>(state => state.wizard_form)
+  // Handlers
+  const { MovePage } = bindActionCreators(WizardFormActions, dispatch)
+
 
   if (Wizard) return (
     <div className={Styles["WizardStats"]}>
@@ -38,10 +39,11 @@ const WizardForm: React.FC = () => {
             Page {PageIdx + (Wizard?.pages.length ? 1 : 0)} out of {Wizard?.pages.length}
           </h5>
           <div className={Styles["page-controllers"]}>
-            <BtnPageBack onClick={()=>dispatch(MovePage('BACK'))} />
-            <BtnPageNext onClick={()=>dispatch(MovePage('NEXT'))} />
+            <BtnPageBack onClick={() => MovePage('BACK')} />
+            {PageIdx < Wizard.pages.length - 1
+              ? <BtnFormNext onClick={() => MovePage("NEXT")} />
+              : <BtnFormNext onClick={SendAnswer} isLastPage />}
             <BtnLeave />
-            <BtnFinish onClick={SaveChanges} />
           </div>
         </section>
         {/* {body */}

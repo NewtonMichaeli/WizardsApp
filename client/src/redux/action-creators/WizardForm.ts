@@ -16,7 +16,7 @@ import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
 // Utils:
 import { ExtractDataToWizard } from "../../configs/_parser"
 import { RenderInitForm } from "../../utils/WizardForm/RenderInitFormElement"
-import { MovePageAction } from "../actions/WizardForm"
+import { MovePageAction, SaveAnswerPageAction } from "../actions/WizardForm"
 import { RenderToServerFormPage } from "../../utils/WizardForm/RenderServerFormElement"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
@@ -25,7 +25,7 @@ import { UIAction } from "../action-types/UI"
 // Move Page action (if answers are valid till now)
 export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<WizardFormAction | UIAction>, getState: () => RootState): Promise<void> =>
 {
-  const CurrPage = getState().wizard_form.Page  
+  const { Page: CurrPage, PageIdx  } = getState().wizard_form
   if (CurrPage === null) {
     dispatch(PushFeedback(false, "Cant Move while page doesn't exist"))
     return
@@ -35,13 +35,16 @@ export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<Wiza
   if (dir === "BACK") {
     const parsed_page = RenderToServerFormPage(CurrPage, true)  // save and move page back (check later)
     dispatch(MovePageAction("BACK"))
+    dispatch(PushFeedback(true, "Saved changes"))
     return
   }
   
   // Movement forward is conditional
   try {
     const parsed_page = RenderToServerFormPage(CurrPage, false)
-    
+    dispatch(SaveAnswerPageAction(parsed_page, PageIdx))    // -- save current page
+    dispatch(PushFeedback(true, "Saved changes"))     // -- success msg
+    dispatch(MovePageAction("NEXT"))
   }
   catch (e: any) {
     dispatch(PushFeedback(false, e.message))
@@ -93,19 +96,35 @@ export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<Wizar
 
 
 // Send answer by server format
-export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction>, getState: () => RootState): Promise<void> =>
+export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIAction>, getState: () => RootState): Promise<void> =>
 {
-  
+
   // Check authorization
-  const { UserData, isLoading, isAuthed } = getState().user
+  // States:
+  const { Page: CurrPage, PageIdx } = getState().wizard_form
+  const { UserData } = getState().user
   const { token } = getState().auth
+
   // Validate user before request:
   if (!token || !UserData || UserData.role !== UserRoleTypes.USER) {
     // -- unauthorized - only users can fill wizard forms
     dispatch({type: WizardFormActionTypes.FORM_AUTH_FAIL})
     return
   }  
+
+  // Check page only if exists
+  if (CurrPage === null) {
+    dispatch(PushFeedback(false, "Cant Move while page doesn't exist"))
+    return
+  }
+
   try {
+    // Movement forward is conditional
+    const parsed_page = RenderToServerFormPage(CurrPage, false)
+    dispatch(SaveAnswerPageAction(parsed_page, PageIdx))    // -- save current page
+    dispatch(PushFeedback(true, "Submitted!"))     // -- success msg
+    return
+
     // Request specific wizard
     // const server_res = await axios.get(SERVER_GET_WIZARDS_URL + id, {headers: _headers(token)})
 
@@ -128,6 +147,7 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction>, get
   catch (err: any) {
     // wizard not found
     console.log(err)
+    dispatch(PushFeedback(false, err.message))
     // dispatch({type: WizardFormActionTypes.WIZARD_NOT_FOUND})
   }
 }
