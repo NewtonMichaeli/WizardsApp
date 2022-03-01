@@ -1,10 +1,15 @@
 // Elements Parser 
+
 import React from 'react'
-import { InputTypes } from '../../interfaces/WizardFormat'
+import { useDispatch, useSelector } from 'react-redux'
 // Input fields:
-import { Checkbox, CheckboxList, /*Image,*/ Label, ListsList, Radiobox, RadioboxList, Number, SecuredInput, Text, Textarea } from './Input_Stats'
+import * as StatsInput from './Input_Stats'       // inputs when STATS mode
+import * as ResultsInput from './Input_Results'   // inputs when RESULTS mode
+// Types:
 import { QuestionTypes } from '../../redux/types'
 import { ValidInputType } from '../../interfaces/WizardFormat'
+import { RootState } from '../../redux'
+import { wizard_stats_state_type } from '../../redux/types/reducerStateTypes'
 
 
 type ParseElement__props = React.FC<{
@@ -13,28 +18,58 @@ type ParseElement__props = React.FC<{
 }>
 const ParseElement: ParseElement__props = ({element, q_idx}) => {
 
+  
+  // Dispatch
+  const dispatch = useDispatch()
+  // States
+  const { StatsMode } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  
   // switch element type
-
-  switch (element.type)
+  // Tab on STATS Mode
+  if (StatsMode === 'STATS') switch (element.type)
   {
     case QuestionTypes.LABEL:
-      return <Label key={q_idx} question={element} />
+      return <StatsInput.Label key={q_idx} question={element} />
     case QuestionTypes.TEXT:
-      return <Text key={q_idx} question={element} />
+      return <StatsInput.Text key={q_idx} question={element} />
     case QuestionTypes.TEXTAREA:
-      return <Textarea key={q_idx} question={element} />
+      return <StatsInput.Textarea key={q_idx} question={element} />
     case QuestionTypes.SECURED_INPUT:
-      return <SecuredInput key={q_idx} question={element} />
+      return <StatsInput.SecuredInput key={q_idx} question={element} />
     case QuestionTypes.NUMBER:
-      return <Number key={q_idx} question={element} />
+      return <StatsInput.Number key={q_idx} question={element} />
     // case QuestionTypes.IMAGE:
     //   return <Image element={element as InputTypes['Image']} path={path} />
     case QuestionTypes.RADIOBOX_LIST:
-      return <RadioboxList key={q_idx} question={element} />
+      return <StatsInput.RadioboxList key={q_idx} question={element} />
     case QuestionTypes.CHECKBOX_LIST:
-      return <CheckboxList key={q_idx} question={element} />
+      return <StatsInput.CheckboxList key={q_idx} question={element} />
     case QuestionTypes.LISTS_LIST:
-      return <ListsList key={q_idx} question={element} />
+      return <StatsInput.ListsList key={q_idx} question={element} />
+    default:
+      return <></>
+  }
+
+  // Tab on RESULTS Mode
+  else switch (element.type) {
+    case QuestionTypes.LABEL:
+      return <ResultsInput.Label key={q_idx} question={element} />
+    case QuestionTypes.TEXT:
+      return <ResultsInput.Text key={q_idx} question={element} />
+    case QuestionTypes.TEXTAREA:
+      return <ResultsInput.Textarea key={q_idx} question={element} />
+    case QuestionTypes.SECURED_INPUT:
+      return <ResultsInput.SecuredInput key={q_idx} question={element} />
+    case QuestionTypes.NUMBER:
+      return <ResultsInput.Number key={q_idx} question={element} />
+    // case QuestionTypes.IMAGE:
+    //   return <Image element={element as InputTypes['Image']} path={path} />
+    case QuestionTypes.RADIOBOX_LIST:
+      return <ResultsInput.RadioboxList key={q_idx} question={element} />
+    case QuestionTypes.CHECKBOX_LIST:
+      return <ResultsInput.CheckboxList key={q_idx} question={element} />
+    case QuestionTypes.LISTS_LIST:
+      return <ResultsInput.ListsList key={q_idx} question={element} />
     default:
       return <></>
   }

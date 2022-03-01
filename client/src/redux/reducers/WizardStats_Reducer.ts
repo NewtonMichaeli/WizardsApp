@@ -25,7 +25,8 @@ export default (state = initState, action: WizardStatsAction): wizard_stats_stat
         ...state,
         Wizard: action.payload.Wizard,
         AllAnswers: action.payload.AllAnswers ?? null,
-        isLoading: false
+        isLoading: false,
+        Username: Object.keys(action.payload.AllAnswers ?? {'':''})[0]
       }
     }
     // Form Auth failure
@@ -40,9 +41,19 @@ export default (state = initState, action: WizardStatsAction): wizard_stats_stat
     }
     // Switch Tab (stats/results)
     case 'SWITCH_TAB': {
-      return {
+      // Change different values only
+      if (state.StatsMode === action.payload.to) 
+        return state
+      else return {
         ...state,
         StatsMode: action.payload.to
+      }
+    }
+    // Inspect Username
+    case 'INSPECT_USERNAME': {
+      return {
+        ...state,
+        Username: action.payload.username
       }
     }
     // Default

@@ -1,0 +1,106 @@
+/* Styles for WizardStats : Input modules */
+
+/* Global styling for all inputs */
+.Input {
+  width: 100%;
+  min-height: 3rem;
+  height: fit-content;
+  /* position */
+  padding: 0.6rem 1rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 1rem 0;
+  /* animation */
+  animation: onEnterQ 0.6s 0.4s forwards;
+  /* init state */
+  border-left: 2px solid #4ef;
+}
+.Input h3 {
+  color: #333;
+  font-weight: 400;
+}
+.Input .user-answer {
+  font-weight: 400;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+.Input .user-answer.no-answer::after {
+  content: "This User hasn't answerd this question";
+  color: #f55;
+}
+.Input h6 {
+  margin-top: 0.2rem;
+}
+
+/* input-list */
+.Input.Input-List {
+  padding-top: 0.4rem;
+}
+.Input.Input-List .Input-container {
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 0.8rem;
+}
+.Input.Input-List .Input-container .Input.Input-Partial {
+  margin: 0;
+  margin-bottom: 0.4rem;
+}
+
+/* checkbox-list, radiobox-list stats layout */
+.Input.Input-List,
+.Input.Input-List .Lists-container {
+  width: 100%;
+}
+.Input.Input-List.Input-RadioboxList .data-section,
+.Input.Input-List.Input-CheckboxList .data-section {
+  width: 100%;
+  /* background-color: #f04f4f99; */
+  /* layout */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* .Input.Input-List .data-section .Input-container,
+.Input.Input-List .data-section .stats-container {
+  background-color: green;
+} */
+
+/* input-partial */
+.Input.Input-Partial {
+  height: 1rem;
+  min-height: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-left: none !important;
+}
+.Input.Input-Partial input {
+  margin-right: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+/*// TEXT
+// TEXTAREA
+// SECURED_INPUT
+// RANGE
+// CHECKBOX
+// IMAGE
+// RADIOBOX_LIST
+// CHECKBOX_LIST
+// LISTS_LIST
+// RADIOBOX */
+
+/* animations */
+
+@keyframes onEnterQ {
+  to {
+    border-left: 2px solid #4a416499;
+  }
+}

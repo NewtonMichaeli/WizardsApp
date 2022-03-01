@@ -11,3 +11,10 @@ export const SwitchTab = (to: wizard_stats_state_type['StatsMode']): WizardStats
   payload: { to }
 })
 
+
+// Switch Tab Action
+export const InspectUsername = (username: wizard_stats_state_type['Username']): WizardStatsAction => ({
+  type: WizardStatsActionTypes.INSPECT_USERNAME,
+  payload: { username }
+})
+

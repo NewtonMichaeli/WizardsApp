@@ -1,4 +1,4 @@
-// Inputs (STATS mode)
+// Inputs (RESULTS mode)
 
 import { useDispatch, useSelector } from "react-redux"
 // Types:
@@ -7,12 +7,12 @@ import { InputTypes } from "../../interfaces/WizardFormat"
 import { QuestionTypes } from "../../redux/types"
 import { RootState } from "../../redux"
 import { wizard_stats_state_type } from "../../redux/types/reducerStateTypes"
+import { ServerFormInputTypes } from "../../interfaces/WizardFormat_Server"
 // Components:
 import { InStatisticableField } from "./InputUtils"
 // Styles:
-import Styles from '../../styles/Utils/WizardStats/Input_Stats.module.css'
+import Styles from '../../styles/Utils/WizardStats/Input_Results.module.css'
 import { getStyles } from "../../controllers"
-import { ServerFormInputTypes } from "../../interfaces/WizardFormat_Server"
 
 
 export const Label: React.FC<{
@@ -32,16 +32,14 @@ export const Text: React.FC<{
 }> = ({question}) => {
 
   // States
-  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-  if (AllAnswers)
-    Object.entries(AllAnswers).map((UserAnswer, i) => {
-      console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-    })
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: string = ''
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Text'])?.value
 
   return (
     <div className={getStyles(Styles, "Input Input-Text")}>
       <h3>{question.title}</h3>
-      <InStatisticableField type={question.type} />
+      <h4 className={getStyles(Styles, `user-answer ${value ?  "" : "no-answer"}`)}>{value}</h4>
     </div>
   )
 }
@@ -51,10 +49,15 @@ export const Textarea: React.FC<{
   question: InputTypes['Textarea']
 }> = ({question}) => {
 
+  // States
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: string = ''
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Textarea'])?.value
+
   return (
     <div className={getStyles(Styles, "Input Input-Textarea")}>
       <h3>{question.title}</h3>
-      <InStatisticableField type={question.type} />
+      <h4 className={getStyles(Styles, `user-answer ${value ? "" : "no-answer"}`)}>{value}</h4>
     </div>
   )
 }
@@ -64,10 +67,15 @@ export const SecuredInput: React.FC<{
   question: InputTypes['SecuredInput']
 }> = ({question}) => {
 
+  // States
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: string = ''
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Text'])?.value
+  
   return (
     <div className={getStyles(Styles, "Input Input-SecuredInput")}>
       <h3>{question.title}</h3>
-      <InStatisticableField type={question.type} />
+      <h4 className={getStyles(Styles, `user-answer ${value ?  "" : "no-answer"}`)}>{value}</h4>
     </div>
   )
 }
@@ -77,10 +85,15 @@ export const Number: React.FC<{
   question: InputTypes['Number']
 }> = ({question}) => {
   
+  // States
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: number | null = null
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Number'])?.value
+
   return (
     <div className={getStyles(Styles, "Input Input-Range")}>
       <h3>{question.title}</h3>
-      <input type="number" />
+      <h4 className={getStyles(Styles, `user-answer ${value !== null ?  "" : "no-answer"}`)}>{value}</h4>
     </div>
   )
 }
@@ -88,12 +101,13 @@ export const Number: React.FC<{
 
 export const Checkbox: React.FC<{
   question: InputTypes['Checkbox'],
-  name: string
-}> = ({question, name}) => {
+  name: string,
+  isChecked: boolean
+}> = ({question, name, isChecked}) => {
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
-      <input type="checkbox" name={name} id={question.name} disabled />
+      <input type="checkbox" name={name} id={question.name} defaultChecked={isChecked} disabled />
       <label htmlFor={question.name}>{question.title}</label>
     </div>
   )
@@ -116,42 +130,16 @@ export const RadioboxList: React.FC<{
   question: InputTypes['Radiobox List']
 }> = ({question}) => {
 
-  // States
-  let answers_amount: number = 0
-  let avg_answer: {[q_name: string]: number} = {}   // {q1: 3, q2: 9, q3: 11, q4: 6}
-
-  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-
-  if (AllAnswers) {
-    Object.entries(AllAnswers).map((UserAnswer, i) => {
-      // username: { q1: {...}, q2: {...} }
-      console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElement = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List']).checkedElement ?? null
-      if (checkedElement) {
-        answers_amount ++
-        // init firld on first instance
-        if (!avg_answer[checkedElement]) avg_answer[checkedElement] = 1
-        // increment instance
-        else avg_answer[checkedElement]++
-      }
-    })
-    // console.log(answers_amount, avg_answer)
-  }
-
   return (
     <div className={getStyles(Styles, "Input Input-List Input-RadioboxList")}>
       <h3>{question.title}</h3>
-      <h6>Answers: {answers_amount}</h6>
       <div className={Styles["data-section"]}>
         <div className={Styles["Input-container"]}>
           {question.elements.map((input, i) => 
             <Radiobox key={input.name} 
               question={input}
-              isChecked={true}
+              isChecked={question.name === input.name}
               name={question.name} />)}
-        </div>
-        <div className={Styles["stats-container"]}>
-          somestats
         </div>
       </div>
     </div>
@@ -163,43 +151,16 @@ export const CheckboxList: React.FC<{
   question: InputTypes['Checkbox List']
 }> = ({question}) => {
 
-  // States
-  let answers_amount: number = 0,
-    avg_answer: {[q_name: string]: number} = {}
-
-  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-
-  if (AllAnswers) {
-    Object.entries(AllAnswers).map((UserAnswer, i) => {
-      // username: { q1: {...}, q2: {...} }
-      console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElements = (UserAnswer[1][question.name] as ServerFormInputTypes['Checkbox List']).checkedElements ?? null
-      if (checkedElements.length) {
-        answers_amount ++
-        checkedElements.map(element => {
-          // init firld on first instance
-          if (!avg_answer[element]) avg_answer[element] = 1
-          // increment instance
-          else avg_answer[element]++
-        })
-      }
-    })
-    // console.log(answers_amount, avg_answer)
-  }
-
   return (
     <div className={getStyles(Styles, "Input Input-List Input-CheckboxList")}>
       <h3>{question.title}</h3>
-      <h6>Answers: {answers_amount}</h6>
       <div className={Styles["data-section"]}>
         <div className={Styles["Input-container"]}>
           {question.elements.map((input, i) => 
             <Checkbox key={input.name} 
               question={input} 
+              isChecked={question.name === input.name}
               name={input.name} />)}
-        </div>
-        <div className={Styles["stats-container"]}>
-          somestats
         </div>
       </div>
     </div>
@@ -210,9 +171,6 @@ export const CheckboxList: React.FC<{
 export const ListsList: React.FC<{
   question: InputTypes['Lists List']
 }> = ({question}) => {
-
-  // Dispatch
-  const dispatch = useDispatch()
 
   return (
     <div className={getStyles(Styles, "Input Input-List Input-ListsList")}>
@@ -239,7 +197,7 @@ export const Radiobox: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Radiobox")}>
-      <input type="radio" name={name} defaultChecked={isChecked} id={question.name} />
+      <input type="radio" name={name} defaultChecked={isChecked} id={question.name} disabled />
       <label htmlFor={question.name}>{question.title}</label>
     </div>
   )

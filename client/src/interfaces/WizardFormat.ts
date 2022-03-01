@@ -423,7 +423,7 @@ export const fake_server_answer: ServerResultsType[] =
                             {
                                 type: QuestionTypes.TEXT,
                                 name: "8",
-                                value: ""
+                                value: "Exists"
                             }
                         ]
                     },
@@ -437,7 +437,7 @@ export const fake_server_answer: ServerResultsType[] =
                             {
                                 type: QuestionTypes.TEXT,
                                 name: "10",
-                                value: ""
+                                value: "Exists"
                             }
                         ]
                     }

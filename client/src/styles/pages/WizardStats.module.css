@@ -55,11 +55,11 @@
   justify-content: space-between;
 }
 /* header top layout */
-.wizard-content-container .container-header .header-top .wizard-title,
+/* .wizard-content-container .container-header .header-top .wizard-title,
 .wizard-content-container .container-header .header-top .page-counter,
 .wizard-content-container .container-header .header-top .page-controllers {
   flex: 1 1 0;
-}
+} */
 .wizard-content-container .container-header .header-top .wizard-title {
   text-align: left;
   padding-left: 1rem;
@@ -109,6 +109,7 @@
 }
 .wizard-content-container .container-header .header-btm button.btn-selected {
   color: #4a4164;
+  /* color: #9e43a1; */
 }
 
 /* wizard container body */

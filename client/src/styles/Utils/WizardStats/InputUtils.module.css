@@ -1,7 +1,7 @@
 /* Styles for InputUtils */
 
 .InStatisticableField {
-  background-color: #aaaaaa66;
+  background-color: #bcbcbc66;
   height: 2.85rem;
   min-width: 12rem;
   width: fit-content;
@@ -27,5 +27,5 @@
   color: #0aa;
 }
 .InStatisticableField:hover {
-  background-color: #bcc;
+  background-color: #bcbcbc99;
 }

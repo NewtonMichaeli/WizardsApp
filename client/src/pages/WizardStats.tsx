@@ -14,6 +14,7 @@ import { getStyles } from '../controllers'
 import { BtnLeave } from '../components/HeaderControllers'
 import PageComponent from '../components/WizardStats/Wizard.Page'
 import { SwitchTab } from '../redux/actions/WizardStats'
+import UserSelection from '../components/WizardStats/UserSelection'
 
 
 const WizardStats: React.FC = () => {
@@ -34,9 +35,6 @@ const WizardStats: React.FC = () => {
             <h1 className={Styles["wizard-title"]}>
               Currently Viewing: {Wizard?.name}
             </h1>
-            <h5 className={Styles["page-counter"]}>
-              Page {-1} out of {-999}
-            </h5>
             <div className={Styles["page-controllers"]}>
               <BtnLeave />
             </div>
@@ -62,7 +60,7 @@ const WizardStats: React.FC = () => {
         {/* {body */}
         <section className={Styles["container-body"]}>
           
-          {console.log(Wizard?.pages)}
+          <UserSelection />
           {Wizard?.pages.map((page, i) => <PageComponent key={i} page_idx={i} page={page} />)}
         
         </section>

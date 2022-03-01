@@ -81,6 +81,8 @@ export interface wizard_stats_state_type {
   isLoading: boolean
   // Stats mode - <stats> option or <results> option:
   StatsMode: "STATS" | "RESULTS"
+  // Username to inspect stats
+  Username?: string
 }
 
 
