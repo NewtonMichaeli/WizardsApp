@@ -10,6 +10,7 @@ const initState: wizard_stats_state_type = {
   // current wizard state - questions, sections, etc.. :
   Wizard: null,
   AllAnswers: null,
+  StatsMode: "STATS",
   isLoading: true     // -- loading is default
 }
 
@@ -36,6 +37,13 @@ export default (state = initState, action: WizardStatsAction): wizard_stats_stat
     case 'WIZARD_NOT_FOUND': {
       window.location.href = '/dashboard'
       return state
+    }
+    // Switch Tab (stats/results)
+    case 'SWITCH_TAB': {
+      return {
+        ...state,
+        StatsMode: action.payload.to
+      }
     }
     // Default
     default:

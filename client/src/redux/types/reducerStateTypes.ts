@@ -74,11 +74,13 @@ export interface wizard_form_state_type {
 // Wizard_stats state type
 export interface wizard_stats_state_type {
   // current wizard state - questions, sections, etc.. :
-  Wizard: WizardServerFormFormat | null         // -- server-format form
+  Wizard: WizardFormat | null         // -- server-format form
   // map users-answers to a name:answer pairs
   AllAnswers: MappedUserResultsType | null
   // loading indicator - will mark-false when reducer finishes mapping data to 'AllAnswers'
   isLoading: boolean
+  // Stats mode - <stats> option or <results> option:
+  StatsMode: "STATS" | "RESULTS"
 }
 
 

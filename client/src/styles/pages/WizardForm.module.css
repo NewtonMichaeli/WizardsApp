@@ -1,0 +1,214 @@
+/* Styles for Wizard Staistics page */
+
+/* Wizard Stats Page */
+.WizardStats {
+  width: 100vw;
+  height: calc(100vh - var(--navbar_height));
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* WizardStats - Inner content container */
+.WizardStats .wizard-content-container {
+  width: 76vw;
+  height: 74vh;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px #00000044;
+  border-radius: 8px;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+/* WizardStats - Inner content container (wizard not fount at url) */
+.WizardStats .wizard-content-container-loading {
+  justify-content: center;
+}
+.WizardStats .wizard-content-container-loading img {
+  width: 5rem;
+}
+
+/* Top header */
+.wizard-content-container .container-header {
+  background: #8080804d;
+  width: 100%;
+  height: 2.95rem;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #333333bc;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* header top layout */
+.wizard-content-container .container-header .wizard-title,
+.wizard-content-container .container-header .page-counter,
+.wizard-content-container .container-header .page-controllers {
+  flex: 1 1 0;
+}
+.wizard-content-container .container-header .wizard-title {
+  text-align: left;
+  padding-left: 1rem;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #4a4164bc;
+}
+.wizard-content-container .container-header .page-counter {
+  text-align: center;
+  font-weight: 400;
+  color: #9a8dc1;
+}
+
+.wizard-content-container .container-header .page-controllers {
+  height: 1.45rem;
+  padding-right: 1rem;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* wizard container body */
+.wizard-content-container .container-body {
+  width: 100%;
+  height: calc(100% - 2.95rem);
+  padding: 1rem 0.8rem;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* overflow */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* delete page button - bottom-right */
+.container-body .delete-page {
+  height: 3rem;
+  width: 3rem;
+  background-color: #eee;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position */
+  position: absolute;
+  left: -3rem;
+  top: 0;
+  top: 50%;
+  /* transform: translateY(-50%); */
+  /* mouse */
+  cursor: pointer;
+}
+.container-body .delete-page img {
+  height: 55%;
+  opacity: 0.5;
+}
+.container-body:hover .delete-page img {
+  opacity: 1;
+}
+
+/* Styles for Add-Page-Here component */
+
+.Add-Page-Here {
+  width: 100%;
+  height: fit-content;
+  left: 0 !important;
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position */
+  position: absolute;
+  top: -0.6rem;
+  left: 0.5rem;
+  z-index: 9;
+  /* animation */
+  transition: all 0.15s ease;
+  animation: onEnterAddHere 0.15s 0s forwards;
+  /* mouse */
+  pointer-events: none;
+  /* init state */
+  opacity: 0;
+}
+/* Add Here modes (append-left, append-right, empty page) */
+/* append right */
+.Add-Page-Here.append-right {
+  justify-content: flex-end;
+}
+/* append left */
+.Add-Page-Here.append-left {
+  justify-content: flex-start;
+}
+.Add-Page-Here.append-right,
+.Add-Page-Here.append-left {
+  top: 50%;
+  transform: translateY(-36%);
+}
+.Add-Page-Here.append-right section,
+.Add-Page-Here.append-left section {
+  width: 2.2rem;
+  height: 10rem;
+}
+.Add-Page-Here.append-right section img,
+.Add-Page-Here.append-left section img {
+  height: 18%;
+}
+
+/* page no elements */
+.Add-Page-Here.no-elements::after {
+  content: "Add new Page";
+  position: absolute;
+  margin-top: 3.5rem;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+.Add-Page-Here.no-elements {
+  position: relative;
+  top: 50%;
+  border-top: none;
+  transform: translateY(-50%);
+}
+
+/* Add Here Plus section */
+.Add-Page-Here.no-elements section {
+  border-radius: 5px;
+}
+.Add-Page-Here:hover {
+  opacity: 1;
+}
+.Add-Page-Here section {
+  width: 10rem;
+  height: 1.9rem;
+  background-color: #0aaaaa;
+  border-radius: 5px;
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* mouse */
+  cursor: pointer;
+  pointer-events: visible;
+}
+.Add-Page-Here section img {
+  height: 70%;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+/* animations */
+
+@keyframes onEnterAddHere {
+  to {
+    opacity: 0.5;
+  }
+}

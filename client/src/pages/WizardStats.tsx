@@ -1,33 +1,29 @@
 // Wizard Statistics Viewer
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+// Types:
+import { wizard_stats_state_type } from '../redux/types/reducerStateTypes'
 import { RootState } from '../redux'
 // Styles:
 import Styles from '../styles/pages/WizardStats.module.css'
 import { getStyles } from '../controllers'
 // Components:
-import Section from '../components/WizardStats/Wizard.Section'
-import { BtnFinish, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
-import { wizard_editor_state_type, wizard_stats_state_type } from '../redux/types/reducerStateTypes'
+import { BtnLeave } from '../components/HeaderControllers'
+import PageComponent from '../components/WizardStats/Wizard.Page'
+import { SwitchTab } from '../redux/actions/WizardStats'
 
-
-// Stats mode type - <stats> option or <results> option:
-const enum StatsMode_types {
-  STATS = "STATS",
-  RESULTS = "RESULTS"
-}
-type StatsMode_type = StatsMode_types.RESULTS | StatsMode_types.STATS
 
 const WizardStats: React.FC = () => {
 
-  const { Wizard, AllAnswers, isLoading } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-
+  // Dispatch
+  const dispatch = useDispatch()
+  // States
+  const { Wizard, AllAnswers, isLoading, StatsMode } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
   // State for viewing mode - <stats> option or <results> option:
-  const [StatsMode, setStatsMode] = useState<StatsMode_type>(StatsMode_types.STATS)
+
 
   if (!isLoading) return (
     <div className={Styles["WizardStats"]}>
@@ -42,23 +38,21 @@ const WizardStats: React.FC = () => {
               Page {-1} out of {-999}
             </h5>
             <div className={Styles["page-controllers"]}>
-              <BtnPageBack onClick={()=>2} />
-              <BtnPageNext onClick={()=>2} />
-              <BtnFinish onClick={()=>2} />
+              <BtnLeave />
             </div>
           </section>
           <section className={Styles["header-btm"]}>
             <button 
-              onClick={()=>setStatsMode(StatsMode_types.STATS)} 
-              className={Styles[StatsMode===StatsMode_types.STATS
+              onClick={() => dispatch(SwitchTab('STATS'))} 
+              className={Styles[StatsMode === "STATS"
                 ? "btn-selected"
                 : ""]}>
                 Statistics
             </button>
             <div className={Styles["line"]}></div>
             <button 
-              onClick={()=>setStatsMode(StatsMode_types.RESULTS)} 
-              className={Styles[StatsMode===StatsMode_types.RESULTS
+              onClick={() => dispatch(SwitchTab("RESULTS"))} 
+              className={Styles[StatsMode === "RESULTS"
                 ? "btn-selected"
                 : ""]}>
                 Results
@@ -68,12 +62,14 @@ const WizardStats: React.FC = () => {
         {/* {body */}
         <section className={Styles["container-body"]}>
           
-          {/* {Wizard?.pages.map((page, i) => <Section key={i} page_idx={PageIdx} section_idx={i} section={section} />)} */}
+          {console.log(Wizard?.pages)}
+          {Wizard?.pages.map((page, i) => <PageComponent key={i} page_idx={i} page={page} />)}
         
         </section>
       </div>
     </div>
   )
+  // loading gif
   else return (
     <div className={Styles["WizardStats"]}>
         <div className={getStyles(Styles, "wizard-content-container wizard-content-container-loading")}>

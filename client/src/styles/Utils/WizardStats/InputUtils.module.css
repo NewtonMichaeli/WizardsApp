@@ -1,0 +1,31 @@
+/* Styles for InputUtils */
+
+.InStatisticableField {
+  background-color: #aaaaaa66;
+  height: 2.85rem;
+  min-width: 12rem;
+  width: fit-content;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0 5px 5px 5px;
+  color: #222;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.7rem;
+  padding: 0 0.7rem;
+  /* animation */
+  transition: all 0.2s ease;
+  /* mouse */
+  cursor: pointer;
+}
+.InStatisticableField::after {
+  content: "Switch to 'Results'";
+  color: #0aa;
+}
+.InStatisticableField:hover {
+  background-color: #bcc;
+}

@@ -52,6 +52,10 @@ const App: React.FC = () => {
           path="/wizard/:id"
           element={<GetUserWizardForm children={<WizardForm />} />} 
           />
+          <Route 
+          path='/' 
+          element={<>Home</>}
+          />
         <Route 
           path="*"
           element={<GoToDashboard />}

@@ -446,3 +446,155 @@ export const fake_server_answer: ServerResultsType[] =
         }
     }
 ]
+
+
+// Valid Form struct
+export const fake_form: WizardFormat[] = 
+[
+    {
+        name: "wizard1",
+        id: "wizard1_id",
+        pages: [
+            [
+                {
+                    name: "Section 1",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "aaa",
+                            title: "This is a title"
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "2",
+                            max: 9,
+                            min: 3,
+                            regex: null,
+                            required: false,
+                            title: "this is a text"
+                        },
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "ccc",
+                            title: "Label 2"
+                        },
+                        {
+                            type: QuestionTypes.SECURED_INPUT,
+                            name: "ddd",
+                            max: 9,
+                            min: 3,
+                            regex: null,
+                            required: false,
+                            title: "this is a secured-input"
+                        },
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "eee",
+                            title: "label 3"
+                        },
+                        {
+                            type: QuestionTypes.TEXTAREA,
+                            name: "6",
+                            max: 9,
+                            min: 3,
+                            regex: null,
+                            required: false,
+                            title: "this is a textarea"
+                        },
+                    ]
+                },
+                {
+                    name: "Section 2",
+                    elements: []
+                },
+                {
+                    name: "Section 3",
+                    elements: [
+                        {
+                            type: QuestionTypes.CHECKBOX_LIST,
+                            name: "xxwqeocwoqwxwqe",
+                            checkedInputs: ["xoZerpxqixwq2"],
+                            title: "checkbox list 1",
+                            elements: []
+                        },
+                        {
+                            type: QuestionTypes.RADIOBOX_LIST,
+                            name: "xxwqeoccheckwoe",
+                            checkedInput: "ciwq4ceeaa",
+                            title: "checkbox list 2",
+                            elements: []
+                        },
+                        {
+                            type: QuestionTypes.LISTS_LIST,
+                            name: "xxwqeocwoe",
+                            title: 'Lists list 1#',
+                            elements: [
+                                {
+                                    name: "list-wexqiwaeuv",
+                                    type: QuestionTypes.CHECKBOX_LIST,
+                                    checkedInputs: ['ecwverbyrte'],
+                                    title: "swxpwe",
+                                    elements: [
+                                        {
+                                            type: QuestionTypes.CHECKBOX,
+                                            name: "ecwverbyrte",
+                                            title: "xcweberu"
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: "list-ajwrvnb9ur",
+                                    type: QuestionTypes.RADIOBOX_LIST,
+                                    checkedInput: "",
+                                    title: 'sxwrec',
+                                    elements: []
+                                }
+                            ]
+                        },
+                    ],
+                }
+            ],
+            [
+                // section 1
+                {
+                    name: "Section 4",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "7",
+                            title: 'Label 6777'
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "8",
+                            max: 9,
+                            min: 3,
+                            regex: null,
+                            required: false,
+                            title: "this is a text 8"
+                        }
+                    ]
+                },
+                {
+                    name: "Section 5",
+                    elements: [
+                        {
+                            type: QuestionTypes.LABEL,
+                            name: "9",
+                            title: 'labe; 9000'
+                        },
+                        {
+                            type: QuestionTypes.TEXT,
+                            name: "10",
+                            max: 9,
+                            min: 3,
+                            regex: null,
+                            required: false,
+                            title: "this is a text 90"
+                        }
+                    ]
+                }
+            ]      
+        ]        
+    }
+]

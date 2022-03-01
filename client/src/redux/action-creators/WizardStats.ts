@@ -14,7 +14,7 @@ import { UserRoleTypes } from "../action-types/User"
 import { WizardStatsAction, WizardStatsActionTypes } from "../action-types/WizardStats"
 import { ExtractDataToStatsWizard } from "../../configs/_parser"
 import { PushFeedback } from "../actions/UI"
-import { fake_server_answer } from "../../interfaces/WizardFormat"
+import { fake_form, fake_server_answer, WizardFormat } from "../../interfaces/WizardFormat"
 // Configs:
 
 // Utils:
@@ -47,17 +47,14 @@ export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsActi
     // Parse results
     // const wizard_content: WizardServerFormFormat = JSON.parse(content)    // the wizard structure
     // const results_content: ServerResultsType[] = JSON.parse(results)      // all results
+    const wizard_content: WizardFormat[] = fake_form
     const results_content: ServerResultsType[] = fake_server_answer
     // Dispatch results to state
     dispatch({
       type: WizardStatsActionTypes.MAP_RESULTS_TO_STATE,
       payload: {
         // Wizard: wizard_content,
-        Wizard: {
-          name: 'aaa',
-          id: 'aaa',
-          pages: []
-        },
+        Wizard: wizard_content[0],
         AllAnswers: ExtractDataToStatsWizard(results_content)
       }
     })
