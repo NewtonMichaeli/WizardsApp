@@ -2,7 +2,7 @@
 import React from 'react'
 import { InputTypes } from '../../interfaces/WizardFormat'
 // Input fields:
-import { Checkbox, CheckboxList, Image, Label, ListsList, Radiobox, RadioboxList, Number, SecuredInput, Text, Textarea } from './Input'
+import { CheckboxList, Label, ListsList, RadioboxList, Number, SecuredInput, Text, Textarea } from './Input'
 import { QuestionTypes } from '../../redux/types'
 import { ValidFormInputType } from '../../interfaces/WizardFormat_Form'
 

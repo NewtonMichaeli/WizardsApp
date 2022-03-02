@@ -20,7 +20,7 @@ import { getStyles } from "../controllers"
 const Register: React.FC = () => {
 
     if (localStorage.getItem(TOKEN_NAME) !== null)
-        window.location.href = '/dashboard'
+        window.location.href = '/'
 
     const { SignUp } = bindActionCreators(AuthActions, useDispatch())
     

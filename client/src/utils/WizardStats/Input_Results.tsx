@@ -13,6 +13,7 @@ import { InStatisticableField } from "./InputUtils"
 // Styles:
 import Styles from '../../styles/Utils/WizardStats/Input_Results.module.css'
 import { getStyles } from "../../controllers"
+import NumericalGraph from "./graphs/NumericalGraph"
 
 
 export const Label: React.FC<{
@@ -84,16 +85,28 @@ export const SecuredInput: React.FC<{
 export const Number: React.FC<{
   question: InputTypes['Number']
 }> = ({question}) => {
-  
+    
   // States
-  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-  let value: number | null = null
-  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Number'])?.value
+  let numbers: number[] = []
+
+  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+
+  if (AllAnswers) Object.entries(AllAnswers).map(UserAnswer => {
+    numbers.push((UserAnswer[1][question.name] as ServerFormInputTypes['Number']).value)
+  })
+
 
   return (
     <div className={getStyles(Styles, "Input Input-Range")}>
       <h3>{question.title}</h3>
-      <h4 className={getStyles(Styles, `user-answer ${value !== null ?  "" : "no-answer"}`)}>{value}</h4>
+      {/* <h6>Answers: {answers_amount}</h6> */}
+      <div className={Styles["data-section"]}>
+        <div className={Styles["Input-container"]}>
+        </div>
+        <div className={Styles["stats-container"]}>
+          <NumericalGraph data={numbers} />
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,36 @@
+/* Styles for numerical graph */
+
+.Numerical-Graph {
+  width: 14rem;
+  height: 10rem;
+  background-color: #aaa;
+  padding: 0.4rem;
+  /* position */
+  position: relative;
+}
+
+.Numerical-Graph .name {
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) translateX(-150%);
+}
+
+.Numerical-Graph .Stat-block-fixed-border {
+  height: calc(100% - 0.8rem);
+  width: 2rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.4rem;
+  border-right: 3px solid #111;
+  /* background-color: red; */
+}
+
+.Numerical-Graph .Stat-block.odd {
+  background-color: #f04f4f99;
+}
+.Numerical-Graph .Stat-block.even {
+  background-color: #4a416499;
+}

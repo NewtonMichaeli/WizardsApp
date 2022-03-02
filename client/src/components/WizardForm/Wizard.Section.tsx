@@ -23,9 +23,6 @@ const Section: React.FC<{
   section: WizardFormSectionFormat
 }> = ({section}) => {
 
-  // States
-  const { IsAction, ActionTrigger, ActionType, WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
-
   return (
     <div className={Styles["Section-container"]}>
       {/* left section - title */}

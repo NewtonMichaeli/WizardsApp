@@ -6,13 +6,12 @@ import { Dispatch } from "redux"
 import { RootState } from ".."
 import { _headers } from "../../configs/_headers"
 import { SERVER_GET_WIZARDS_URL } from "../../configs/_server"
-import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
-import { MappedUserResultsType, ServerResultsType } from "../types"
+import { ServerResultsType } from "../types"
 // Actions:
 import { UIAction } from "../action-types/UI"
 import { UserRoleTypes } from "../action-types/User"
 import { WizardStatsAction, WizardStatsActionTypes } from "../action-types/WizardStats"
-import { ExtractDataToStatsWizard } from "../../configs/_parser"
+import { MapAnswersDataToState } from "../../configs/_parser"
 import { PushFeedback } from "../actions/UI"
 import { fake_form, fake_server_answer, WizardFormat } from "../../interfaces/WizardFormat"
 // Configs:
@@ -55,7 +54,7 @@ export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsActi
       payload: {
         // Wizard: wizard_content,
         Wizard: wizard_content[0],
-        AllAnswers: ExtractDataToStatsWizard(results_content)
+        AllAnswers: MapAnswersDataToState(results_content)
       }
     })
     // success msg

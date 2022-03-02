@@ -2,7 +2,6 @@
 
 import { useDispatch, useSelector } from "react-redux"
 // Types:
-import { InputChange, TextareaChange } from "../WizardEditor/types"
 import { InputTypes } from "../../interfaces/WizardFormat"
 import { QuestionTypes } from "../../redux/types"
 import { RootState } from "../../redux"
@@ -126,8 +125,8 @@ export const RadioboxList: React.FC<{
     Object.entries(AllAnswers).map((UserAnswer, i) => {
       // username: { q1: {...}, q2: {...} }
       console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElement = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List']).checkedElement ?? null
-      if (checkedElement) {
+      const checkedElement = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List'])?.checkedElement ?? null
+      if (checkedElement?.length) {
         answers_amount ++
         // init firld on first instance
         if (!avg_answer[checkedElement]) avg_answer[checkedElement] = 1
@@ -173,8 +172,8 @@ export const CheckboxList: React.FC<{
     Object.entries(AllAnswers).map((UserAnswer, i) => {
       // username: { q1: {...}, q2: {...} }
       console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElements = (UserAnswer[1][question.name] as ServerFormInputTypes['Checkbox List']).checkedElements ?? null
-      if (checkedElements.length) {
+      const checkedElements = (UserAnswer[1][question.name] as ServerFormInputTypes['Checkbox List'])?.checkedElements ?? null
+      if (checkedElements?.length) {
         answers_amount ++
         checkedElements.map(element => {
           // init firld on first instance

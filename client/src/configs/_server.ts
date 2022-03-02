@@ -7,6 +7,9 @@ export const SERVER_URI = "http://localhost:5000"
 export const SERVER_SIGNUP_URL = SERVER_URI + "/api/auth/signup/"
 
 // Server endpoint (POST) - signup
+export const SERVER_FILL_WIZARD_URL = (id: string) => SERVER_URI + `/api/wizards/${id}/fill/`
+
+// Server endpoint (POST) - signup
 export const SERVER_SIGNIN_URL = SERVER_URI + "/api/auth/signin/"
 
 // Server endpoint (POST) - create wizard

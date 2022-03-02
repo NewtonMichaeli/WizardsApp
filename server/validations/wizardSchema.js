@@ -4,29 +4,29 @@ const filledItemSchema = Joi.object().valid(
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Label").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Checkbox").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Text").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Number").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
     value: Joi.number().required()
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Textarea").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
 // {
@@ -38,25 +38,25 @@ const filledItemSchema = Joi.object().valid(
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Radiobox").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("SecuredInput").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
     value: Joi.string().required()
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Image").required(),
-    title: Joi.string().min(2).max(300).required(),
+    // title: Joi.string().min(2).max(300).required(),
     value: Joi.string()
 },
 {
     name: Joi.string().required(),
     type: Joi.string().valid("Radiobox List").required(),
-    title: Joi.string().min(2).max(300).required(),
-    checkedInput: Joi.string(),
+    // title: Joi.string().min(2).max(300).required(),
+    checkedElement: Joi.string(),
     // elements: Joi.array().items(
     //     {
     //         type: Joi.string().valid("RadioBox").required(),
@@ -67,9 +67,9 @@ const filledItemSchema = Joi.object().valid(
 },
 {
     type: Joi.string().valid("Checkbox List").required(),
-    title: Joi.string().min(2).max(300).required(),
     name: Joi.string().required(),
-    checkedInputs: Joi.array(),
+    // title: Joi.string().min(2).max(300).required(),
+    checkedElements: Joi.array(),
     // required: Joi.boolean(),
     // elements: Joi.array().items(
     //     {
@@ -193,21 +193,30 @@ const wizardSchema = Joi.object({
     )
 })
 
+// v1
+// const filledWizardSchema = Joi.object({
+//     id: Joi.number().required(),
+//     data: Joi.object({
+//         pages: Joi.array().items(
+//             {
+//                 sections: Joi.array().items(
+//                     {
+//                         title: Joi.string().min(2).required(),
+//                         elements: Joi.array().items(
+//                                 filledItemSchema
+//                         )
+//                     }
+//                 )
+//             }
+//         ).required()
+//     }).required()
+// })
+
+// v2
 const filledWizardSchema = Joi.object({
-    id: Joi.number().required(),
-    data: Joi.object({
-        pages: Joi.array().items(
-            {
-                sections: Joi.array().items(
-                    {
-                        title: Joi.string().min(2).required(),
-                        elements: Joi.array().items(
-                                filledItemSchema
-                        )
-                    }
-                )
-            }
-        ).required()
-    }).required()
+    username: Joi.string().required(),
+    email: Joi.string().required(),
+    data: Joi.array().items(filledItemSchema).required()
 })
+
 module.exports = {wizardSchema, filledWizardSchema}

@@ -1,9 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { ValidInputType, WizardSectionFormat } from '../../interfaces/WizardFormat'
-import { WizardServerFormSectionFormat } from '../../interfaces/WizardFormat_Server'
-import { RootState } from '../../redux'
-import { wizard_stats_state_type } from '../../redux/types/reducerStateTypes'
+import { WizardSectionFormat } from '../../interfaces/WizardFormat'
 // Styles:
 import Styles from '../../styles/components/WizardStats/Wizard.Section.module.css'
 import ParseElement from '../../utils/WizardStats/ParseElement'

@@ -2,8 +2,6 @@
 
 import { Url } from "url"
 import { QuestionTypes, ServerResultsType } from "../redux/types"
-import { WizardServerFormFormat } from "./WizardFormat_Server"
-
 
 // All Input types for a Wizard to have
 export interface InputTypes {
@@ -188,7 +186,16 @@ export const fake_wizard: WizardFormat[] = [
                 },
                 {
                     name: "Section 2",
-                    elements: []
+                    elements: [
+                        {
+                            type: QuestionTypes.NUMBER,
+                            max: 20,
+                            min: 2,
+                            name: 'numberq1',
+                            required: true,
+                            title: "Enter number between 2-20"
+                        }
+                    ]
                 },
                 {
                     name: "Section 3",
@@ -335,115 +342,112 @@ export const fake_server_answer: ServerResultsType[] =
     {
         username: 'username1',
         email: 'username1@gmail.com',
-        results: {
-            name: "Wizard 1.0",
-            id: "j18cn63ng98hHi9",
-            pages: [
-                // page 1
-                [
-                    // section 1
-                    {
-                        name: "Section 1",
-                        elements: [
-                            {
-                                type: QuestionTypes.LABEL,
-                                name: "aaa",
-                            },
-                            {
-                                type: QuestionTypes.TEXT,
-                                name: "2",
-                                value: "bbb"
-                            },
-                            {
-                                type: QuestionTypes.LABEL,
-                                name: "ccc",
-                            },
-                            {
-                                type: QuestionTypes.SECURED_INPUT,
-                                name: "ddd",
-                                value: ""
-                            },
-                            {
-                                type: QuestionTypes.LABEL,
-                                name: "eee",
-                            },
-                            {
-                                type: QuestionTypes.TEXTAREA,
-                                name: "6",
-                                value: ""
-                            },
-                        ]
-                    },
-                    {
-                        name: "Section 2",
-                        elements: []
-                    },
-                    {
-                        name: "Section 3",
-                        elements: [
-                            {
-                                type: QuestionTypes.CHECKBOX_LIST,
-                                name: "xxwqeocwoqwxwqe",
-                                checkedElements: ["xoZerpxqixwq2"],
-                            },
-                            {
-                                type: QuestionTypes.RADIOBOX_LIST,
-                                name: "xxwqeoccheckwoe",
-                                checkedElement: "ciwq4ceeaa",
-                            },
-                            {
-                                type: QuestionTypes.LISTS_LIST,
-                                name: "xxwqeocwoe",
-                                elements: [
-                                    {
-                                        name: "list-wexqiwaeuv",
-                                        type: QuestionTypes.CHECKBOX_LIST,
-                                        checkedElements: []
-                                    },
-                                    {
-                                        name: "list-ajwrvnb9ur",
-                                        type: QuestionTypes.RADIOBOX_LIST,
-                                        checkedElement: ""
-                                    }
-                                ]
-                            },
-                        ]
-                    }
-                ],
-                // page 2
-                [
-                    // section 1
-                    {
-                        name: "Section 4",
-                        elements: [
-                            {
-                                type: QuestionTypes.LABEL,
-                                name: "7"
-                            },
-                            {
-                                type: QuestionTypes.TEXT,
-                                name: "8",
-                                value: "Exists"
-                            }
-                        ]
-                    },
-                    {
-                        name: "Section 5",
-                        elements: [
-                            {
-                                type: QuestionTypes.LABEL,
-                                name: "9"
-                            },
-                            {
-                                type: QuestionTypes.TEXT,
-                                name: "10",
-                                value: "Exists"
-                            }
-                        ]
-                    }
-                ]      
-            ]
-        }
+        data: [
+            
+            {
+                type: QuestionTypes.LABEL,
+                name: "aaa",
+            },
+            {
+                type: QuestionTypes.TEXT,
+                name: "2",
+                value: "bbb"
+            },
+            {
+                type: QuestionTypes.LABEL,
+                name: "ccc",
+            },
+            {
+                type: QuestionTypes.SECURED_INPUT,
+                name: "ddd",
+                value: ""
+            },
+            {
+                type: QuestionTypes.LABEL,
+                name: "eee",
+            },
+            {
+                type: QuestionTypes.TEXTAREA,
+                name: "6",
+                value: ""
+            },
+            {
+                type: QuestionTypes.NUMBER, 
+                name: "numberq1",
+                value: 3
+            },
+            {
+                type: QuestionTypes.CHECKBOX_LIST,
+                name: "xxwqeocwoqwxwqe",
+                checkedElements: ["xoZerpxqixwq2"],
+            },
+            {
+                type: QuestionTypes.RADIOBOX_LIST,
+                name: "xxwqeoccheckwoe",
+                checkedElement: "ciwq4ceeaa",
+            },
+            {
+                name: "list-wexqiwaeuv",
+                type: QuestionTypes.CHECKBOX_LIST,
+                checkedElements: []
+            },
+            {
+                name: "list-ajwrvnb9ur",
+                type: QuestionTypes.RADIOBOX_LIST,
+                checkedElement: ""
+            },
+            {
+                type: QuestionTypes.LABEL,
+                name: "7"
+            },
+            {
+                type: QuestionTypes.TEXT,
+                name: "8",
+                value: "Exists"
+            },
+            {
+                type: QuestionTypes.LABEL,
+                name: "9"
+            },
+            {
+                type: QuestionTypes.TEXT,
+                name: "10",
+                value: "Exists"
+            }
+        ]
+    },
+    {
+        username: 'username2',
+        email: 'scvtey',
+        data: [
+            {
+                type: QuestionTypes.NUMBER, 
+                name: "numberq1",
+                value: 3
+            }
+        ]
+    },
+    {
+        username: 'username3',
+        email: 'scvtey',
+        data: [
+            {
+                type: QuestionTypes.NUMBER, 
+                name: "numberq1",
+                value: 3
+            }
+        ]
+    },
+    {
+        username: 'username4',
+        email: 'scvtey',
+        data: [
+            {
+                type: QuestionTypes.NUMBER, 
+                name: "numberq1",
+                value: 3
+            }
+        ]
     }
 ]
 
@@ -505,7 +509,16 @@ export const fake_form: WizardFormat[] =
                 },
                 {
                     name: "Section 2",
-                    elements: []
+                    elements: [
+                        {
+                            type: QuestionTypes.NUMBER,
+                            max: 20,
+                            min: 2,
+                            name: 'numberq1',
+                            required: true,
+                            title: "Enter number between 2-20",
+                        }
+                    ]
                 },
                 {
                     name: "Section 3",

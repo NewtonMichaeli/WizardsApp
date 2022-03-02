@@ -3,7 +3,7 @@
 import { ElementTypes, QuestionTypes, MappedUserResultsType } from ".";
 import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
 import { WizardFormFormat, WizardFormPageFormat } from "../../interfaces/WizardFormat_Form";
-import { ValidServerFormInputType, WizardServerFormFormat } from "../../interfaces/WizardFormat_Server";
+import { ValidServerFormInputType } from "../../interfaces/WizardFormat_Server";
 import { UserRoleTypes } from "../action-types/User";
 import { WizardEditorActionTypes } from "../action-types/WizardEditor";
 
@@ -65,7 +65,8 @@ export interface wizard_editor_state_type {
 export interface wizard_form_state_type {
   // current wizard state - questions, sections, etc.. :
   Wizard: WizardFormFormat | null         // -- editable Form
-  Answer: WizardServerFormFormat | null   // -- sent form to server
+  // Answer: WizardServerFormFormat | null   // -- sent form to server
+  Answer: ValidServerFormInputType[]              // -- sent form to server
   Page: WizardFormPageFormat | null
   PageIdx: number
 }

@@ -1,11 +1,11 @@
 // Wizard Form
-import React, { useState } from 'react'
+import React from 'react'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
 import { bindActionCreators } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState, WizardEditorActions, WizardFormActions } from '../redux'
+import { RootState, WizardFormActions } from '../redux'
 import { wizard_form_state_type } from '../redux/types/reducerStateTypes'
 // Styles:
 import Styles from '../styles/pages/WizardEditor.module.css'
@@ -20,10 +20,9 @@ const WizardForm: React.FC = () => {
   // Dispatch
   const dispatch = useDispatch()
   // States
-  const { SendAnswer } = bindActionCreators(WizardFormActions, dispatch)
   const { PageIdx, Wizard, Page } = useSelector<RootState, wizard_form_state_type>(state => state.wizard_form)
   // Handlers
-  const { MovePage } = bindActionCreators(WizardFormActions, dispatch)
+  const { SendAnswer, MovePage } = bindActionCreators(WizardFormActions, dispatch)
 
 
   if (Wizard) return (

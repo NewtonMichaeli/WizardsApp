@@ -2,7 +2,7 @@
 
 // Types:
 import { WizardFormFormat } from "../../interfaces/WizardFormat_Form"
-import { WizardServerFormFormat, WizardServerFormPageFormat } from "../../interfaces/WizardFormat_Server"
+import { ValidServerFormInputType } from "../../interfaces/WizardFormat_Server"
 
 
 // Action Types
@@ -44,8 +44,7 @@ interface WizardNotFoundAction {
 interface SaveAnswerAction {
   type: WizardFormActionTypes.SAVE_ANSWER,
   payload: {
-    answer_page: WizardServerFormPageFormat
-    answer_page_idx: number
+    answer_page: ValidServerFormInputType[]
   }
 }
 

@@ -29,13 +29,13 @@ export enum ElementTypes {
 export type ServerResultsType = {
   username: string,
   email: string,
-  results: WizardServerFormFormat
-}
-
-export interface ResultQuestions {
-  [q_name: string]: ValidServerFormInputType
+  data: ValidServerFormInputType[]
 }
 
 export interface MappedUserResultsType {
   [username: string]: ResultQuestions
+}
+
+export interface ResultQuestions {
+  [q_name: string]: ValidServerFormInputType
 }
