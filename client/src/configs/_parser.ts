@@ -17,16 +17,11 @@ export const ExtractDataToWizard = (server_wizard: any): WizardFormat => {
 
 
 // Parses server response to actual wizard format
-export const MapAnswersDataToState = (wizard_results: ServerResultsType[]): MappedUserResultsType => {
+export const ExtractDataToWizardStats = (wizard_results: ServerResultsType[]): MappedUserResultsType => {
   let results: MappedUserResultsType = {}
   // Map each User answer
   wizard_results.map(result => {
-    // add username to results
-    results[result.username] = {}
-    result.data.map(question => {
-      // add question to username
-      results[result.username][question.name] = {...question}
-    })
+    results[result.username] = result.data
   })
   // return total answers mapped as username:questions_by_name
   return results

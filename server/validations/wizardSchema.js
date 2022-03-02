@@ -216,7 +216,63 @@ const wizardSchema = Joi.object({
 const filledWizardSchema = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().required(),
-    data: Joi.array().items(filledItemSchema).required()
+    data: Joi.object().pattern(
+        /^/,    // allow any key (question name)
+        Joi.valid(
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Label").required(),
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Checkbox").required(),
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Text").required(),
+                value: Joi.string().required()
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Number").required(),
+                value: Joi.number().required()
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Textarea").required(),
+                value: Joi.string().required()
+            },
+            // {
+            //     name: Joi.string().required(),
+            //     type: Joi.string().valid("Range").required(),
+            //     title: Joi.string().min(2).max(300).required(),
+            //     value: Joi.number()
+            // },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Radiobox").required(),
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("SecuredInput").required(),
+                value: Joi.string().required()
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Image").required(),
+                value: Joi.string()
+            },
+            {
+                name: Joi.string().required(),
+                type: Joi.string().valid("Radiobox List").required(),
+                checkedElement: Joi.string(),
+            },
+            {
+                type: Joi.string().valid("Checkbox List").required(),
+                name: Joi.string().required(),
+                checkedElements: Joi.array()
+            }
+        )).required()
 })
 
 module.exports = {wizardSchema, filledWizardSchema}

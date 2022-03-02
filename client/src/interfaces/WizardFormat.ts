@@ -342,112 +342,111 @@ export const fake_server_answer: ServerResultsType[] =
     {
         username: 'username1',
         email: 'username1@gmail.com',
-        data: [
-            
-            {
+        data: {            
+            "aaa": {
                 type: QuestionTypes.LABEL,
                 name: "aaa",
             },
-            {
+            "bbb": {
                 type: QuestionTypes.TEXT,
                 name: "2",
                 value: "bbb"
             },
-            {
+            "ccc": {
                 type: QuestionTypes.LABEL,
                 name: "ccc",
             },
-            {
+            "ddd": {
                 type: QuestionTypes.SECURED_INPUT,
                 name: "ddd",
                 value: ""
             },
-            {
+            "eee": {
                 type: QuestionTypes.LABEL,
                 name: "eee",
             },
-            {
+            "6": {
                 type: QuestionTypes.TEXTAREA,
                 name: "6",
                 value: ""
             },
-            {
+            "numberq1": {
                 type: QuestionTypes.NUMBER, 
                 name: "numberq1",
                 value: 3
             },
-            {
+            "xxwqeocwoqwxwqe": {
                 type: QuestionTypes.CHECKBOX_LIST,
                 name: "xxwqeocwoqwxwqe",
                 checkedElements: ["xoZerpxqixwq2"],
             },
-            {
+            "xxwqeoccheckwoe": {
                 type: QuestionTypes.RADIOBOX_LIST,
                 name: "xxwqeoccheckwoe",
                 checkedElement: "ciwq4ceeaa",
             },
-            {
+            "list-wexqiwaeuv": {
                 name: "list-wexqiwaeuv",
                 type: QuestionTypes.CHECKBOX_LIST,
                 checkedElements: []
             },
-            {
+            "list-ajwrvnb9ur": {
                 name: "list-ajwrvnb9ur",
                 type: QuestionTypes.RADIOBOX_LIST,
                 checkedElement: ""
             },
-            {
+            "7": {
                 type: QuestionTypes.LABEL,
                 name: "7"
             },
-            {
+            "8": {
                 type: QuestionTypes.TEXT,
                 name: "8",
                 value: "Exists"
             },
-            {
+            "9": {
                 type: QuestionTypes.LABEL,
                 name: "9"
             },
-            {
+            "10": {
                 type: QuestionTypes.TEXT,
                 name: "10",
                 value: "Exists"
             }
-        ]
+        }
     },
     {
         username: 'username2',
         email: 'scvtey',
-        data: [
-            {
+        data: {
+            "numberq1": {
                 type: QuestionTypes.NUMBER, 
                 name: "numberq1",
                 value: 3
             }
-        ]
+        }
     },
     {
         username: 'username3',
         email: 'scvtey',
-        data: [
-            {
+        data: {
+            "numberq1": {
                 type: QuestionTypes.NUMBER, 
                 name: "numberq1",
                 value: 3
             }
-        ]
+        }
     },
     {
         username: 'username4',
         email: 'scvtey',
-        data: [
-            {
+        data: {
+            "numberq1": {
                 type: QuestionTypes.NUMBER, 
                 name: "numberq1",
                 value: 3
             }
-        ]
+        }
     }
 ]
 

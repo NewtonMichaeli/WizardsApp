@@ -29,7 +29,7 @@ export enum ElementTypes {
 export type ServerResultsType = {
   username: string,
   email: string,
-  data: ValidServerFormInputType[]
+  data: ResultQuestions
 }
 
 export interface MappedUserResultsType {

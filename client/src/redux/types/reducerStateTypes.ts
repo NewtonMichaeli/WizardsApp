@@ -1,9 +1,8 @@
 // Reducer's initial state types
 
-import { ElementTypes, QuestionTypes, MappedUserResultsType } from ".";
+import { ElementTypes, QuestionTypes, MappedUserResultsType, ResultQuestions } from ".";
 import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat";
 import { WizardFormFormat, WizardFormPageFormat } from "../../interfaces/WizardFormat_Form";
-import { ValidServerFormInputType } from "../../interfaces/WizardFormat_Server";
 import { UserRoleTypes } from "../action-types/User";
 import { WizardEditorActionTypes } from "../action-types/WizardEditor";
 
@@ -66,7 +65,7 @@ export interface wizard_form_state_type {
   // current wizard state - questions, sections, etc.. :
   Wizard: WizardFormFormat | null         // -- editable Form
   // Answer: WizardServerFormFormat | null   // -- sent form to server
-  Answer: ValidServerFormInputType[]              // -- sent form to server
+  Answer: ResultQuestions              // -- sent form to server
   Page: WizardFormPageFormat | null
   PageIdx: number
 }

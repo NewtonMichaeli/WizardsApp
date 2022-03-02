@@ -11,9 +11,10 @@ import { ServerResultsType } from "../types"
 import { UIAction } from "../action-types/UI"
 import { UserRoleTypes } from "../action-types/User"
 import { WizardStatsAction, WizardStatsActionTypes } from "../action-types/WizardStats"
-import { MapAnswersDataToState } from "../../configs/_parser"
+import { ExtractDataToWizardStats } from "../../configs/_parser"
 import { PushFeedback } from "../actions/UI"
 import { fake_form, fake_server_answer, WizardFormat } from "../../interfaces/WizardFormat"
+import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
 // Configs:
 
 // Utils:
@@ -40,7 +41,8 @@ export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsActi
       {headers: _headers(token)}
     )
     // Mapping results to state
-    const {content, results} = server_res.data.results
+    const content: WizardServerFormFormat = server_res.data.results.content
+    const results: ServerResultsType[] = server_res.data.results
     console.log("Content: " + content)
     console.log("Results: " + results)
     // Parse results
@@ -54,7 +56,7 @@ export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsActi
       payload: {
         // Wizard: wizard_content,
         Wizard: wizard_content[0],
-        AllAnswers: MapAnswersDataToState(results_content)
+        AllAnswers: ExtractDataToWizardStats(results_content)
       }
     })
     // success msg

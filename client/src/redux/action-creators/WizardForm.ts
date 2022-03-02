@@ -19,7 +19,6 @@ import { SavePageAnswersToServerFormat } from "../../utils/WizardForm/RenderServ
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
 import { ResultQuestions, ServerResultsType } from "../types"
-import { ValidServerFormInputType } from "../../interfaces/WizardFormat_Server"
 
 
 // Move Page action (if answers are valid till now)
@@ -120,7 +119,7 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
 
   try {
     // Movement forward is conditional
-    const parsed_page: ValidServerFormInputType[] = SavePageAnswersToServerFormat(CurrPage, false)
+    const parsed_page: ResultQuestions = SavePageAnswersToServerFormat(CurrPage, false)
     dispatch(SaveAnswerPageAction(parsed_page))    // -- save current page
     // return
 
