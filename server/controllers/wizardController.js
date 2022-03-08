@@ -25,13 +25,14 @@ const deleteWizard = async (req, res) => {
 
     //data extracting
     const {id, role} = req.user
-    const {wizardId} = req.body
+    const {id: wizardId} = req.params
 
     //continue only if it's your wizard, or if you're the admin.
     const wizard = await wizardRequests.getWizard(wizardId)
     if(!wizard) return resHandler.wizardNotFoundErr(res)
     
-    const isCreator = wizard.creator === id
+    // Validate user
+    const isCreator = wizard.createdBy === id.toString()
     if(!(isCreator || role === "admin")) return resHandler.accessDeniedErr(res)
     
     //delete the wizard
@@ -50,9 +51,10 @@ const updateWizard = async (req, res) => {
     const wizard = await wizardRequests.getWizard(wizardId)
     if(!wizard) return resHandler.wizardNotFoundErr(res)
     
-    const isCreator = wizard.creator === id
+    const isCreator = wizard.createdBy === id.toString()
     if(!(isCreator || role === "admin")) return resHandler.accessDeniedErr(res)
 
+    console.log(wizardId, newWizard);
     //update the wizard
     const result = await wizardRequests.updateWizard(wizardId, newWizard)
     if(!result) return resHandler.internalServerErr(res)
@@ -81,13 +83,14 @@ const fillWizard = async (req, res) => {
 const getWizard = async (req, res) => {
     
     //data extracting
-    const {wizardId} = req.body
+    const { id: wizardId } = req.params
     
     //get the wizard
     const wizard = await wizardRequests.getWizard(wizardId)
+    console.log(wizard)
     if(!wizard) return resHandler.wizardNotFoundErr(res)
 
-    return resHandler.wizardSentSuccessfuly(res, wizard.content)
+    return resHandler.wizardSentSuccessfuly(res, wizard)
 }
 
 

@@ -77,7 +77,7 @@ export const SaveChanges = (wizard_id: string) => async (
     // save data in localstorage temporarly
     // localStorage.setItem('data', JSON.stringify(new_wizard))
     const res = await axios.patch(
-      SERVER_UPDATE_WIZARD + wizard_id,
+      SERVER_UPDATE_WIZARD + WizardState.id,
       // new wizard details
         {
           newWizard: WizardState,

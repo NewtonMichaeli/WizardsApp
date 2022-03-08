@@ -20,7 +20,7 @@ export const ExtractDataToWizard = (server_wizard: any): WizardFormat => {
 export const ExtractDataToWizardStats = (wizard_results: ServerResultsType[]): MappedUserResultsType => {
   let results: MappedUserResultsType = {}
   // Map each User answer
-  wizard_results.map(result => {
+  wizard_results?.map(result => {
     results[result.username] = result.data
   })
   // return total answers mapped as username:questions_by_name

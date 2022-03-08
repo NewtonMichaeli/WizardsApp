@@ -20,6 +20,7 @@ const createWizard = async (wizard, userId) => {
 const deleteWizard = async (wizardId) => {
     const query = mysql.format(`DELETE FROM wizards WHERE id = ?`, [wizardId])
 
+    console.log("WizardID: " + wizardId);
     try {
         await asyncQuery(query)
         return true
@@ -31,14 +32,17 @@ const deleteWizard = async (wizardId) => {
 
 const updateWizard = async (wizardId, newWizard) => {
 
-    const query = mysql.format(`UPDATE wizards SET content = ?, WHERE wizards.id = ?`, [JSON.stringify(newWizard), wizardId])
+    const query = mysql.format(`UPDATE wizards SET content = ? WHERE wizards.id = ?`, [JSON.stringify(newWizard), wizardId])
     try {
         const {insertID} = await asyncQuery(query)
         const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [insertID])
         const result = await asyncQuery(getUserQuery)
-        return result[0]
+        console.log(result);
+        return true
+        // return result[0]
     }
-    catch {
+    catch(err) {
+        console.log(err)
         return false
     }
 }
@@ -68,7 +72,8 @@ const fillWizard = async (wizardId, filledWizard) => {
 
 const getWizard = async (wizardId) => {
 
-    const query = mysql.format(`SELECT results FROM wizards WHERE id = ?`, [wizardId])
+    // const query = mysql.format(`SELECT results FROM wizards WHERE id = ?`, [wizardId])
+    const query = mysql.format(`SELECT * FROM wizards WHERE id = ?`, [wizardId])
     try {
         const result = await asyncQuery(query)
         return result[0]

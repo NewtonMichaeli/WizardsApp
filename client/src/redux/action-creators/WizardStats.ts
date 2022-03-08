@@ -5,8 +5,8 @@ import { Dispatch } from "redux"
 // Types:
 import { RootState } from ".."
 import { _headers } from "../../configs/_headers"
-import { SERVER_GET_WIZARDS_URL } from "../../configs/_server"
-import { ServerResultsType } from "../types"
+import { SERVER_GET_WIZARDS_URL, SERVER_GET_WIZARD_URL } from "../../configs/_server"
+import { MappedUserResultsType, ServerResultsType } from "../types"
 // Actions:
 import { UIAction } from "../action-types/UI"
 import { UserRoleTypes } from "../action-types/User"
@@ -21,7 +21,7 @@ import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
 
 
 // Map Results To State
-export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsAction | UIAction>, getState: () => RootState): Promise<void> =>
+export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatch<WizardStatsAction | UIAction>, getState: () => RootState): Promise<void> =>
 { 
   // Validate before entering stats
   const { UserData, isAuthed } = getState().user
@@ -37,26 +37,37 @@ export const MapResultsToState = () => async (dispatch: Dispatch<WizardStatsActi
   try {
 
     const server_res = await axios.get(
-      SERVER_GET_WIZARDS_URL,
+      SERVER_GET_WIZARD_URL(wizard_id),
       {headers: _headers(token)}
     )
+    console.log(server_res.data);
+    
     // Mapping results to state
-    const content: WizardServerFormFormat = server_res.data.results.content
-    const results: ServerResultsType[] = server_res.data.results
-    console.log("Content: " + content)
-    console.log("Results: " + results)
+    const wizard_content: WizardServerFormFormat = server_res.data.content
+    const wizard_results: ServerResultsType[] = server_res.data.results
+    console.log("Content: ")
+    console.log(wizard_content)
+    console.log("Results: ")
+    console.log(wizard_results)
     // Parse results
+    let mapped_wizard_results: MappedUserResultsType | null = null
+    mapped_wizard_results = ExtractDataToWizardStats(wizard_results)
+    try {
+    }
+    catch (err: any) {
+      // console.log(err)
+    }
     // const wizard_content: WizardServerFormFormat = JSON.parse(content)    // the wizard structure
     // const results_content: ServerResultsType[] = JSON.parse(results)      // all results
-    const wizard_content: WizardFormat[] = fake_form
-    const results_content: ServerResultsType[] = fake_server_answer
+    // const wizard_content: WizardFormat[] = fake_form
+    // const results_content: ServerResultsType[] = fake_server_answer
     // Dispatch results to state
     dispatch({
       type: WizardStatsActionTypes.MAP_RESULTS_TO_STATE,
       payload: {
         // Wizard: wizard_content,
-        Wizard: wizard_content[0],
-        AllAnswers: ExtractDataToWizardStats(results_content)
+        Wizard: wizard_content,
+        AllAnswers: mapped_wizard_results ?? null
       }
     })
     // success msg

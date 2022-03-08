@@ -24,6 +24,9 @@ export const SERVER_USERDETAILS_URL = SERVER_URI + "/api/auth/"
 // Server endpoint (GET) - specific_wizard
 export const SERVER_GET_WIZARDS_URL = SERVER_URI + "/api/wizards/"
 
+// Server endpoint (GET) - specific_wizard
+export const SERVER_GET_WIZARD_URL = (id: string) => SERVER_URI + "/api/wizards/" + id
+
 // Server endpoint (PATCH) - update wizard
 export const SERVER_UPDATE_WIZARD = SERVER_URI + "/api/wizards/"
 

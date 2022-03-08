@@ -19,7 +19,7 @@ export const GetWizardStatistics: React.FC<{children: JSX.Element}> = ({children
   // Handlers
   const LoadUserAndSpecificWizard = async (id: string) => {
     await LoadUser()
-    await MapResultsToState()
+    await MapResultsToState(id)
   }
   useEffect(() => {
     if (id)
