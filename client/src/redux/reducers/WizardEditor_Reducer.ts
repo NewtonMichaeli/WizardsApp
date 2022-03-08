@@ -15,7 +15,6 @@ const initState: wizard_editor_state_type = {
   ActionType: null,
   // current wizard state - questions, sections, etc.. :
   WizardState: null,
-  WizardResults: null,
   Page: null,
   PageIdx: 0
 }

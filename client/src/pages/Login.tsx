@@ -17,8 +17,10 @@ import { TOKEN_NAME } from "../configs/_storage"
 // Login Page
 const Login: React.FC = () => {
 
-    if (localStorage.getItem(TOKEN_NAME) !== null)
+    if (localStorage.getItem(TOKEN_NAME) !== null) {
+        // localStorage.removeItem('auth-token')
         window.location.href = '/'
+    }
 
     const { SignIn } = bindActionCreators(AuthActions, useDispatch())
 

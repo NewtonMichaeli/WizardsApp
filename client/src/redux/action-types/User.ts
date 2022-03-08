@@ -17,7 +17,7 @@ export enum UserActionTypes {
 
 export enum UserRoleTypes {
     USER = "user",
-    WIZARD_CREATOR = "wizard Creator",
+    WIZARD_CREATOR = "wizardCreator",
     ADMIN = "admin"
 }
   

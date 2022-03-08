@@ -216,12 +216,11 @@ const wizardSchema = Joi.object({
 const filledWizardSchema = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().required(),
-    data: Joi.object().pattern(
-        /^/,    // allow any key (question name)
-        Joi.valid(
+    data: Joi.object().keys({
+        genericKey: Joi.object().valid(
             {
                 name: Joi.string().required(),
-                type: Joi.string().valid("Label").required(),
+                type: Joi.string().valid("Labelo").required(),
             },
             {
                 name: Joi.string().required(),
@@ -272,7 +271,8 @@ const filledWizardSchema = Joi.object({
                 name: Joi.string().required(),
                 checkedElements: Joi.array()
             }
-        )).required()
+        )
+    }).unknown(true).required()
 })
 
 module.exports = {wizardSchema, filledWizardSchema}

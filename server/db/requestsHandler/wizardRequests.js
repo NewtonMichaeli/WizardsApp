@@ -82,7 +82,8 @@ const getWizardsById = async (userId) => {
     const query = mysql.format(`SELECT * FROM wizards WHERE createdBy = ?`, [userId])
     try {
         const result = await asyncQuery(query)
-        return result[0]
+        // console.log(result);
+        return result
     }
     catch {
         return false

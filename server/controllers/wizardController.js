@@ -99,10 +99,9 @@ const getWizards = async (req, res) => {
 
     //get the wizards
     if(role === "admin") wizards = await wizardRequests.getWizards()
-    else wizards = await wizardRequests.getWizardsById(id)
-
-    if(!wizards) return resHandler.wizardSentSuccessfuly(res, [])
-
+    else wizards = await wizardRequests.getWizardsById(id)  // [wizard1, wizard2, etc..]
+    
+    // return wizards-array
     return resHandler.wizardSentSuccessfuly(res, wizards)
 }
 

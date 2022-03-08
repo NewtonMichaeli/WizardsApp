@@ -13,6 +13,7 @@ import DashboardAddWizardBtn from '../components/Dashboard/DashboardAddWizardBtn
 import DashboardAddWizardInput from '../components/Dashboard/DashboardAddWizardInput'
 // static wizards data
 import { user_state_type } from '../redux/types/reducerStateTypes'
+import { UserRoleTypes } from '../redux/action-types/User'
 
 
 // Dashboard page
@@ -26,7 +27,7 @@ const Dashboard: React.FC = (/* user's wizards data */) => {
         {UserData?.wizards.map(wizard => <DashboardWizard wizard={wizard} key={wizard.id} />)}
         {/* last element - add wizards: */}
         {UserData?.isAddingWizard && <DashboardAddWizardInput />}
-        <DashboardAddWizardBtn />
+        {UserData?.role === UserRoleTypes.WIZARD_CREATOR ? <DashboardAddWizardBtn /> : ''}
     </>
 
     return ( 

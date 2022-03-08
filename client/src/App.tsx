@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 // Pages:
 import Login from './pages/Login'
 import Register from './pages/Register'
+import RegisterWizardCreator from './pages/RegisterWIzardCreator'
 import Dashboard from './pages/Dashboard'
 import WizardStats from './pages/WizardStats'
 import WizardEditor from './pages/WizardEditor'
@@ -16,6 +17,7 @@ import { GetUserWizard } from './utils/middlewares/WizardEditor.middleware'
 import { GetUserWizardForm } from './utils/middlewares/WizardForm.middleware'
 import WizardForm from './pages/WizardForm'
 import { GetWizardStatistics } from './utils/middlewares/WizardStats.middleware'
+import { LoadUserBeforeCreatingWizardCreator } from './utils/middlewares/CreateWizardCreator.middleware'
 
 
 const App: React.FC = () => {
@@ -35,6 +37,11 @@ const App: React.FC = () => {
         <Route 
           path="/signup"
           element={<Register />}
+          />
+        <Route 
+          path="/create-wizard-creator"
+          element={
+            <LoadUserBeforeCreatingWizardCreator children={<RegisterWizardCreator />} />}
           />
         <Route 
           path="/dashboard"

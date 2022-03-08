@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 export const GetUserWizard: React.FC<{children: JSX.Element}> = ({children}) => {
   // Get UserData
   const { id } = useParams();
-  const { ExtractWizard } = bindActionCreators<RootState, any>(WizardEditorActions, useDispatch())
+  const { ExtractWizard } = bindActionCreators(WizardEditorActions, useDispatch())
   const { LoadUser, GetWizards } = bindActionCreators(UserActions, useDispatch())
   // Handlers
   const LoadUserAndSpecificWizard = async (id: string) => {

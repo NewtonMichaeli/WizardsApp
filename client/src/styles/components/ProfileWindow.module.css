@@ -1,5 +1,15 @@
 /* Styles for ProfileWindow component */
 
+/* profile window - admin mode */
+.ProfileWindow.profile-window-admin {
+  height: 17rem;
+}
+.ProfileWindow.profile-window-admin .profile-top-section {
+  height: 48%;
+}
+.ProfileWindow.profile-window-admin .profile-btm-section {
+  height: 52%;
+}
 /* profile window container */
 .ProfileWindow {
   /* enter animation */
@@ -92,8 +102,22 @@
   font-weight: 300;
   text-decoration: none;
 }
+/* profile window controller buttons */
+.profile-controllers {
+  height: fit-content;
+  width: 100%;
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+/* create-wizard-creator-btn button */
+.ProfileWindow .profile-btm-section .control-btn.create-wizard-creator-btn {
+  width: 70%;
+}
 /* sign out button */
-.ProfileWindow .profile-btm-section .sign-out-btn {
+.ProfileWindow .profile-btm-section .control-btn {
   border: 3px solid #888;
   outline: none !important;
   background-color: transparent;
@@ -104,7 +128,7 @@
   /* mouse */
   cursor: pointer;
 }
-.ProfileWindow .profile-btm-section .sign-out-btn span {
+.ProfileWindow .profile-btm-section .control-btn span {
   font-family: "Dongle", sans-serif;
   font-size: 1.2rem;
   color: #666666fb;

@@ -69,7 +69,9 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
 
     if (!token || (UserData?.role !== UserRoleTypes.ADMIN && UserData?.role !== UserRoleTypes.WIZARD_CREATOR)) {
       // no token
-      dispatch({type: UserActionTypes.AUTH_FAIL})
+      // dispatch({type: UserActionTypes.AUTH_FAIL})
+      console.log('bad')
+      console.log(UserData?.role, UserRoleTypes.WIZARD_CREATOR)
       return
     }
 

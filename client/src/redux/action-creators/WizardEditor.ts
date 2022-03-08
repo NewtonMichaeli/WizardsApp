@@ -9,6 +9,8 @@ import { UserRoleTypes } from "../action-types/User"
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
+import { SERVER_UPDATE_WIZARD } from "../../configs/_server"
+import { _headers } from "../../configs/_headers"
 
 
 // Load User Action creator, called directly from <App> component
@@ -18,7 +20,8 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
   const { UserData, isLoading, isAuthed } = getState().user
 
   // Auth check
-  if (UserData?.role !== UserRoleTypes.WIZARD_CREATOR) {
+  // if (UserData?.role !== UserRoleTypes.WIZARD_CREATOR) {
+  if (UserData?.role === UserRoleTypes.USER) {
     // no token
     dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
     return
@@ -49,6 +52,22 @@ export const SaveChanges = (wizard_id: string) => async (
 
   // Send Changes to server
 
+  // States:
+  const { WizardState } = getState().wizard_editor
+  const { UserData } = getState().user
+  const { token } = getState().auth
+
+  // Validate user before request:
+  if (!token || !UserData || UserData.role === UserRoleTypes.USER) {
+    // -- unauthorized - only users can fill wizard forms
+    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
+    return
+  }  
+
+  if (WizardState === null) {
+    dispatch(PushFeedback(false, "Cant Move while page doesn't exist"))
+    return
+  }
 
   try {
     const new_wizard = getState().wizard_editor.WizardState
@@ -56,12 +75,18 @@ export const SaveChanges = (wizard_id: string) => async (
     console.log(new_wizard);
     
     // save data in localstorage temporarly
-    localStorage.setItem('data', JSON.stringify(new_wizard))
-
-    // const res = await axios.post(SERVER_UPDATE_WIZARD + wizard_id, {
-    //   // new wizard details
-    //   // ...new_wizard
-    // })
+    // localStorage.setItem('data', JSON.stringify(new_wizard))
+    const res = await axios.patch(
+      SERVER_UPDATE_WIZARD + wizard_id,
+      // new wizard details
+        {
+          newWizard: WizardState,
+          wizardId: WizardState.id
+        },
+        {
+          headers: _headers(token)
+        }
+    )
 
     // Success feedback
     dispatch(PushFeedback(true, "Data has been Saved Successfully"))

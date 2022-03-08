@@ -12,6 +12,7 @@ import { UIAction } from '../redux/action-types/UI'
 // Styles:
 import Styles from '../styles/components/ProfileWindow.module.css'
 import { UserRoleTypes } from '../redux/action-types/User'
+import { getStyles } from '../controllers'
 
 
 // Profile Window props type
@@ -34,7 +35,9 @@ const ProfileWindow: ProfileWindow__props = ({UserData}) => {
   }
 
   return (
-    <div className={Styles["ProfileWindow"]}>
+    <div className={getStyles(Styles, `ProfileWindow ${UserData?.role === UserRoleTypes.ADMIN
+      ? 'profile-window-admin'
+      : ''}`)}>
       <section className={Styles["profile-top-section"]}>
         <img draggable="false" src={UserRoleTypeImg} alt="Profile Picture" />
         <h1 className={Styles["user-username"]}>
@@ -49,9 +52,16 @@ const ProfileWindow: ProfileWindow__props = ({UserData}) => {
           <h2 className={Styles["user-status"]}>{UserData?.role}</h2>
           <a href='/' className={Styles["learn-more"]}>Learn More</a>
         </div>
-        <button onClick={signOutHandler} className={Styles["sign-out-btn"]}>
-          <span>Sign Out</span>
-        </button>
+        <div className={Styles["profile-controllers"]}>
+          {UserData?.role === UserRoleTypes.ADMIN 
+            ? <button onClick={() => window.location.href = '/create-wizard-creator'} className={getStyles(Styles, "control-btn create-wizard-creator-btn")}>
+              <span>Create Wizard Creator</span>
+            </button>
+            : ''}
+          <button onClick={(signOutHandler)} className={getStyles(Styles, "control-btn sign-out-btn")}>
+            <span>Sign Out</span>
+          </button>
+          </div>
       </section>
     </div>
   )

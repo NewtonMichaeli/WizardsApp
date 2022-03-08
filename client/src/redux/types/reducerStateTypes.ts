@@ -54,7 +54,6 @@ export interface wizard_editor_state_type {
     WizardEditorActionTypes.RELOCATING_ELEMENT | null
   // current wizard state - questions, sections, etc.. :
   WizardState: WizardFormat | null
-  WizardResults: WizardFormat | null
   Page: WizardPageFormat | null
   PageIdx: number
 }

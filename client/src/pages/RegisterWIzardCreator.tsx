@@ -19,12 +19,7 @@ import { getStyles } from "../controllers"
 // Login Page
 const Register: React.FC = () => {
 
-    if (localStorage.getItem(TOKEN_NAME) !== null) {
-        // localStorage.removeItem('auth-token')
-        window.location.href = '/'
-    }
-
-    const { SignUp } = bindActionCreators(AuthActions, useDispatch())
+    const { CreateWizardCreator } = bindActionCreators(AuthActions, useDispatch())
     
     // const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
 
@@ -32,9 +27,9 @@ const Register: React.FC = () => {
         <div className={Styles["Login"]}>
             <div className={Styles["login-container"]}>
                 <section className={Styles["login-header-section"]}>
-                    <h1>Sign Up</h1>
+                    <h1>Add Wizard Creator</h1>
                 </section>
-                <form onSubmit={e=> SignUp(e)} className={Styles["login-form-section"]}>
+                <form onSubmit={e=> CreateWizardCreator(e)} className={Styles["login-form-section"]}>
                 <div className={getStyles(Styles, "input-struct-container input-struct-container_register")}>
                     <div className={Styles["input-struct"]}>
                         <img src={UserImg} alt="Username" />
@@ -67,7 +62,7 @@ const Register: React.FC = () => {
                             minLength={3}
                             maxLength={32} />
                     </div>
-                    <NavLink to="/signin" className={Styles["link"]}>Already Have An Account? Sign In</NavLink>
+                    <NavLink to="/dashboard" className={Styles["link"]}>Return to Dashboard</NavLink>
                 </div>
                 <button className={Styles["login-submit-btn"]}>SIGN UP</button>
                 {/* feedback - position absolute */}

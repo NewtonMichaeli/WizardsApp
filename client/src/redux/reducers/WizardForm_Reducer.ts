@@ -71,7 +71,7 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
     }
     case 'SEND_ANSWER_SUCCESS': {
       window.alert("Answer Submitted!")
-      window.location.href = '/'
+      // window.location.href = '/'
       return state
     }
     // Default

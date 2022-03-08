@@ -38,6 +38,12 @@ export default (state = initState, action: AuthAction) => {
       localStorage.removeItem(TOKEN_NAME)   // remove token from localStorage
       window.location.href = '/signin'
       return state
+    case 'ADMIN_AUTH_FAIL':
+      window.location.href = '/signin'
+      return state
+    case 'CREATE_WIZARD_CREATOR_SUCCESS':
+      window.location.href = '/dashboard'
+      return state
     default:
       return state
   }
