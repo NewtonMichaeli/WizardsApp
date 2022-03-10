@@ -87,13 +87,19 @@ export const Number: React.FC<{
 
 export const Checkbox: React.FC<{
   question: InputTypes['Checkbox'],
-  name: string
-}> = ({question, name}) => {
+  name: string,
+  checkedPercentage: number
+}> = ({question, name, checkedPercentage}) => {
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
-      <input type="checkbox" name={name} id={question.name} disabled />
-      <label htmlFor={question.name}>{question.title}</label>
+      <div className={Styles["option"]}>
+        <input type="checkbox" name={name} id={question.name} disabled />
+        <label htmlFor={question.name}>{question.title}</label>
+      </div>
+      <h5 className={Styles["option-stat"]}>
+        {Math.round(checkedPercentage)}% checked this option
+      </h5>
     </div>
   )
 }
@@ -116,25 +122,25 @@ export const RadioboxList: React.FC<{
 }> = ({question}) => {
 
   // States
-  let answers_amount: number = 0
-  let avg_answer: {[q_name: string]: number} = {}   // {q1: 3, q2: 9, q3: 11, q4: 6}
+  let answers_amount: number = 0,
+    elements_counter: {[q_name: string]: number} = {}
 
   const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
 
+  console.log(AllAnswers)
   if (AllAnswers) {
     Object.entries(AllAnswers).map((UserAnswer, i) => {
       // username: { q1: {...}, q2: {...} }
       console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElement = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List'])?.checkedElement ?? null
-      if (checkedElement?.length) {
+      const checkedElement: string | null = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List'])?.checkedElement ?? null
+      if (checkedElement) {
         answers_amount ++
         // init firld on first instance
-        if (!avg_answer[checkedElement]) avg_answer[checkedElement] = 1
+        if (!elements_counter[checkedElement]) elements_counter[checkedElement] = 1
         // increment instance
-        else avg_answer[checkedElement]++
+        else elements_counter[checkedElement]++
       }
     })
-    // console.log(answers_amount, avg_answer)
   }
 
   return (
@@ -143,15 +149,22 @@ export const RadioboxList: React.FC<{
       <h6>Answers: {answers_amount}</h6>
       <div className={Styles["data-section"]}>
         <div className={Styles["Input-container"]}>
-          {question.elements.map((input, i) => 
-            <Radiobox key={input.name} 
+          {question.elements.map((input, i) => {
+            
+            let checkedPercentage: number = 0
+            if (elements_counter[input.name] !== undefined)
+              checkedPercentage = elements_counter[input.name] / answers_amount * 100
+
+            return <Radiobox key={input.name} 
               question={input}
-              isChecked={true}
-              name={question.name} />)}
+              checkedPercentage={checkedPercentage}
+              name={question.name} />
+              })
+          }
         </div>
-        <div className={Styles["stats-container"]}>
+        {/* <div className={Styles["stats-container"]}>
           somestats
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -163,27 +176,29 @@ export const CheckboxList: React.FC<{
 }> = ({question}) => {
 
   // States
-  let answers_amount: number = 0,
-    avg_answer: {[q_name: string]: number} = {}
+  let answers_amount: number = 0, 
+    options_amount: number = 0,
+    elements_counter: {[q_name: string]: number} = {}
 
   const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
 
+  console.log(AllAnswers)
   if (AllAnswers) {
     Object.entries(AllAnswers).map((UserAnswer, i) => {
       // username: { q1: {...}, q2: {...} }
       console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
-      const checkedElements = (UserAnswer[1][question.name] as ServerFormInputTypes['Checkbox List'])?.checkedElements ?? null
+      const checkedElements: string[] = (UserAnswer[1][question.name] as ServerFormInputTypes['Checkbox List'])?.checkedElements ?? null
       if (checkedElements?.length) {
         answers_amount ++
         checkedElements.map(element => {
+          options_amount ++
           // init firld on first instance
-          if (!avg_answer[element]) avg_answer[element] = 1
+          if (!elements_counter[element]) elements_counter[element] = 1
           // increment instance
-          else avg_answer[element]++
+          else elements_counter[element]++
         })
       }
     })
-    // console.log(answers_amount, avg_answer)
   }
 
   return (
@@ -192,14 +207,23 @@ export const CheckboxList: React.FC<{
       <h6>Answers: {answers_amount}</h6>
       <div className={Styles["data-section"]}>
         <div className={Styles["Input-container"]}>
-          {question.elements.map((input, i) => 
-            <Checkbox key={input.name} 
+          {question.elements.map((input, i) => {
+
+            let checkedPercentage: number = 0
+            if (elements_counter[input.name] !== undefined)
+              checkedPercentage = elements_counter[input.name] / options_amount * 100
+            console.log(input.name, elements_counter);
+            
+            return <Checkbox key={input.name} 
               question={input} 
-              name={input.name} />)}
+              checkedPercentage={checkedPercentage}
+              name={input.name} />
+            })
+          }
         </div>
-        <div className={Styles["stats-container"]}>
+        {/* <div className={Styles["stats-container"]}>
           somestats
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -209,9 +233,6 @@ export const CheckboxList: React.FC<{
 export const ListsList: React.FC<{
   question: InputTypes['Lists List']
 }> = ({question}) => {
-
-  // Dispatch
-  const dispatch = useDispatch()
 
   return (
     <div className={getStyles(Styles, "Input Input-List Input-ListsList")}>
@@ -233,13 +254,18 @@ export const ListsList: React.FC<{
 export const Radiobox: React.FC<{
   question: InputTypes['Radiobox']
   name: string,
-  isChecked: boolean,
-}> = ({question, name, isChecked}) => {
+  checkedPercentage: number
+}> = ({question, name, checkedPercentage}) => {
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Radiobox")}>
-      <input type="radio" name={name} defaultChecked={isChecked} id={question.name} />
-      <label htmlFor={question.name}>{question.title}</label>
+      <div className={Styles["option"]}>
+        <input type="radio" name={name} id={question.name} disabled />
+        <label htmlFor={question.name}>{question.title}</label>
+      </div>
+      <h5 className={Styles["option-stat"]}>
+        {Math.round(checkedPercentage)}% checked this option
+      </h5>
     </div>
   )
 }

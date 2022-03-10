@@ -35,7 +35,7 @@ export default (state = initState, action: AuthAction) => {
         isLoading: false,
       }
     case 'AUTH_FAIL':
-      // window.localStorage.removeItem(TOKEN_NAME)
+      window.localStorage.removeItem(TOKEN_NAME)
       if (window.location.pathname !== '/')
         // -- auth failed - go to signin
         window.location.href = '/'        

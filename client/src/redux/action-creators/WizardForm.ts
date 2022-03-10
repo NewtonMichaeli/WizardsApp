@@ -4,7 +4,7 @@ import axios from "axios"
 import { Dispatch } from "redux"
 // Types:
 import { RootState } from ".."
-import { SERVER_FILL_WIZARD_URL } from "../../configs/_server"
+import { SERVER_FILL_WIZARD_URL, SERVER_GET_WIZARDS_URL } from "../../configs/_server"
 import { UserRoleTypes } from "../action-types/User"
 import { WizardFormFormat } from "../../interfaces/WizardFormat_Form"
 // Actions:
@@ -69,21 +69,16 @@ export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<Wizar
   }  
   try {
     // Request specific wizard
-    // const server_res = await axios.get(SERVER_GET_WIZARDS_URL + id, {headers: _headers(token)})
+    const server_res = await axios.get(SERVER_GET_WIZARDS_URL + id, {headers: _headers(token)})
 
-    // // Extract specific wizard
-    // const data: any = server_res.data.result
-    // console.log(data)
-    // let wizard: WizardFormat = ExtractDataToWizard(data)
-    // make form format
-    let answer_format: WizardFormFormat = RenderInitForm(fake_wizard[0])
-    console.log(answer_format)
+    // Extract specific wizard
+    const { content } = server_res.data
+    let wizard: WizardFormFormat = RenderInitForm(JSON.parse(content))
+    console.log(wizard)
     // Success - save to global state
     dispatch<WizardFormAction>({
       type: WizardFormActionTypes.EXTRACT_WIZARD_FORM,
-      payload: {
-        wizard: answer_format
-      }
+      payload: { wizard }
     })
 
   }
@@ -122,18 +117,19 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
     // Movement forward is conditional
     const parsed_page: ResultQuestions = SavePageAnswersToServerFormat(CurrPage, false)
     dispatch(SaveAnswerPageAction(parsed_page))    // -- save current page
-    // return
-
+    
     // Build server-formatted filled-wizard answer
     const AnswerToServer: ServerResultsType = {
       username: UserData.username,
       email: UserData.email,
-      data: Answer
+      data: {
+        ...Answer,
+        ...parsed_page
+      }
     }
 
     // Send Answer
     const server_res = await axios.post(
-      // SERVER_FILL_WIZARD_URL(Wizard.id), 
       SERVER_FILL_WIZARD_URL("1"), 
       {
         filledWizard: AnswerToServer,
@@ -148,8 +144,7 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
   }
   catch (err: any) {
     // wizard not found
-    console.log(err)
-    dispatch(PushFeedback(false, err.message))
+    dispatch(PushFeedback(false, err.message ?? err.data ?? "An error has occured"))
     // dispatch({type: WizardFormActionTypes.WIZARD_NOT_FOUND})
   }
 }

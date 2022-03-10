@@ -60,6 +60,7 @@ export const Text: React.FC<{
           defaultValue={element.title}
           placeholder="Textbox Title" />
         <div className={Styles["q-controllers"]}>
+          <RequiredBtn onClick={() => element.required= !element.required} isRequired={element.required} />
           <DeleteInputBtn onClick={() => dispatch(RemoveElement.Question(path))} />
           <OptionsBtn 
             min={{initValue: element.min, onClick: min => element.min = min}}

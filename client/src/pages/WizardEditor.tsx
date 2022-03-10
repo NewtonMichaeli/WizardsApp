@@ -69,7 +69,7 @@ const WizardEditor: React.FC = () => {
   
   // Dispatch
   const dispatch = useDispatch()
-  useEffect(() => {dispatch(SetPageTitle('WizardEditor'))}, [])  // -- set title current page
+  useEffect(() => {dispatch(SetPageTitle('Edit'))}, [])  // -- set title current page
   // States:
   const [ElementsListMode, setElementsListMode] = useState(false)   // -- toggling element's list
   const { SaveChanges } = bindActionCreators<RootState, any>(WizardEditorActions, dispatch)

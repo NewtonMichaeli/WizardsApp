@@ -20,7 +20,7 @@ const WizardForm: React.FC = () => {
   
   // Dispatch
   const dispatch = useDispatch()
-  useEffect(() => {dispatch(SetPageTitle('WizardForm'))}, [])  // -- set title current page
+  useEffect(() => {dispatch(SetPageTitle('Form'))}, [])  // -- set title current page
   // States
   const { PageIdx, Wizard, Page } = useSelector<RootState, wizard_form_state_type>(state => state.wizard_form)
   // Handlers

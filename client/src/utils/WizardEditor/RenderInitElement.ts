@@ -64,7 +64,7 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
         max: 16,
         name: uuidv4(),
         required: false,
-        title: "New Range field"
+        title: "New Number field"
       }
     case QuestionTypes.TEXTAREA:
       return {
@@ -73,7 +73,7 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
         max: 16,
         name: uuidv4(),
         required: false,
-        title: "New Range field",
+        title: "New Textarea field",
         regex: null
       }
     case QuestionTypes.CHECKBOX_LIST:

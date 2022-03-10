@@ -20,7 +20,6 @@ const createWizard = async (wizard, userId) => {
 const deleteWizard = async (wizardId) => {
     const query = mysql.format(`DELETE FROM wizards WHERE id = ?`, [wizardId])
 
-    console.log("WizardID: " + wizardId);
     try {
         await asyncQuery(query)
         return true
@@ -37,7 +36,7 @@ const updateWizard = async (wizardId, newWizard) => {
         const {insertID} = await asyncQuery(query)
         const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [insertID])
         const result = await asyncQuery(getUserQuery)
-        console.log(result);
+        // console.log(result);
         return true
         // return result[0]
     }
@@ -52,20 +51,23 @@ const fillWizard = async (wizardId, filledWizard) => {
     const resultsQuery = mysql.format(`SELECT results FROM wizards WHERE id = ?`, [wizardId])
     try {
         const result = await asyncQuery(resultsQuery)
-
-        const parsedResults = JSON.parse(result[0])
-        const newResults = JSON.parse([...parsedResults, filledWizard])
-
-        const updateQuery = mysql.format(`UPDATE wizards SET results = ?, WHERE wizards.id = ?`, [newResults, wizardId])
-        try {
-            const result = await asyncQuery(updateQuery)
-            return true
-        }
-        catch {
-            return false
-        }
+        console.log('result: ')
+        console.log(result)
+        const parsedResults = JSON.parse(result[0].results)
+        // Check if user has already answerd
+        parsedResults.map(res => {
+            if (res.email === filledWizard.email && res.name === filledWizard.name)
+                // -- user has already answerd
+                throw new Error("User has already answerd")
+        })
+        // Send query to db
+        const newResults = JSON.stringify([...parsedResults, filledWizard])
+        const updateQuery = mysql.format(`UPDATE wizards SET results = ? WHERE wizards.id = ?`, [newResults, wizardId])
+        await asyncQuery(updateQuery)
+        return true
     }
-    catch {
+    catch (err) {
+        console.log(err.message ?? err.data)
         return false
     }
 }

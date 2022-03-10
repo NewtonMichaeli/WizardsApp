@@ -67,6 +67,7 @@ const fillWizard = async (req, res) => {
     const {role} = req.user
     const {wizardId, filledWizard} = req.body
 
+    console.log(wizardId, filledWizard);
     //continue only if you're user
     if(!(role === "user")) return resHandler.accessDeniedErr(res)
 
@@ -76,7 +77,8 @@ const fillWizard = async (req, res) => {
     
     //upload to db
     const result = await wizardRequests.fillWizard(wizardId, filledWizard)
-    if(!result) return resHandler.wizardFilledSuccessfuly(res)
+    if (result) return resHandler.wizardFilledSuccessfuly(res)
+    else return resHandler.internalServerErr(res)
 
 }
 

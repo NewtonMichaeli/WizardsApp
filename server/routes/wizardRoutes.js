@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const authMiddleware = require('../middlewares/authMiddleware')
 const wizardController = require('../controllers/wizardController')
+
 //create new wizard
 router.post('/create', authMiddleware, wizardController.createWizard)
 

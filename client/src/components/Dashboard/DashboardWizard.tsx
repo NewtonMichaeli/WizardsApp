@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import Delete from '../../assets/wizard-controllers/delete.png'
 import Edit from '../../assets/wizard-controllers/edit.png'
 import View from '../../assets/wizard-controllers/view.png'
+import Options from '../../assets/Q-controllers/options.png'
+// Types:
 import { WizardFormat } from '../../interfaces/WizardFormat'
 import { RootState, UserActions } from '../../redux'
 import { UserRoleTypes } from '../../redux/action-types/User'
@@ -45,6 +47,8 @@ const DashboardWizard: DashboardWizard__props = ({wizard}) => {
                 </h4>
             </section>
             <section className={Styles["wizard-controllers"]}>
+                {/* options */}
+                {/* <img draggable='false' src={Options} onClick={viewHandler} alt="Options" title="Options" /> */}
                 {/* view wizard stats */}
                 <img draggable='false' src={View} onClick={viewHandler} alt="View Wizard" title="View Wizard" />
                 {/* edit wizard */}

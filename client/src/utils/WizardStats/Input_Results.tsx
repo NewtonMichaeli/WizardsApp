@@ -172,7 +172,7 @@ export const CheckboxList: React.FC<{
           {question.elements.map((input, i) => 
             <Checkbox key={input.name} 
               question={input} 
-              isChecked={question.name === input.name}
+              isChecked={question.checkedInputs.includes(input.name)}
               name={input.name} />)}
         </div>
       </div>
