@@ -8,7 +8,6 @@ import { ResultQuestions } from "../types"
 // Action Types
 export enum WizardFormActionTypes {
   EXTRACT_WIZARD_FORM = "EXTRACT_WIZARD_FORM",
-  FORM_AUTH_FAIL = "FORM_AUTH_FAIL",
   MOVE_PAGE = "MOVE_PAGE",
   WIZARD_NOT_FOUND = "WIZARD_NOT_FOUND",
   // wizard
@@ -22,11 +21,6 @@ interface ExtractWizardAction {
   payload: {
     wizard: WizardFormFormat | null
   }
-}
-
-// Extract wizard from user wizards
-interface FormAuthFailAction {
-  type: WizardFormActionTypes.FORM_AUTH_FAIL
 }
 
 // Move page (forwards/backwards via payload instruction)
@@ -56,7 +50,6 @@ interface SendAnswerAction {
 
 // Action types for WizardForm Action
 export type WizardFormAction = ExtractWizardAction
-  | FormAuthFailAction 
   | MovePageAction 
   | WizardNotFoundAction
   | SendAnswerAction

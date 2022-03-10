@@ -9,7 +9,6 @@ import { wizard_stats_state_type } from "../types/reducerStateTypes"
 // Action Types
 export enum WizardStatsActionTypes {
   MAP_RESULTS_TO_STATE = "MAP_RESULTS_TO_STATE",
-  STATS_AUTH_FAIL = "STATS_AUTH_FAIL",
   WIZARD_NOT_FOUND = "WIZARD_NOT_FOUND",
   SWITCH_TAB = "SWITCH_TAB",
   INSPECT_USERNAME = "INSPECT_USERNAME",
@@ -26,11 +25,6 @@ interface MapResultsToStateAction {
       }
     } | null
   }
-}
-
-// Extract wizard from user wizards
-interface StatsAuthFailAction {
-  type: WizardStatsActionTypes.STATS_AUTH_FAIL
 }
 
 // Wizard not found
@@ -57,7 +51,6 @@ interface InspectUsernameAction {
 
 // Action types for WizardForm Action
 export type WizardStatsAction = MapResultsToStateAction
-  | StatsAuthFailAction 
   | WizardNotFoundAction
   | SwitchTabAction
   | InspectUsernameAction

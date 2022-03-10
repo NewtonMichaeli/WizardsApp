@@ -1,0 +1,26 @@
+/* Styles for Homepage */
+
+/* Home page */
+.Home {
+  width: 100vw;
+  height: calc(100vh - var(--navbar_height));
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Home .title,
+.Home .link {
+  font-size: 1.5rem;
+  text-align: center;
+  /* background: red; */
+  width: 8rem;
+  margin: 0.1rem 0;
+}
+
+.Home .link {
+  text-decoration: none;
+  color: var(--app_def_color);
+}

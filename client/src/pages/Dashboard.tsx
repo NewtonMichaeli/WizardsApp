@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
 import { RootState } from '../redux'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // Styles:
 import Styles from '../styles/pages/Dashboard.module.css'
 import { getStyles } from '../controllers'
@@ -14,12 +14,17 @@ import DashboardAddWizardInput from '../components/Dashboard/DashboardAddWizardI
 // static wizards data
 import { user_state_type } from '../redux/types/reducerStateTypes'
 import { UserRoleTypes } from '../redux/action-types/User'
+import { SetPageTitle } from '../redux/actions/User'
 
 
 // Dashboard page
 // Access Roles: Admin, Wizard-creator.
 const Dashboard: React.FC = (/* user's wizards data */) => {
 
+    // Dispatch
+    const dispatch = useDispatch()
+    useEffect(() => {dispatch(SetPageTitle('Dashboard'))}, [])  // -- set title current page
+    // States
     const { UserData } = useSelector<RootState, user_state_type>(state => state.user)
 
     const RenderDashboardContents = () => 

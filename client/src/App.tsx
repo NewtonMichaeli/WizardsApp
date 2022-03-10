@@ -13,11 +13,13 @@ import RegisterWizardCreator from './pages/RegisterWIzardCreator'
 import Dashboard from './pages/Dashboard'
 import WizardStats from './pages/WizardStats'
 import WizardEditor from './pages/WizardEditor'
+import WizardForm from './pages/WizardForm'
+import Home from './pages/Home'
+// Middlewares:
 import { GetUserWizard } from './utils/middlewares/WizardEditor.middleware'
 import { GetUserWizardForm } from './utils/middlewares/WizardForm.middleware'
-import WizardForm from './pages/WizardForm'
 import { GetWizardStatistics } from './utils/middlewares/WizardStats.middleware'
-import { LoadUserBeforeCreatingWizardCreator } from './utils/middlewares/CreateWizardCreator.middleware'
+import { LoadUserMiddleware } from './utils/middlewares/LoadUser.middleware'
 
 
 const App: React.FC = () => {
@@ -41,7 +43,7 @@ const App: React.FC = () => {
         <Route 
           path="/create-wizard-creator"
           element={
-            <LoadUserBeforeCreatingWizardCreator children={<RegisterWizardCreator />} />}
+            <LoadUserMiddleware children={<RegisterWizardCreator />} />}
           />
         <Route 
           path="/dashboard"
@@ -59,13 +61,14 @@ const App: React.FC = () => {
           path="/wizard/:id"
           element={<GetUserWizardForm children={<WizardForm />} />} 
           />
-          <Route 
-          path='/' 
-          element={<>Home</>}
+        <Route
+          path='/'
+          element={
+            <LoadUserMiddleware children={<Home />} />}
           />
         <Route 
           path="*"
-          element={<GoToDashboard />}
+          element={<>404 Not found</>}
           />
       </Routes>
     </div>

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 
 
 // Gets User Details before Rendering Component
-export const LoadUserBeforeCreatingWizardCreator: React.FC<{
+export const LoadUserMiddleware: React.FC<{
   id?: string,
   children: JSX.Element
 }> = ({children}) => {

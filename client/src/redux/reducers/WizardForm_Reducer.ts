@@ -29,12 +29,6 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
         Page: action.payload.wizard?.pages[PageIdx] ?? null    // default page
       }
     }
-    // Form Auth failure
-    case 'FORM_AUTH_FAIL': {
-      window.location.href = '/login'
-      return state
-    }
-    // Auth failure
     case 'WIZARD_NOT_FOUND': {
       window.location.href = '/dashboard'
       return state
@@ -47,11 +41,8 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
         (action.payload === 'BACK' && state['PageIdx'] === 0) ||
         !state.Wizard?.pages.length
       ) return state
-      // -- DONT MOVE PAGE IF PAGE NOT COMPLETE --
-
       // update page index
       const UpdatedPageIdx = state.PageIdx + (action.payload === 'NEXT' ? 1 : -1)
-        
       return {
         ...state,
         PageIdx: UpdatedPageIdx,

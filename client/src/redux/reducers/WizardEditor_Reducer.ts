@@ -33,12 +33,6 @@ export default (state = initState, action: WizardEditorAction): wizard_editor_st
           Page: action.payload?.pages[PageIdx] ?? null    // default page
         }
       }
-    // Auth failure
-    case 'AUTH_FAIL': {
-      window.location.href = '/signin'
-      return state
-    }
-    // Auth failure
     case 'WIZARD_NOT_FOUND': {
       window.location.href = '/dashboard'
       return state

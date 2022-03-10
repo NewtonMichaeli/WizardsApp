@@ -13,3 +13,9 @@ export const AddingWizard = (): UserAction => ({
 export const AbortAddingWizard = (): UserAction => ({
   type: UserActionTypes.ABORT_ADDING_WIZARD
 })
+
+// Set Page Title
+export const SetPageTitle = (title: string): UserAction => ({
+  type: UserActionTypes.SET_PAGE_TITLE,
+  payload: { title }
+})

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { NavLink } from "react-router-dom"
 // Assets:
 import EmailImg from "../assets/email.png"
@@ -12,6 +12,7 @@ import { AuthActions, RootState } from "../redux"
 import Styles from "../styles/pages/Login.module.css"
 // Components:
 import { TOKEN_NAME } from "../configs/_storage"
+import { SetPageTitle } from "../redux/actions/User"
 
 
 // Login Page
@@ -19,9 +20,14 @@ const Login: React.FC = () => {
 
     if (localStorage.getItem(TOKEN_NAME) !== null) {
         // localStorage.removeItem('auth-token')
-        window.location.href = '/'
+        console.log(localStorage.getItem(TOKEN_NAME))
+        // window.location.href = '/'
     }
 
+    // Dispatch
+    const dispatch = useDispatch()
+    useEffect(() => {dispatch(SetPageTitle('Login'))}, [])  // -- set title current page
+    // Handlers
     const { SignIn } = bindActionCreators(AuthActions, useDispatch())
 
     return (

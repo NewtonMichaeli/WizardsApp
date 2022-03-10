@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { RootState, UserActions, WizardFormActions } from '../../redux'
 import { useDispatch } from 'react-redux'
+import { SetPageTitle } from '../../redux/actions/User'
 
 
 // Gets User Details before Rendering Component
@@ -13,7 +14,7 @@ export const GetUserWizardForm: React.FC<{children: JSX.Element}> = ({children})
   // Get UserData
   const { id } = useParams();
   const { ExtractWizardForm } = bindActionCreators<RootState, any>(WizardFormActions, useDispatch())
-  const { LoadUser, GetWizards } = bindActionCreators(UserActions, useDispatch())
+  const { LoadUser } = bindActionCreators(UserActions, useDispatch())
   // Handlers
   const LoadUserAndSpecificWizard = async (id: string) => {
     await LoadUser()

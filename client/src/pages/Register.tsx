@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { NavLink } from "react-router-dom"
 // Assets:
 import UserImg from "../assets/user.png"
@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux"
 // Utils:
 import { AuthActions } from "../redux"
 import { TOKEN_NAME } from "../configs/_storage"
+import { SetPageTitle } from "../redux/actions/User"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
 import { getStyles } from "../controllers"
@@ -24,9 +25,11 @@ const Register: React.FC = () => {
         window.location.href = '/'
     }
 
-    const { SignUp } = bindActionCreators(AuthActions, useDispatch())
-    
-    // const feedback = useSelector<RootState, ui_state_type>(state => state.ui)   // -- feedback state
+    // Dispatch
+    const dispatch = useDispatch()
+    useEffect(() => {dispatch(SetPageTitle('Register'))}, [])  // -- set title current page
+    // Handlers
+    const { SignUp } = bindActionCreators(AuthActions, useDispatch())    
 
     return (
         <div className={Styles["Login"]}>

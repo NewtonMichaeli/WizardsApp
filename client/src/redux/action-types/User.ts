@@ -7,12 +7,12 @@ export enum UserActionTypes {
     TRY_LOAD_USER = "TRY_LOAD_USER",
     LOAD_USER_SUCCESS = "LOAD_USER_SUCCESS",
     LOAD_WIZARDS_SUCCESS = "LOAD_WIZARDS_SUCCESS",
-    AUTH_FAIL = "AUTH_FAIL",
     // wizard
     ADDING_WIZARD = "ADDING_WIZARD",
     ABORT_ADDING_WIZARD = "ABORT_ADDING_WIZARD",
     ADD_WIZARD_SUCCESS = "ADD_WIZARD_SUCCESS",
     DELETE_WIZARD = "DELETE_WIZARD",
+    SET_PAGE_TITLE = "SET_PAGE_TITLE",
 }
 
 export enum UserRoleTypes {
@@ -21,8 +21,11 @@ export enum UserRoleTypes {
     ADMIN = "admin"
 }
   
-interface AuthFailAction {
-    type: UserActionTypes.AUTH_FAIL
+interface SetPageTitleAction {
+    type: UserActionTypes.SET_PAGE_TITLE,
+    payload: {
+        title: string
+    }
 }
   
 interface LoadUserSuccessAction {
@@ -82,10 +85,10 @@ interface AddWizardAction {
 export type UserAction = 
     TryLoadUserAction | 
     LoadUserSuccessAction | 
-    LoadWizardsSuccessAction | 
-    AuthFailAction | 
+    LoadWizardsSuccessAction |
     DeleteWizardAction |        // remove wizard action
     AddWizardAction |           // add wizard action
     AbortAddingWizardAction |   // abort add wizard action
+    SetPageTitleAction |        // set page title at main navbar
     AddingWizardAction          // adding wizard state
   

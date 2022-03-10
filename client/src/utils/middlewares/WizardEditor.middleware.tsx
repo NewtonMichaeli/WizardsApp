@@ -4,8 +4,9 @@ import React, {useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 // Redux:
 import { bindActionCreators } from 'redux'
-import { RootState, UserActions, WizardEditorActions } from '../../redux'
+import { UserActions, WizardEditorActions } from '../../redux'
 import { useDispatch } from 'react-redux'
+import { SetPageTitle } from '../../redux/actions/User'
 
 
 // Gets User Details before Rendering Component

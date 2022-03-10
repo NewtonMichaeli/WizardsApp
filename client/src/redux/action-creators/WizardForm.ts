@@ -4,7 +4,7 @@ import axios from "axios"
 import { Dispatch } from "redux"
 // Types:
 import { RootState } from ".."
-import { SERVER_FILL_WIZARD_URL, SERVER_GET_WIZARDS_URL } from "../../configs/_server"
+import { SERVER_FILL_WIZARD_URL } from "../../configs/_server"
 import { UserRoleTypes } from "../action-types/User"
 import { WizardFormFormat } from "../../interfaces/WizardFormat_Form"
 // Actions:
@@ -19,6 +19,7 @@ import { SavePageAnswersToServerFormat } from "../../utils/WizardForm/RenderServ
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
 import { ResultQuestions, ServerResultsType } from "../types"
+import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
 
 // Move Page action (if answers are valid till now)
@@ -55,7 +56,7 @@ export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<Wiza
 
 // Extract Wizard form to state
 // @param id<string> : wizard id to extract
-export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<WizardFormAction>, getState: () => RootState): Promise<void> => {
+export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<WizardFormAction | AuthAction>, getState: () => RootState): Promise<void> => {
 
   // Extract wizard form to state:
   const { UserData, isLoading, isAuthed } = getState().user
@@ -63,7 +64,7 @@ export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<Wizar
   // Validate user before request:
   if (!token || !UserData || UserData.role !== UserRoleTypes.USER) {
     // -- unauthorized - only users can fill wizard forms
-    dispatch({type: WizardFormActionTypes.FORM_AUTH_FAIL})
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
     return
   }  
   try {
@@ -95,7 +96,7 @@ export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<Wizar
 
 
 // Send answer by server format
-export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIAction>, getState: () => RootState): Promise<void> =>
+export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIAction | AuthAction>, getState: () => RootState): Promise<void> =>
 {
 
   // Check authorization
@@ -107,7 +108,7 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
   // Validate user before request:
   if (!token || !UserData || UserData.role !== UserRoleTypes.USER) {
     // -- unauthorized - only users can fill wizard forms
-    dispatch({type: WizardFormActionTypes.FORM_AUTH_FAIL})
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
     return
   }  
 

@@ -1,5 +1,5 @@
 // Wizard Statistics Viewer
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
@@ -15,12 +15,14 @@ import { BtnLeave } from '../components/HeaderControllers'
 import PageComponent from '../components/WizardStats/Wizard.Page'
 import { SwitchTab } from '../redux/actions/WizardStats'
 import UserSelection from '../components/WizardStats/UserSelection'
+import { SetPageTitle } from '../redux/actions/User'
 
 
 const WizardStats: React.FC = () => {
 
   // Dispatch
   const dispatch = useDispatch()
+  useEffect(() => {dispatch(SetPageTitle('Statistics'))}, [])  // -- set title current page
   // States
   const { Wizard, AllAnswers, isLoading, StatsMode } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
   // State for viewing mode - <stats> option or <results> option:
@@ -61,7 +63,7 @@ const WizardStats: React.FC = () => {
         <section className={Styles["container-body"]}>
           
           <UserSelection />
-          {Wizard?.pages.map((page, i) => <PageComponent key={i} page_idx={i} page={page} />)}
+          {Wizard?.pages?.map((page, i) => <PageComponent key={i} page_idx={i} page={page} />)}
         
         </section>
       </div>

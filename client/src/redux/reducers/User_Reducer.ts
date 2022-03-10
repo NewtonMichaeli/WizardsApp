@@ -11,28 +11,20 @@ import { UserAction } from "../action-types/User"
 const initState: user_state_type = {
   isLoading: false,
   isAuthed: false,
-  UserData: null
+  UserData: null,
+  CurrentPageTitle: 'Welcome'
 }
 
 export default (state = initState, action: UserAction): user_state_type => {
   switch (action.type) {
-    // case '':
     case 'TRY_LOAD_USER':
       return {
         ...state,
         isLoading: true
       }
-    case 'AUTH_FAIL':
-      // window.localStorage.removeItem(TOKEN_NAME)
-      window.location.href = '/signin'   // auth failed - go to signin
-      return {
-        ...state,
-        isLoading: false,
-        isAuthed: false
-      }
     case 'LOAD_USER_SUCCESS':
       return {
-        // ...state,
+        ...state,
         isLoading: true,
         isAuthed: true,
         UserData: action.payload.UserData
@@ -79,6 +71,11 @@ export default (state = initState, action: UserAction): user_state_type => {
       }
       console.log(state.UserData?.wizards)
       return { ...state }
+    case 'SET_PAGE_TITLE':
+      return {
+        ...state,
+        CurrentPageTitle: action.payload.title
+      }
     default:
       return state
   }

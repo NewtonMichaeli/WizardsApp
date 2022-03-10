@@ -6,7 +6,7 @@ import { Dispatch } from "redux"
 import { RootState } from ".."
 // Server configs:
 import { SERVER_CREATE_WIZARD_URL, SERVER_DELETE_WIZARD, SERVER_GET_WIZARDS_URL, SERVER_USERDETAILS_URL } from "../../configs/_server"
-import { WizardFormat, WizardPageFormat } from "../../interfaces/WizardFormat"
+import { WizardFormat } from "../../interfaces/WizardFormat"
 import { UIAction } from "../action-types/UI"
 import { UserAction, UserActionTypes, UserRoleTypes } from "../action-types/User"
 import { AbortAddingWizard } from "../actions/User"
@@ -14,10 +14,11 @@ import { PushFeedback } from "../actions/UI"
 // Configs:
 import { ExtractDataToWizard } from "../../configs/_parser"
 import { _headers } from "../../configs/_headers"
+import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
 
 // Load User Action creator, called directly from <App> component
-export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
+export const LoadUser = () => async (dispatch: Dispatch<UserAction | AuthAction>, getState: () => RootState): Promise<void> => {
   // Try receiving user data
   const token = getState().auth.token
   dispatch({ type: UserActionTypes.TRY_LOAD_USER })   // set loading to true
@@ -25,7 +26,7 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
   {
     if (token === null) {
       // -- auth failed - token doesn't exist
-      dispatch({ type: UserActionTypes.AUTH_FAIL })
+      dispatch({ type: AuthActionTypes.AUTH_FAIL })
       return
     }
 
@@ -54,13 +55,13 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction>, getState: (
   }
   catch (err: any) {
     console.log(err)
-    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    dispatch({ type: AuthActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
 }
 
 
 // Get Wizards (optional id = specific wizard)
-export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState: () => RootState): Promise<void> => {
+export const GetWizards = () => async (dispatch: Dispatch<UserAction | AuthAction>, getState: () => RootState): Promise<void> => {
 
   // Try receiving user wizards
   const { token } = getState().auth
@@ -69,9 +70,7 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
 
     if (!token || (UserData?.role !== UserRoleTypes.ADMIN && UserData?.role !== UserRoleTypes.WIZARD_CREATOR)) {
       // no token
-      // dispatch({type: UserActionTypes.AUTH_FAIL})
-      console.log('bad')
-      console.log(UserData?.role, UserRoleTypes.WIZARD_CREATOR)
+      dispatch({type: AuthActionTypes.AUTH_FAIL})
       return
     }
 
@@ -81,8 +80,9 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
       {headers: _headers(token)}
     )
     
-    const data: any[] = server_res.data.results
-    console.log(data)
+    console.log(server_res)
+    const data: any[] = server_res.data
+    console.log(data[0])
     // Extract server_res data to valid format
     let wizards: WizardFormat[] = [...data.map(wizard => ExtractDataToWizard(wizard))]
     console.log(wizards)
@@ -99,14 +99,14 @@ export const GetWizards = () => async (dispatch: Dispatch<UserAction>, getState:
   }
   catch (err: any) {
     console.log(err)
-    dispatch({ type: UserActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    dispatch({ type: AuthActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
   
 }
 
 
 // Delete Wizard
-export const DeleteWizard = (wizard_id: string) => async (dispatch: Dispatch<UserAction | UIAction>, getState: () => RootState): Promise<void> => {
+export const DeleteWizard = (wizard_id: string) => async (dispatch: Dispatch<UserAction | UIAction | AuthAction>, getState: () => RootState): Promise<void> => {
   // Delete Wizard
   const { token } = getState().auth
   const { isAuthed } = getState().user
@@ -114,7 +114,7 @@ export const DeleteWizard = (wizard_id: string) => async (dispatch: Dispatch<Use
   {
     if (token === null || !isAuthed) {
       // -- auth failed - token doesn't exist
-      dispatch({ type: UserActionTypes.AUTH_FAIL })
+      dispatch({ type: AuthActionTypes.AUTH_FAIL })
       return
     }
 
@@ -144,14 +144,14 @@ export const DeleteWizard = (wizard_id: string) => async (dispatch: Dispatch<Use
 
 
 // Add Wizard
-export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<UserAction | UIAction>, getState: () => RootState): Promise<void> => {
+export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<UserAction | UIAction | AuthAction>, getState: () => RootState): Promise<void> => {
   // Add Wizard
   const token = getState().auth.token
   try 
   {
     if (token === null) {
       // -- auth failed - token doesn't exist
-      dispatch({ type: UserActionTypes.AUTH_FAIL })
+      dispatch({ type: AuthActionTypes.AUTH_FAIL })
       return
     }
     

@@ -29,12 +29,6 @@ export default (state = initState, action: WizardStatsAction): wizard_stats_stat
         Username: Object.keys(action.payload.AllAnswers ?? {'':''})[0]
       }
     }
-    // Form Auth failure
-    case 'STATS_AUTH_FAIL': {
-      window.location.href = '/login'
-      return state
-    }
-    // Auth failure
     case 'WIZARD_NOT_FOUND': {
       window.location.href = '/dashboard'
       return state

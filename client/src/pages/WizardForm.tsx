@@ -1,5 +1,5 @@
 // Wizard Form
-import React from 'react'
+import React, { useEffect } from 'react'
 // Assets:
 import Loading from '../assets/loading-1.gif'
 // Redux:
@@ -13,12 +13,14 @@ import { getStyles } from '../controllers'
 // Components:
 import Section from '../components/WizardForm/Wizard.Section'
 import { BtnFormNext, BtnLeave, BtnPageBack } from '../components/HeaderControllers'
+import { SetPageTitle } from '../redux/actions/User'
 
 
 const WizardForm: React.FC = () => {
   
   // Dispatch
   const dispatch = useDispatch()
+  useEffect(() => {dispatch(SetPageTitle('WizardForm'))}, [])  // -- set title current page
   // States
   const { PageIdx, Wizard, Page } = useSelector<RootState, wizard_form_state_type>(state => state.wizard_form)
   // Handlers

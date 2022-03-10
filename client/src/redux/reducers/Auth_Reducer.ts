@@ -18,7 +18,7 @@ export default (state = initState, action: AuthAction) => {
     case 'LOGIN_SUCCESS':
     case 'REGISTER_SUCCESS':
       localStorage.setItem(TOKEN_NAME, action.payload.token)  // insert token to localStorage
-      // window.location.href = "/dashboard"   // redirect to dashboard
+      window.location.href = "/"
       return {
         ...state,
         isAuthed: true,
@@ -34,12 +34,18 @@ export default (state = initState, action: AuthAction) => {
         isAuthed: false,
         isLoading: false,
       }
+    case 'AUTH_FAIL':
+      // window.localStorage.removeItem(TOKEN_NAME)
+      if (window.location.pathname !== '/')
+        // -- auth failed - go to signin
+        window.location.href = '/'        
+      return state
     case 'LOGOUT_SUCCESS':
       localStorage.removeItem(TOKEN_NAME)   // remove token from localStorage
-      window.location.href = '/signin'
+      window.location.href = '/'
       return state
     case 'ADMIN_AUTH_FAIL':
-      window.location.href = '/signin'
+      window.location.href = '/'
       return state
     case 'CREATE_WIZARD_CREATOR_SUCCESS':
       window.location.href = '/dashboard'

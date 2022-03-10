@@ -5,6 +5,7 @@ import React, {useEffect} from 'react'
 import { bindActionCreators } from 'redux'
 import { UserActions, WizardEditorActions } from '../../redux'
 import { useDispatch, useSelector } from 'react-redux'
+import { SetPageTitle } from '../../redux/actions/User'
 
 
 // Gets User Details before Rendering Component

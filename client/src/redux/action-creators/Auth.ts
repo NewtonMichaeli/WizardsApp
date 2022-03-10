@@ -120,7 +120,7 @@ export const CreateWizardCreator = (e: React.FormEvent<HTMLFormElement>) => asyn
 
   // Validate role
   if (!token || UserData?.role !== UserRoleTypes.ADMIN) {
-    dispatch({ type: AuthActionTypes.ADMIN_AUTH_FAIL })
+    dispatch({ type: AuthActionTypes.AUTH_FAIL })
     return
   }
 
@@ -159,8 +159,8 @@ export const CreateWizardCreator = (e: React.FormEvent<HTMLFormElement>) => asyn
   }
   catch (err: any) {
     // Register Failed
-    dispatch({ type: AuthActionTypes.ADMIN_AUTH_FAIL })
+    dispatch({ type: AuthActionTypes.AUTH_FAIL })
     // Set error feedback
-    dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
+    // dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "an error has occured"))
   }
 }

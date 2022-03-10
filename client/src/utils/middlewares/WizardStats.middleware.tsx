@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { RootState, UserActions, WizardFormActions, WizardStatsActions } from '../../redux'
 import { useDispatch } from 'react-redux'
+import { SetPageTitle } from '../../redux/actions/User'
 
 
 // Gets User Details before Rendering Component
@@ -25,8 +26,7 @@ export const GetWizardStatistics: React.FC<{children: JSX.Element}> = ({children
     if (id)
       LoadUserAndSpecificWizard(id)
     else
-      // window.location.href = '/'
-      console.log('err')
+      window.location.href = '/'
   }, [])
   return children
 }

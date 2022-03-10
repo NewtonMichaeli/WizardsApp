@@ -39,6 +39,7 @@ export interface user_state_type {
     results: WizardFormat[],
     isAddingWizard: boolean
   } | null
+  CurrentPageTitle: string    // title appears at main navbar
 }
 
 

@@ -7,7 +7,6 @@ import { ElementTypes, QuestionTypes } from "../types";
 
 export enum WizardEditorActionTypes {
   EXTRACT_WIZARD = "EXTRACT_WIZARD",
-  AUTH_FAIL = "AUTH_FAIL",
   WIZARD_NOT_FOUND = "WIZARD_NOT_FOUND",
   MOVE_PAGE = "MOVE_PAGE",
   // Status Indicators
@@ -28,11 +27,6 @@ export enum WizardEditorActionTypes {
 interface ExtractWizardAction {
   type: WizardEditorActionTypes.EXTRACT_WIZARD,
   payload: WizardFormat | null
-}
-
-// Extract wizard from user wizards
-interface AuthFailAction {
-  type: WizardEditorActionTypes.AUTH_FAIL
 }
 
 // Move page (forwards/backwards via payload instruction)
@@ -199,7 +193,6 @@ interface WizardNotFoundAction {
 
 // Action types for WizardEditor Action
 export type WizardEditorAction = ExtractWizardAction
-  | AuthFailAction 
   | MovePageAction 
   | AddElementAction          // add element
   | ModifyElementAction       // modify element

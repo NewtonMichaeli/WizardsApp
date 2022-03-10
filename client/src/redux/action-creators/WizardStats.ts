@@ -5,7 +5,7 @@ import { Dispatch } from "redux"
 // Types:
 import { RootState } from ".."
 import { _headers } from "../../configs/_headers"
-import { SERVER_GET_WIZARDS_URL, SERVER_GET_WIZARD_URL } from "../../configs/_server"
+import { SERVER_GET_WIZARD_URL } from "../../configs/_server"
 import { MappedUserResultsType, ServerResultsType } from "../types"
 // Actions:
 import { UIAction } from "../action-types/UI"
@@ -13,15 +13,12 @@ import { UserRoleTypes } from "../action-types/User"
 import { WizardStatsAction, WizardStatsActionTypes } from "../action-types/WizardStats"
 import { ExtractDataToWizardStats } from "../../configs/_parser"
 import { PushFeedback } from "../actions/UI"
-import { fake_form, fake_server_answer, WizardFormat } from "../../interfaces/WizardFormat"
-import { WizardServerFormFormat } from "../../interfaces/WizardFormat_Server"
-// Configs:
-
-// Utils:
+import { WizardFormFormat } from "../../interfaces/WizardFormat_Form"
+import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
 
 // Map Results To State
-export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatch<WizardStatsAction | UIAction>, getState: () => RootState): Promise<void> =>
+export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatch<WizardStatsAction | UIAction | AuthAction>, getState: () => RootState): Promise<void> =>
 { 
   // Validate before entering stats
   const { UserData, isAuthed } = getState().user
@@ -29,7 +26,7 @@ export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatc
   // Validate user before request:
   if (!token || !isAuthed || !UserData || (UserData.role !== UserRoleTypes.ADMIN && UserData.role !== UserRoleTypes.WIZARD_CREATOR)) {
     // -- unauthorized - only users can fill wizard forms
-    dispatch({type: WizardStatsActionTypes.STATS_AUTH_FAIL})
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
     return
   } 
 
@@ -43,16 +40,16 @@ export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatc
     console.log(server_res.data);
     
     // Mapping results to state
-    const wizard_content: WizardServerFormFormat = server_res.data.content
-    const wizard_results: ServerResultsType[] = server_res.data.results
+    const wizard_content: WizardFormFormat = JSON.parse(server_res.data.content)
+    const wizard_results: ServerResultsType[] = JSON.parse(server_res.data.results)
     console.log("Content: ")
     console.log(wizard_content)
     console.log("Results: ")
     console.log(wizard_results)
     // Parse results
     let mapped_wizard_results: MappedUserResultsType | null = null
-    mapped_wizard_results = ExtractDataToWizardStats(wizard_results)
     try {
+      mapped_wizard_results = ExtractDataToWizardStats(wizard_results)
     }
     catch (err: any) {
       // console.log(err)
@@ -84,10 +81,9 @@ export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatc
 
 
 
-
 // Extract Wizard form to state
 // @param id<string> : wizard id to extract
-// export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<WizardFormAction>, getState: () => RootState): Promise<void> => {
+// export const ExtractWizardForm = (id: string) => async (dispatch: Dispatch<WizardFormAction | AuthAction>, getState: () => RootState): Promise<void> => {
 
 //   // Extract wizard form to state:
 //   const { UserData, isLoading, isAuthed } = getState().user
@@ -95,7 +91,7 @@ export const MapResultsToState = (wizard_id: string) => async (dispatch: Dispatc
 //   // Validate user before request:
 //   if (!token || !UserData || UserData.role !== UserRoleTypes.USER) {
 //     // -- unauthorized - only users can fill wizard forms
-//     dispatch({type: WizardFormActionTypes.FORM_AUTH_FAIL})
+//     dispatch({type: AuthActionTypes.AUTH_FAIL})
 //     return
 //   }  
 //   try {

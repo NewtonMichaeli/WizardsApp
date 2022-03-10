@@ -1,5 +1,5 @@
 // Wizard Edirot
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // Assets:
 import Add from '../assets/wizard-controllers/add-white.png'
 import Loading from '../assets/loading-1.gif'
@@ -20,6 +20,7 @@ import { BtnAdd, BtnFinish, BtnLeave, BtnPageBack, BtnPageNext } from '../compon
 import { ElementTypes } from '../redux/types'
 import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
 import { PushFeedback } from '../redux/actions/UI'
+import { SetPageTitle } from '../redux/actions/User'
 
 
 // Add Page in a certain index (path)
@@ -68,6 +69,7 @@ const WizardEditor: React.FC = () => {
   
   // Dispatch
   const dispatch = useDispatch()
+  useEffect(() => {dispatch(SetPageTitle('WizardEditor'))}, [])  // -- set title current page
   // States:
   const [ElementsListMode, setElementsListMode] = useState(false)   // -- toggling element's list
   const { SaveChanges } = bindActionCreators<RootState, any>(WizardEditorActions, dispatch)

@@ -11,10 +11,11 @@ import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
 import { SERVER_UPDATE_WIZARD } from "../../configs/_server"
 import { _headers } from "../../configs/_headers"
+import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
 
 // Load User Action creator, called directly from <App> component
-export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAction>, getState: () => RootState): void => {
+export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAction | AuthAction>, getState: () => RootState): void => {
   
   // States
   const { UserData, isLoading, isAuthed } = getState().user
@@ -23,7 +24,7 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
   // if (UserData?.role !== UserRoleTypes.WIZARD_CREATOR) {
   if (UserData?.role === UserRoleTypes.USER) {
     // no token
-    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
     return
   }
 
@@ -47,7 +48,7 @@ export const ExtractWizard = (id: string) => (dispatch: Dispatch<WizardEditorAct
 
 // Save Changes
 export const SaveChanges = (wizard_id: string) => async (
-  dispatch: Dispatch<WizardEditorAction | UIAction>, getState: () => RootState
+  dispatch: Dispatch<WizardEditorAction | UIAction | AuthAction>, getState: () => RootState
 ): Promise<void> => {
 
   // Send Changes to server
@@ -60,7 +61,7 @@ export const SaveChanges = (wizard_id: string) => async (
   // Validate user before request:
   if (!token || !UserData || UserData.role === UserRoleTypes.USER) {
     // -- unauthorized - only users can fill wizard forms
-    dispatch({type: WizardEditorActionTypes.AUTH_FAIL})
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
     return
   }  
 
@@ -95,10 +96,4 @@ export const SaveChanges = (wizard_id: string) => async (
     // Set error feedback
     dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "An error has occured"))
   }
-
-  // Extract wizard on success - save to global state
-  // dispatch({
-  //   type: WizardEditorActionTypes.EXTRACT_WIZARD,
-  //   payload: CurrWizard
-  // })
 }
