@@ -14,19 +14,17 @@ import { SetPageTitle } from "../redux/actions/User"
 // Styles:
 import Styles from "../styles/pages/Login.module.css"
 import { getStyles } from "../controllers"
+import { AuthAction, AuthActionTypes } from "../redux/action-types/Auth"
 // Components:
 
 
 // Login Page
 const Register: React.FC = () => {
 
-    if (localStorage.getItem(TOKEN_NAME) !== null) {
-        // localStorage.removeItem('auth-token')
-        window.location.href = '/'
-    }
-
     // Dispatch
     const dispatch = useDispatch()
+    if (localStorage.getItem(TOKEN_NAME) !== null)
+        dispatch<AuthAction>({type: AuthActionTypes.AUTH_FAIL})
     useEffect(() => {dispatch(SetPageTitle('Register'))}, [])  // -- set title current page
     // Handlers
     const { SignUp } = bindActionCreators(AuthActions, useDispatch())    

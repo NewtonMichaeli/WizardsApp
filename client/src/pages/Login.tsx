@@ -13,19 +13,16 @@ import Styles from "../styles/pages/Login.module.css"
 // Components:
 import { TOKEN_NAME } from "../configs/_storage"
 import { SetPageTitle } from "../redux/actions/User"
+import { AuthAction, AuthActionTypes } from "../redux/action-types/Auth"
 
 
 // Login Page
 const Login: React.FC = () => {
 
-    if (localStorage.getItem(TOKEN_NAME) !== null) {
-        // localStorage.removeItem('auth-token')
-        console.log(localStorage.getItem(TOKEN_NAME))
-        // window.location.href = '/'
-    }
-
     // Dispatch
     const dispatch = useDispatch()
+    if (localStorage.getItem(TOKEN_NAME) !== null)
+        dispatch<AuthAction>({type: AuthActionTypes.AUTH_FAIL})
     useEffect(() => {dispatch(SetPageTitle('Login'))}, [])  // -- set title current page
     // Handlers
     const { SignIn } = bindActionCreators(AuthActions, useDispatch())

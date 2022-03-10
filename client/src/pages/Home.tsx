@@ -18,14 +18,14 @@ const Home: React.FC = () => {
   if (UserData?.role === UserRoleTypes.ADMIN) return (
     <div className={Styles["Home"]}>
       <h2 className={Styles['title']}>Home</h2>
-      <NavLink className={Styles['link']} to='/dashboard'>Dashbord</NavLink>
+      <NavLink className={Styles['link']} to='/dashboard'>Dashboard</NavLink>
     </div>
   )
   // WizardCreator
   else if (UserData?.role === UserRoleTypes.WIZARD_CREATOR) return (
     <div className={Styles["Home"]}>
       <h2 className={Styles['title']}>Home</h2>
-      <NavLink className={Styles['link']} to='/dashboard'>Dashbord</NavLink>
+      <NavLink className={Styles['link']} to='/dashboard'>Dashboard</NavLink>
     </div>
   )
   // User

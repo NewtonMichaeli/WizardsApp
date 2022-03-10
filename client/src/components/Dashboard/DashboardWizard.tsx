@@ -36,7 +36,7 @@ const DashboardWizard: DashboardWizard__props = ({wizard}) => {
     return (
         <div className={Styles["DashboardWizard"]}>
             <section className={Styles["nameinfo"]}>
-                <h1 className={Styles["user-name"]}>Artemix</h1>
+                <h1 className={Styles["user-name"]}>{UserData?.username}</h1>
                 <span className={Styles["line"]} />
                 <h2 className={Styles["wizard-name"]}>
                     {wizard.name}</h2>
