@@ -16,7 +16,7 @@ import { getStyles } from '../controllers'
 // Components:
 import Section, { AddSectionHere } from '../components/WizardEditor/Wizard.Section'
 import AddMenu from '../components/WizardEditor/AddMenu'
-import { BtnAdd, BtnFinish, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
+import { BtnAdd, BtnControlPageNavigation, BtnFinish, BtnLeave, BtnPageBack, BtnPageNext } from '../components/HeaderControllers'
 import { ElementTypes } from '../redux/types'
 import { AddElementAction, WizardEditorActionTypes } from '../redux/action-types/WizardEditor'
 import { PushFeedback } from '../redux/actions/UI'
@@ -90,6 +90,8 @@ const WizardEditor: React.FC = () => {
   // Curent page & wizard:
   const { ActionTrigger, ActionType, WizardState, Page, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
 
+  console.log(WizardState?.DoC)
+  console.log(WizardState?.canNavigate)
   if (WizardState) return (
     <div className={Styles["WizardStats"]}>
       <div className={Styles["wizard-content-container"]}>
@@ -104,6 +106,7 @@ const WizardEditor: React.FC = () => {
             } out of {WizardState?.pages.length}
           </h5>
           <div className={Styles["page-controllers"]}>
+            <BtnControlPageNavigation />
             <BtnPageBack onClick={()=>dispatch(MovePage('BACK'))} />
             <BtnPageNext onClick={()=>dispatch(MovePage('NEXT'))} />
             <BtnLeave />

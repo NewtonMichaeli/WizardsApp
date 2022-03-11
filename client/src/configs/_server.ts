@@ -1,6 +1,9 @@
 // Configs File - Server
 
 // Server URI
+export const CLIENT_URI = "http://localhost:3000"
+
+// Server URI
 export const SERVER_URI = "http://localhost:5000"
 
 // Server endpoint (POST) - signup
@@ -32,3 +35,6 @@ export const SERVER_UPDATE_WIZARD = SERVER_URI + "/api/wizards/"
 
 // Server endpoint (PATCH) - update wizard
 export const SERVER_DELETE_WIZARD = SERVER_URI + "/api/wizards/"
+
+// Server endpoint (PATCH) - update wizard
+export const SERVER_CHANGE_PAGE_NAVIGATION_STATUS = (id: string) => SERVER_URI + "/api/wizards/" + id + "/changePageNavigationStatus"

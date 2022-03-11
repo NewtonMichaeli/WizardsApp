@@ -9,7 +9,7 @@ import { UserRoleTypes } from "../action-types/User"
 import { WizardEditorAction, WizardEditorActionTypes } from "../action-types/WizardEditor"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
-import { SERVER_UPDATE_WIZARD } from "../../configs/_server"
+import { SERVER_CHANGE_PAGE_NAVIGATION_STATUS, SERVER_UPDATE_WIZARD } from "../../configs/_server"
 import { _headers } from "../../configs/_headers"
 import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
@@ -91,6 +91,56 @@ export const SaveChanges = (wizard_id: string) => async (
 
     // Success feedback
     dispatch(PushFeedback(true, "Data has been Saved Successfully"))
+  }
+  catch (err: any) {
+    // Set error feedback
+    dispatch(PushFeedback(false, err?.response?.message ?? err?.response?.data ?? "An error has occured"))
+  }
+}
+
+
+// Save Changes
+export const ChangePageNavigation = () => async (dispatch: Dispatch<WizardEditorAction | UIAction | AuthAction>, getState: () => RootState): Promise<void> => {
+
+  // Send Changes to server
+
+  // States:
+  const { WizardState } = getState().wizard_editor
+  const { UserData } = getState().user
+  const { token } = getState().auth
+
+  // Validate user before request:
+  if (!token || !UserData || UserData.role === UserRoleTypes.USER) {
+    // -- unauthorized - only users can fill wizard forms
+    dispatch({type: AuthActionTypes.AUTH_FAIL})
+    return
+  }  
+
+  if (WizardState === null) {
+    dispatch(PushFeedback(false, "Error: page doesn't exist"))
+    return
+  }
+
+  try {
+    
+    // save data in localstorage temporarly
+    const res = await axios.patch(
+      SERVER_CHANGE_PAGE_NAVIGATION_STATUS(WizardState.id),
+      {headers: _headers(token)}
+    )
+    // Change Page Navigation to response result
+    dispatch({
+      type: WizardEditorActionTypes.CHANGE_PAGE_NAVIGATION_STATUS,
+      payload: {
+        status: res.data.result
+      }
+    })
+    // Success feedback
+    dispatch(PushFeedback(true, 
+      res.data.result
+        ? "Navigation is now Enabled"
+        : "Navigation is now Disabled"
+    ))
   }
   catch (err: any) {
     // Set error feedback

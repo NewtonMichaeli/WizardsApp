@@ -105,6 +105,8 @@ export const RenderInitFormPage = (page: WizardPageFormat): WizardFormPageFormat
 export const RenderInitForm = (wizard: WizardFormat): WizardFormFormat => ({
   name: wizard.name,
   id: wizard.id,
+  DoC: wizard.DoC,
+  canNavigate: wizard.canNavigate,
   pages: wizard.pages.map(page => RenderInitFormPage(page))
 })
 

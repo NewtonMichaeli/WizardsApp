@@ -91,6 +91,8 @@ export type WizardServerFormPageFormat = WizardServerFormSectionFormat[]
 export type WizardServerFormFormat = {
   name: string,
   id: string,
+  DoC: number,
+  canNavigate: boolean,
   pages: WizardServerFormPageFormat[]
 }
 

@@ -124,6 +124,8 @@ export type WizardPageFormat = WizardSectionFormat[]
 export type WizardFormat = {
     name: string,
     id: string,
+    canNavigate: boolean,
+    DoC: number,
     pages: WizardPageFormat[]
 }
 
@@ -133,6 +135,8 @@ export const fake_wizard: WizardFormat[] = [
     {
         name: "Wizard 1.0",
         id: "j18cn63ng98hHi9",
+        DoC: 93876534,
+        canNavigate: false,
         pages: [
             // page 1
             [
@@ -331,6 +335,8 @@ export const fake_wizard: WizardFormat[] = [
     {
         name: "Wizard 2.0",
         id: "X18HZ63YgX8hH01",
+        DoC: 987654,
+        canNavigate: false,
         pages: []
     },
 ]
@@ -457,6 +463,8 @@ export const fake_form: WizardFormat[] =
     {
         name: "wizard1",
         id: "wizard1_id",
+        DoC: 987654098,
+        canNavigate: false,
         pages: [
             [
                 {

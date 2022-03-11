@@ -10,7 +10,9 @@ export const ExtractDataToWizard = (server_wizard: any): WizardFormat => {
   const wizard_content = JSON.parse(server_wizard.content)
   return {
     name: (wizard_content.name as string),
-    id: (server_wizard.id as string),
+    id: (wizard_content.id as string),
+    DoC: (wizard_content.DoC as number),
+    canNavigate: (wizard_content.DoC as boolean),
     pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
   }
 }

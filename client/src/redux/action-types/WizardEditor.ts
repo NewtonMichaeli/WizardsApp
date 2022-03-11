@@ -17,7 +17,8 @@ export enum WizardEditorActionTypes {
   ADD_ELEMENT = "ADD_ELEMENT",
   REMOVE_ELEMENT = "REMOVE_ELEMENT",
   MODIFY_ELEMENT = "MODIFY_ELEMENT",
-  SAVE_CHANGES = "SAVE_CHANGES"
+  SAVE_CHANGES = "SAVE_CHANGES",
+  CHANGE_PAGE_NAVIGATION_STATUS = "CHANGE_PAGE_NAVIGATION_STATUS",
 }
 
 
@@ -184,9 +185,16 @@ interface AbortElementModeAction {
 interface SaveChangesAction {
   type: WizardEditorActionTypes.SAVE_CHANGES
 }
-// Wizard not fuond
+// Wizard not found
 interface WizardNotFoundAction {
   type: WizardEditorActionTypes.WIZARD_NOT_FOUND
+}
+// Change Page Navigation
+interface ChangePageNavigationAction {
+  type: WizardEditorActionTypes.CHANGE_PAGE_NAVIGATION_STATUS,
+  payload: {
+    status: boolean
+  }
 }
 
 
@@ -202,3 +210,4 @@ export type WizardEditorAction = ExtractWizardAction
   | AbortElementModeAction    // changing mode (abort)
   | SaveChangesAction         // save changes
   | WizardNotFoundAction      // wizard not found
+  | ChangePageNavigationAction      // change page navigation

@@ -164,13 +164,13 @@ export const AddWizard = (wizard_name: string) => async (dispatch: Dispatch<User
 
     // add wizard from response
     const returned_wizard = ExtractDataToWizard(server_res.data.results)
-    const {id, name, pages} = returned_wizard
+    const {id, name, pages, DoC, canNavigate} = returned_wizard
     // Dispatch success
     dispatch({
       type: UserActionTypes.ADD_WIZARD_SUCCESS,
       payload: {
         new_wizard: {
-          id, name, pages
+          id, name, pages, DoC, canNavigate
         }
       }
     })

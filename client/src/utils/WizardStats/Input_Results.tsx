@@ -120,7 +120,7 @@ export const Checkbox: React.FC<{
 
   return (
     <div className={getStyles(Styles, "Input Input-Partial Input-Checkbox")}>
-      <input type="checkbox" name={name} id={question.name} defaultChecked={isChecked} disabled />
+      <input type="checkbox" name={name} id={question.name} checked={isChecked} disabled />
       <label htmlFor={question.name}>{question.title}</label>
     </div>
   )
@@ -143,6 +143,10 @@ export const RadioboxList: React.FC<{
   question: InputTypes['Radiobox List']
 }> = ({question}) => {
 
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: string | null = null
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Radiobox List'])?.checkedElement
+
   return (
     <div className={getStyles(Styles, "Input Input-List Input-RadioboxList")}>
       <h3>{question.title}</h3>
@@ -151,7 +155,7 @@ export const RadioboxList: React.FC<{
           {question.elements.map((input, i) => 
             <Radiobox key={input.name} 
               question={input}
-              isChecked={question.name === input.name}
+              isChecked={value === input.name}
               name={question.name} />)}
         </div>
       </div>
@@ -164,6 +168,10 @@ export const CheckboxList: React.FC<{
   question: InputTypes['Checkbox List']
 }> = ({question}) => {
 
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let values: string[] = []
+  if (Username && AllAnswers) values = (AllAnswers[Username][question.name] as ServerFormInputTypes['Checkbox List'])?.checkedElements
+
   return (
     <div className={getStyles(Styles, "Input Input-List Input-CheckboxList")}>
       <h3>{question.title}</h3>
@@ -172,7 +180,7 @@ export const CheckboxList: React.FC<{
           {question.elements.map((input, i) => 
             <Checkbox key={input.name} 
               question={input} 
-              isChecked={question.checkedInputs.includes(input.name)}
+              isChecked={values.includes(input.name)}
               name={input.name} />)}
         </div>
       </div>
@@ -221,7 +229,6 @@ export const Radiobox: React.FC<{
 // TEXT
 // TEXTAREA
 // SECURED_INPUT
-// Number
 // CHECKBOX
 // IMAGE
 // RADIOBOX_LIST

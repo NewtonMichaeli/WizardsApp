@@ -52,6 +52,7 @@
   font-weight: 400;
   color: #4a4164cc;
   height: 1.2rem;
+  width: max-content;
 }
 
 /* DashboardWizard wizard-info */
@@ -77,14 +78,17 @@
   justify-content: flex-end;
   padding-right: 1rem;
 }
-.DashboardWizard .wizard-controllers img {
+.DashboardWizard .wizard-controllers .control-btn {
   height: 2rem;
+}
+.DashboardWizard .wizard-controllers .control-btn img {
+  height: 100%;
   margin-left: 0.5rem;
   transition: transform 0.1s ease;
   /* mouse */
   cursor: pointer;
 }
-.DashboardWizard .wizard-controllers img:hover {
+.DashboardWizard .wizard-controllers .control-btn img:hover {
   transform: scale(1.05);
 }
 

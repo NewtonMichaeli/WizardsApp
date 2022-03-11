@@ -24,7 +24,7 @@ const UserSelection: React.FC = () => {
 
   // show only on 'results' tab
   if (StatsMode === "RESULTS") return (
-    <select className={Styles["UserSelection"]} title='Watch Results for a specific User' onChange={showUsernameResults} value={Usernames[0] ?? ''}>
+    <select className={Styles["UserSelection"]} title='Watch Results for a specific User' onChange={showUsernameResults} defaultValue={Usernames[0] ?? ''}>
       {/* map usernames to selection */}
       {Usernames.map((username, i) => 
         <option key={i} value={username}>{username}</option>)}

@@ -25,7 +25,7 @@ import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 // Move Page action (if answers are valid till now)
 export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<WizardFormAction | UIAction>, getState: () => RootState): Promise<void> =>
 {
-  const { Page: CurrPage, PageIdx  } = getState().wizard_form
+  const { Wizard, Page: CurrPage, PageIdx  } = getState().wizard_form
   if (CurrPage === null) {
     dispatch(PushFeedback(false, "Cant Move while page doesn't exist"))
     return
@@ -41,7 +41,7 @@ export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<Wiza
   
   // Movement forward is conditional
   try {
-    const parsed_page = SavePageAnswersToServerFormat(CurrPage, false)
+    const parsed_page = SavePageAnswersToServerFormat(CurrPage, Wizard?.canNavigate ? true : false)
     dispatch(SaveAnswerPageAction(parsed_page))    // -- save current page
     dispatch(PushFeedback(true, "Saved changes"))     // -- success msg
     dispatch(MovePageAction("NEXT"))

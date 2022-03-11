@@ -1,20 +1,25 @@
 // WizardStats : Header Controllers
-import React from 'react'
+import React, { useState } from 'react'
 // Assets:
 import Add from '../assets/wizard-controllers/add-white.png'
 import Finished from '../assets/wizard-controllers/yes-white.svg'
 import Leave from '../assets/wizard-controllers/no-white.png'
 import Back from '../assets/wizard-controllers/black-arrow.png'
 import Next from '../assets/wizard-controllers/white-arrow-right.png'
+import RequiredTrue from '../assets/wizard-controllers/required-true.png'
+import RequiredFalse from '../assets/wizard-controllers/required-false.png'
 // Styles:
 import Styles from '../styles/components/HeaderController.module.css'
 import { getStyles } from '../controllers'
+import { bindActionCreators } from 'redux'
+import { RootState, WizardEditorActions } from '../redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
 
 // Prop types
 type BtnPageBack__props = React.FC<{onClick: () => any}>
 type BtnPageNext__props = BtnPageBack__props
 type BtnFinish__props = BtnPageBack__props
-// type BtnLeave__props = BtnPageBack__props
 type BtnAdd__props = React.FC<{onClick: () => any, focus: boolean}>
 type BtnFormNext__props = React.FC<{onClick: () => any, isLastPage?: true}>
 
@@ -41,6 +46,21 @@ export const BtnPageNext: BtnPageNext__props = ({onClick}) =>
     <span>Next</span>
     <img src={Next} alt="Next" />
   </button>
+
+
+// Button - Finished
+export const BtnControlPageNavigation = () => {
+
+  // States:
+  const { WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
+  // Handlers:
+  const { ChangePageNavigation } = bindActionCreators(WizardEditorActions, useDispatch())
+
+  return <button className={Styles["btn-controlPageNavigation"]} title={WizardState?.canNavigate 
+    ? 'Disable Navigation' : 'Enable Navigation'} onClick={ChangePageNavigation}>
+    <img src={WizardState?.canNavigate ? RequiredFalse : RequiredTrue} alt='Change Navigation Status' />
+  </button>
+}
 
 
 // Button - Finished
