@@ -12,7 +12,7 @@ export const ExtractDataToWizard = (server_wizard: any): WizardFormat => {
     name: (wizard_content.name as string),
     id: (wizard_content.id as string),
     DoC: (wizard_content.DoC as number),
-    canNavigate: (wizard_content.DoC as boolean),
+    canNavigate: (wizard_content.canNavigate as boolean),
     pages: (wizard_content?.pages as WizardPageFormat[]) ?? []  
   }
 }

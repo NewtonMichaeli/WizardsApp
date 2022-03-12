@@ -52,7 +52,7 @@
   font-weight: 400;
   color: #4a4164cc;
   height: 1.2rem;
-  width: max-content;
+  /* width: max-content; */
 }
 
 /* DashboardWizard wizard-info */

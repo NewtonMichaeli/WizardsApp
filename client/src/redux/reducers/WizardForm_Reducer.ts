@@ -11,7 +11,8 @@ const initState: wizard_form_state_type = {
   Wizard: null,
   Answer: {},
   Page: null,
-  PageIdx: 0
+  PageIdx: 0,
+  PagesWithErrors: []
 }
 
 
@@ -52,8 +53,7 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
     // Send Form Answer Success
     case 'SAVE_ANSWER': {
       if (state.Answer)
-        // -- update state 
-        // state.Answer.pages.splice(action.payload.answer_page_idx, 0, action.payload.answer_page)
+        // -- update state
         state.Answer = {
           ...state.Answer,
           ...action.payload.answer_page
@@ -61,9 +61,15 @@ export default (state = initState, action: WizardFormAction): wizard_form_state_
       return {...state}
     }
     case 'SEND_ANSWER_SUCCESS': {
-      // window.alert("Answer Submitted!")
       window.location.href = '/'
       return state
+    }
+    case 'SAVE_PAGE_ERROR_IDX': {
+      if (action.payload.method === 'ADD' && state.PagesWithErrors.includes(action.payload.idx))
+        state.PagesWithErrors.push(action.payload.idx)
+      else 
+        state.PagesWithErrors.filter(idx => idx !== action.payload.idx)
+      return {...state}
     }
     // Default
     default:

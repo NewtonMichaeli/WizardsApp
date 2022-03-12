@@ -106,7 +106,6 @@ const getWizards = async (req, res) => {
     if(role === "admin") wizards = await wizardRequests.getWizards()
     else wizards = await wizardRequests.getWizardsById(id)  // [wizard1, wizard2, etc..]
     
-    console.log(wizards)
     // return wizards-array
     return resHandler.wizardSentSuccessfuly(res, wizards)
 }

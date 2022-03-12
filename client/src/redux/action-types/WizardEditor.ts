@@ -191,10 +191,7 @@ interface WizardNotFoundAction {
 }
 // Change Page Navigation
 interface ChangePageNavigationAction {
-  type: WizardEditorActionTypes.CHANGE_PAGE_NAVIGATION_STATUS,
-  payload: {
-    status: boolean
-  }
+  type: WizardEditorActionTypes.CHANGE_PAGE_NAVIGATION_STATUS
 }
 
 

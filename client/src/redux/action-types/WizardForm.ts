@@ -13,6 +13,7 @@ export enum WizardFormActionTypes {
   // wizard
   SEND_ANSWER_SUCCESS = "SEND_ANSWER_SUCCESS",
   SAVE_ANSWER = "SAVE_ANSWER",
+  SAVE_PAGE_ERROR_IDX = "SAVE_PAGE_ERROR_IDX",
 }
 
 // Extract wizard from user wizards
@@ -47,6 +48,15 @@ interface SendAnswerAction {
   type: WizardFormActionTypes.SEND_ANSWER_SUCCESS
 }
 
+// Save page idx with error
+interface SavePageErrorIdxAction {
+  type: WizardFormActionTypes.SAVE_PAGE_ERROR_IDX,
+  payload: {
+    method: 'REMOVE' | 'ADD'
+    idx: number
+  }
+}
+
 
 // Action types for WizardForm Action
 export type WizardFormAction = ExtractWizardAction
@@ -54,3 +64,4 @@ export type WizardFormAction = ExtractWizardAction
   | WizardNotFoundAction
   | SendAnswerAction
   | SaveAnswerAction
+  | SavePageErrorIdxAction

@@ -78,6 +78,10 @@ export default (state = initState, action: WizardEditorAction): wizard_editor_st
       return ModifyElementInState(state, action)
     case 'ABORT_ELEMENT_MODE':
       return ClearStateSideStats(state)
+    case 'CHANGE_PAGE_NAVIGATION_STATUS':
+      if (state.WizardState)
+        state.WizardState.canNavigate = !state.WizardState.canNavigate
+      return {...state}
     // Default
     default:
       return state

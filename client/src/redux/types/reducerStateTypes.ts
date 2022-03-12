@@ -68,6 +68,8 @@ export interface wizard_form_state_type {
   Answer: ResultQuestions              // -- sent form to server
   Page: WizardFormPageFormat | null
   PageIdx: number
+  // errors checking - validate pages
+  PagesWithErrors: number[]
 }
 
 

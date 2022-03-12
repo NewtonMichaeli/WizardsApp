@@ -20,6 +20,7 @@ import { wizard_editor_state_type } from '../redux/types/reducerStateTypes'
 type BtnPageBack__props = React.FC<{onClick: () => any}>
 type BtnPageNext__props = BtnPageBack__props
 type BtnFinish__props = BtnPageBack__props
+type BtnControlPageNavigation__props = BtnPageBack__props
 type BtnAdd__props = React.FC<{onClick: () => any, focus: boolean}>
 type BtnFormNext__props = React.FC<{onClick: () => any, isLastPage?: true}>
 
@@ -49,15 +50,13 @@ export const BtnPageNext: BtnPageNext__props = ({onClick}) =>
 
 
 // Button - Finished
-export const BtnControlPageNavigation = () => {
+export const BtnControlPageNavigation: BtnControlPageNavigation__props = ({onClick}) => {
 
   // States:
   const { WizardState } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
-  // Handlers:
-  const { ChangePageNavigation } = bindActionCreators(WizardEditorActions, useDispatch())
 
   return <button className={Styles["btn-controlPageNavigation"]} title={WizardState?.canNavigate 
-    ? 'Disable Navigation' : 'Enable Navigation'} onClick={ChangePageNavigation}>
+    ? 'Disable Navigation' : 'Enable Navigation'} onClick={onClick}>
     <img src={WizardState?.canNavigate ? RequiredFalse : RequiredTrue} alt='Change Navigation Status' />
   </button>
 }
@@ -66,7 +65,7 @@ export const BtnControlPageNavigation = () => {
 // Button - Finished
 export const BtnLeave = () =>
   <button className={Styles["btn-leave"]} title='Discrat changes' 
-    onClick={() => AreYouSure("You're about to Discrate changes", () => window.location.href = '/signin')}>
+    onClick={() => window.location.href = '/dashboard'}>
     <img src={Leave} alt="Leave" />
   </button>
 
@@ -74,7 +73,7 @@ export const BtnLeave = () =>
 // Button - Finished
 export const BtnFinish: BtnFinish__props = ({onClick}) =>
   <button className={Styles["btn-finished"]} title='Save changes' 
-    onClick={() => AreYouSure("You're about to Save changes", onClick)}>
+    onClick={onClick}>
     <img src={Finished} alt="Finished" />
   </button>
 

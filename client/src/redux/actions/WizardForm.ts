@@ -19,3 +19,9 @@ export const SaveAnswerPageAction = (answer_page: ResultQuestions): WizardFormAc
   payload: {answer_page}
 })
 
+
+// Save\Remove Page With Errors
+export const SavePageWithErrors = (idx: number, method: 'REMOVE' | 'ADD'): WizardFormAction => ({
+  type: WizardFormActionTypes.SAVE_PAGE_ERROR_IDX,
+  payload: { method, idx }
+})

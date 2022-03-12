@@ -71,6 +71,7 @@ const WizardEditor: React.FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {dispatch(SetPageTitle('Edit'))}, [])  // -- set title current page
   // States:
+  const { ActionTrigger, ActionType, WizardState, Page, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
   const [ElementsListMode, setElementsListMode] = useState(false)   // -- toggling element's list
   const { SaveChanges } = bindActionCreators<RootState, any>(WizardEditorActions, dispatch)
   // Handlers
@@ -86,9 +87,13 @@ const WizardEditor: React.FC = () => {
     dispatch(RemoveElement.Page(PageIdx))
     dispatch(PushFeedback(true, "Page removed successfully."))
   }
+  const changePageNavigationStatusHandler = () => {
+    dispatch({type: WizardEditorActionTypes.CHANGE_PAGE_NAVIGATION_STATUS})
+    dispatch(PushFeedback(true, WizardState?.canNavigate
+      ? 'Page Navigation is now Enabled'
+      : 'Page Navigation is now Disabled'))
+  }
 
-  // Curent page & wizard:
-  const { ActionTrigger, ActionType, WizardState, Page, PageIdx } = useSelector<RootState, wizard_editor_state_type>(state => state.wizard_editor)
 
   console.log(WizardState?.DoC)
   console.log(WizardState?.canNavigate)
@@ -106,7 +111,7 @@ const WizardEditor: React.FC = () => {
             } out of {WizardState?.pages.length}
           </h5>
           <div className={Styles["page-controllers"]}>
-            <BtnControlPageNavigation />
+            <BtnControlPageNavigation onClick={changePageNavigationStatusHandler} />
             <BtnPageBack onClick={()=>dispatch(MovePage('BACK'))} />
             <BtnPageNext onClick={()=>dispatch(MovePage('NEXT'))} />
             <BtnLeave />

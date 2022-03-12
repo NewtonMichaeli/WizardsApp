@@ -5,9 +5,25 @@ const mysql = require('mysql')
 const asyncQuery = promisify(con.query.bind(con));
 
 const createWizard = async (wizard, userId) => {
-    const query = mysql.format(`INSERT INTO wizards (id, createdBy, filled, content, results) VALUES (NULL, ?, ?, ?, ?)`, [userId, 0, JSON.stringify(wizard), JSON.stringify([])])
+    // Initial wizard with initial properties
+    const initWizard = {
+        ...wizard,
+        DoC: new Date().getDate(),  // -- date of creation - constant
+        canNavigate: false          // -- default is false
+    }
     try {
+        // Insert new initial wizard
+        const query = mysql.format(`INSERT INTO wizards (id, createdBy, filled, content, results) VALUES (NULL, ?, ?, ?, ?)`, [userId, 0, JSON.stringify(initWizard), JSON.stringify([])])
         const qResult = await asyncQuery(query)
+        // Update wizard id inside json content
+        const setIdInsideJson = mysql.format(`UPDATE wizards SET content = ? WHERE wizards.id = ?`, [
+            JSON.stringify({
+                ...initWizard,
+                id: qResult.insertId
+            }), qResult.insertId
+        ])
+        const updateWizardIdInJson_res = await asyncQuery(setIdInsideJson)
+        // Get wizard id
         const getUserQuery = mysql.format(`SELECT * FROM wizards WHERE id=?`, [qResult.insertId])
         const result = await asyncQuery(getUserQuery)
         return result[0]
@@ -89,7 +105,6 @@ const getWizardsById = async (userId) => {
     const query = mysql.format(`SELECT * FROM wizards WHERE createdBy = ?`, [userId])
     try {
         const result = await asyncQuery(query)
-        // console.log(result);
         return result
     }
     catch {

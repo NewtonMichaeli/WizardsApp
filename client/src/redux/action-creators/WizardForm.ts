@@ -14,7 +14,7 @@ import { _headers } from "../../configs/_headers"
 import { fake_wizard } from "../../interfaces/WizardFormat"
 // Utils:
 import { RenderInitForm } from "../../utils/WizardForm/RenderInitFormElement"
-import { MovePageAction, SaveAnswerPageAction } from "../actions/WizardForm"
+import { MovePageAction, SaveAnswerPageAction, SavePageWithErrors as SavePageIdxWithErrors } from "../actions/WizardForm"
 import { SavePageAnswersToServerFormat } from "../../utils/WizardForm/RenderServerFormElement"
 import { PushFeedback } from "../actions/UI"
 import { UIAction } from "../action-types/UI"
@@ -23,6 +23,7 @@ import { AuthAction, AuthActionTypes } from "../action-types/Auth"
 
 
 // Move Page action (if answers are valid till now)
+// @param direction : backwards / forwards
 export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<WizardFormAction | UIAction>, getState: () => RootState): Promise<void> =>
 {
   const { Wizard, Page: CurrPage, PageIdx  } = getState().wizard_form
@@ -33,7 +34,6 @@ export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<Wiza
 
   // Can Move Back
   if (dir === "BACK") {
-    // const parsed_page = SavePageAnswersToServerFormat(CurrPage, true)  // save and move page back (check later)
     dispatch(MovePageAction("BACK"))
     dispatch(PushFeedback(true, "Saved changes"))
     return
@@ -41,17 +41,21 @@ export const MovePage = (dir: "BACK" | "NEXT") => async (dispatch: Dispatch<Wiza
   
   // Movement forward is conditional
   try {
-    const parsed_page = SavePageAnswersToServerFormat(CurrPage, Wizard?.canNavigate ? true : false)
+    const parsed_page = SavePageAnswersToServerFormat(CurrPage, false)
     dispatch(SaveAnswerPageAction(parsed_page))    // -- save current page
-    dispatch(PushFeedback(true, "Saved changes"))     // -- success msg
+    dispatch(SavePageIdxWithErrors(PageIdx, 'REMOVE'))    // -- save page idx with error
     dispatch(MovePageAction("NEXT"))
   }
   catch (e: any) {
-    dispatch(PushFeedback(false, e.message))
+    // Go Next page but save errors-page-idx
+    if (Wizard?.canNavigate) {
+      dispatch(SavePageIdxWithErrors(PageIdx, 'ADD'))    // -- save page idx with error
+      dispatch(MovePageAction("NEXT"))
+    } 
+    // Warn user (can't go next because errors)
+    else dispatch(PushFeedback(false, e.message))
   }
 }
-
-
 
 
 // Extract Wizard form to state
@@ -96,7 +100,7 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
 
   // Check authorization
   // States:
-  const { Page: CurrPage, PageIdx, Wizard, Answer } = getState().wizard_form
+  const { Page: CurrPage, Wizard, Answer, PagesWithErrors } = getState().wizard_form
   const { UserData } = getState().user
   const { token } = getState().auth
 
@@ -112,6 +116,12 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
     dispatch(PushFeedback(false, "Cant Move while page doesn't exist"))
     return
   }
+  
+  // Check if any page has errors before sending
+  if (PagesWithErrors.length) {
+    dispatch(PushFeedback(false, `There's an incomplete input field(s), at page ${PagesWithErrors[0] + 1}.`))
+    return
+  }  
 
   try {
     // Movement forward is conditional
@@ -143,8 +153,6 @@ export const SendAnswer = () => async (dispatch: Dispatch<WizardFormAction | UIA
     dispatch({type: WizardFormActionTypes.SEND_ANSWER_SUCCESS})
   }
   catch (err: any) {
-    // wizard not found
     dispatch(PushFeedback(false, err.message ?? err.data ?? "An error has occured"))
-    // dispatch({type: WizardFormActionTypes.WIZARD_NOT_FOUND})
   }
 }
