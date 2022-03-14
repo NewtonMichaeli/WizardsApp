@@ -8,7 +8,7 @@ const createWizard = async (wizard, userId) => {
     // Initial wizard with initial properties
     const initWizard = {
         ...wizard,
-        DoC: new Date().getDate(),  // -- date of creation - constant
+        DoC: new Date().getTime(),  // -- date of creation - constant
         canNavigate: false          // -- default is false
     }
     try {
