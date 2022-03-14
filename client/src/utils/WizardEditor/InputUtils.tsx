@@ -156,7 +156,7 @@ export const AddSubInputHere: React.FC<{
   path: sub_input_path_type,
   isInsideList?: boolean,
   noElements?: boolean
-  list_type: QuestionTypes.CHECKBOX | QuestionTypes.RADIOBOX
+  list_type: QuestionTypes.CHECKBOX | QuestionTypes.RADIOBOX | QuestionTypes.IMAGE
 }> = ({path, noElements, list_type}) => {
 
   // Dispatch

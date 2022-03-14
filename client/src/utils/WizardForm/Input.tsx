@@ -1,13 +1,16 @@
 // Inputs
 
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 // Types:
 import { InputChange, TextareaChange } from "../WizardEditor/types"
 import { FormInputTypes } from "../../interfaces/WizardFormat_Form"
-// import { ServerFormInputTypes, ValidServerFormInputType } from "../../interfaces/WizardFormat_Server"
+// Assets:
+import noimg from '../../assets/Q-controllers/noimg.png'
 // Styles:
 import Styles from '../../styles/Utils/WizardForm/Input.module.css'
 import { getStyles } from "../../controllers"
+// Types:
 import { QuestionTypes } from "../../redux/types"
 
 
@@ -118,12 +121,50 @@ export const Checkbox: React.FC<{
 
 
 export const Image: React.FC<{
-  question: FormInputTypes['Image']
-}> = ({question}) => {
+  question: FormInputTypes['Image'],
+  name: string,
+  isChecked: boolean,
+  setCheckedInput: (name: string) => void
+}> = ({question, isChecked, name, setCheckedInput}) => {
+
+  // Handlers
+  const imageNotFoundHandler = (e: EventTarget & HTMLImageElement) => {
+    e.onerror = null
+    e.src = noimg
+  }
 
   return (
-    <div className={getStyles(Styles, "Input Input-Image")}>
-      
+    <div className={getStyles(Styles, `Input Input-Partial Input-Image ${isChecked ? 'selected-image' : ''}`)}>
+      <img src={question.url} onError={({currentTarget}) => imageNotFoundHandler(currentTarget)} 
+        alt={question.title} title={isChecked ? '' : "Check as Default"} onClick={() => setCheckedInput(question.name)} />
+    </div>
+  )
+}
+
+
+export const ImagesList: React.FC<{
+  question: FormInputTypes['Image List']
+}> = ({question}) => {
+
+  // States
+  const [checkedInput, setCheckedInput] = useState(question.checkedInput)
+  // Handlers
+  const setCheckedInputHandler = (name: string) => {
+    question.checkedInput = name
+    setCheckedInput(name)
+  }
+  return (
+    <div className={getStyles(Styles, "Input Input-List Input-ImageList")}>
+      <h3>{question.title}</h3>
+      <div className={Styles["Input-container"]}>
+        {/* render images */}
+        {question.elements.map((_element, i) => 
+          <Image key={_element.name} 
+            question={_element} 
+            name={question.name} 
+            isChecked={checkedInput === _element.name}
+            setCheckedInput={setCheckedInputHandler} />)}
+      </div>
     </div>
   )
 }

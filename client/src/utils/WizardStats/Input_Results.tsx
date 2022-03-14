@@ -8,12 +8,11 @@ import { QuestionTypes } from "../../redux/types"
 import { RootState } from "../../redux"
 import { wizard_stats_state_type } from "../../redux/types/reducerStateTypes"
 import { ServerFormInputTypes } from "../../interfaces/WizardFormat_Server"
-// Components:
-import { InStatisticableField } from "./InputUtils"
+// Assets:
+import noimg from '../../assets/Q-controllers/noimg.png'
 // Styles:
 import Styles from '../../styles/Utils/WizardStats/Input_Results.module.css'
 import { getStyles } from "../../controllers"
-import NumericalGraph from "./graphs/NumericalGraph"
 
 
 export const Label: React.FC<{
@@ -82,36 +81,6 @@ export const SecuredInput: React.FC<{
 }
 
 
-export const Number: React.FC<{
-  question: InputTypes['Number']
-}> = ({question}) => {
-    
-  // States
-  let numbers: number[] = []
-
-  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
-
-  if (AllAnswers) Object.entries(AllAnswers).map(UserAnswer => {
-    numbers.push((UserAnswer[1][question.name] as ServerFormInputTypes['Number']).value)
-  })
-
-
-  return (
-    <div className={getStyles(Styles, "Input Input-Range")}>
-      <h3>{question.title}</h3>
-      {/* <h6>Answers: {answers_amount}</h6> */}
-      <div className={Styles["data-section"]}>
-        <div className={Styles["Input-container"]}>
-        </div>
-        <div className={Styles["stats-container"]}>
-          <NumericalGraph data={numbers} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-
 export const Checkbox: React.FC<{
   question: InputTypes['Checkbox'],
   name: string,
@@ -128,12 +97,48 @@ export const Checkbox: React.FC<{
 
 
 export const Image: React.FC<{
-  question: InputTypes['Image']
-}> = ({question}) => {
+  question: InputTypes['Image'],
+  name: string,
+  isChecked: boolean
+}> = ({question, name, isChecked}) => {
+
+  // Handlers
+  const imageNotFoundHandler = (e: EventTarget & HTMLImageElement) => {
+    e.onerror = null
+    e.src = noimg
+  }
 
   return (
-    <div className={getStyles(Styles, "Input Input-Image")}>
-      
+    <div className={getStyles(Styles, `Input Input-Partial Input-Image ${isChecked ? 'selected-image' : ''}`)}>
+      <div className={Styles["option"]}>
+        <img src={question.url} onError={({currentTarget}) => imageNotFoundHandler(currentTarget)} alt={question.title} />
+      </div>
+    </div>
+  )
+}
+
+
+export const ImagesList: React.FC<{
+  question: InputTypes['Image List']
+}> = ({question}) => {
+
+  // States
+  const { AllAnswers, Username } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+  let value: string | null = null
+  if (Username && AllAnswers) value = (AllAnswers[Username][question.name] as ServerFormInputTypes['Image List'])?.checkedInput
+
+  return (
+    <div className={getStyles(Styles, "Input Input-List Input-ImageList")}>
+      <h3>{question.title}</h3>
+      <div className={Styles["data-section"]}>
+        <div className={Styles["Input-container"]}>
+          {question.elements.map((input, i) => 
+            <Image key={input.name} 
+              question={input}
+              isChecked={value === input.name}
+              name={question.name} />)}
+        </div>
+      </div>
     </div>
   )
 }

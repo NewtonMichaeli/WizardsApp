@@ -75,6 +75,10 @@
   width: 100%;
   margin: 0.2rem 0;
 }
+.Input.Input-Partial.Input-Image {
+  margin: 3.1rem 0;
+  /* height: 8rem; */
+}
 .Input.Input-Partial .upper-section {
   /* layout */
   display: flex;
@@ -91,6 +95,21 @@
 .Input.Input-Partial .upper-section input[type="checkbox"] {
   width: 0.9rem;
   margin-right: 0.7rem;
+}
+.Input.Input-Partial.selected-image .upper-section > img {
+  outline: 3px solid #00aaaaaa;
+}
+.Input.Input-Partial .upper-section > img {
+  height: 8rem;
+  max-width: 15rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  /* animation */
+  transition: transform 0.2s ease;
+}
+.Input.Input-Partial .upper-section > img:hover {
+  transform: scale(1.02);
 }
 
 /* List Input : Checkbox-List, Radiobox-List, Lists-List */

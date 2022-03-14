@@ -1,8 +1,7 @@
 // Elements Parser 
 import React from 'react'
-import { InputTypes } from '../../interfaces/WizardFormat'
 // Input fields:
-import { CheckboxList, Label, ListsList, RadioboxList, Number, SecuredInput, Text, Textarea } from './Input'
+import { CheckboxList, Label, ListsList, RadioboxList, Number, SecuredInput, Text, Textarea, ImagesList } from './Input'
 import { QuestionTypes } from '../../redux/types'
 import { ValidFormInputType } from '../../interfaces/WizardFormat_Form'
 
@@ -17,7 +16,7 @@ const ParseElement: ParseElement__props = ({element}) => {
   switch (element.type)
   {
     case QuestionTypes.LABEL:
-      return <Label question={element as InputTypes['Label']} />
+      return <Label question={element} />
     case QuestionTypes.TEXT:
       return <Text question={element} />
     case QuestionTypes.TEXTAREA:
@@ -26,8 +25,8 @@ const ParseElement: ParseElement__props = ({element}) => {
       return <SecuredInput question={element} />
     case QuestionTypes.NUMBER:
       return <Number question={element} />
-    // case QuestionTypes.IMAGE:
-    //   return <Image element={element as InputTypes['Image']} path={path} />
+    case QuestionTypes.IMAGE_LIST:
+      return <ImagesList question={element} />
     case QuestionTypes.RADIOBOX_LIST:
       return <RadioboxList question={element} />
     case QuestionTypes.CHECKBOX_LIST:

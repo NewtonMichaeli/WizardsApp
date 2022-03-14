@@ -49,6 +49,10 @@
   align-items: center;
   border-left: none !important;
 }
+.Input.Input-Partial.Input-Image {
+  /* margin: 3.8rem 0 3rem 0; */
+  height: 8rem;
+}
 .Input.Input-Partial input {
   margin-right: 0.5rem;
   margin-top: 0.2rem;
@@ -61,9 +65,32 @@
   justify-content: flex-start;
   margin-top: 0.8rem;
 }
+.Input.Input-List.Input-ImageList .Input-container {
+  /* layout */
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  /* background-color: #aaa; */
+}
 .Input.Input-List .Input-container .Input.Input-Partial {
   margin: 0;
   margin-bottom: 0.4rem;
+  width: min-content;
+}
+.Input.Input-Partial.selected-image > img {
+  outline: 3px solid #00aaaaaa;
+}
+.Input.Input-Partial > img {
+  height: 8rem;
+  max-width: 15rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  /* animation */
+  transition: transform 0.2s ease;
+}
+.Input.Input-Partial > img:hover {
+  transform: scale(1.02);
 }
 
 /*// TEXT

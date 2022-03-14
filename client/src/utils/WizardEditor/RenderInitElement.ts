@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { RootState } from "../../redux"
 import { ValidInputType, WizardFormat, WizardPageFormat, WizardSectionFormat } from "../../interfaces/WizardFormat"
 import { QuestionTypes } from "../../redux/types"
+import { url } from 'inspector'
 
 
 type RenderInitInput__props = (
@@ -40,13 +41,21 @@ export const RenderInitInput: RenderInitInput__props = (ActionTrigger) => {
         name: uuidv4(),
         title: "New Radiobox field"
       }
-    // case QuestionTypes.IMAGE:
-    //   return {
-    //     type: QuestionTypes.IMAGE,
-    //     name: uuidv4(),
-    //     title: "New Image",
-    //     url: null
-    //   }
+    case QuestionTypes.IMAGE:
+      return {
+        type: QuestionTypes.IMAGE,
+        name: uuidv4(),
+        title: "New Image",
+        url: ''
+      }
+    case QuestionTypes.IMAGE_LIST:
+      return {
+        type: QuestionTypes.IMAGE_LIST,
+        name: uuidv4(),
+        title: "New ImageList List",
+        checkedInput: null,
+        elements: []
+      }
     case QuestionTypes.SECURED_INPUT:
       return {
         type: QuestionTypes.SECURED_INPUT,

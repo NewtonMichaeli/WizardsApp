@@ -40,8 +40,15 @@ export interface ServerFormInputTypes {
   },
   "Image": {
     type: QuestionTypes.IMAGE,
-    name: string
+    name: string,
+    // title: string,
+    // url: string
   }
+  "Image List": {
+    type: QuestionTypes.IMAGE_LIST,
+    name: string
+    checkedInput: string | null
+  },
   "Radiobox List": {
     type: QuestionTypes.RADIOBOX_LIST,
     name: string,
@@ -72,6 +79,7 @@ export type ValidServerFormInputType =
   ServerFormInputTypes['Textarea'] |
   ServerFormInputTypes['Checkbox List'] |
   ServerFormInputTypes['Radiobox List'] |
+  ServerFormInputTypes['Image List'] | 
   ServerFormInputTypes['Lists List'] | 
   ServerFormInputTypes['Image']
 

@@ -2,7 +2,7 @@
 import React from 'react'
 import { InputTypes, ValidInputType } from '../../interfaces/WizardFormat'
 // Input fields:
-import { Checkbox, CheckboxList, Image, Label, ListsList, Radiobox, RadioboxList, Range, SecuredInput, Text, Textarea } from './Input'
+import { Checkbox, CheckboxList, Image, ImagesList, Label, ListsList, Radiobox, RadioboxList, Range, SecuredInput, Text, Textarea } from './Input'
 import { QuestionTypes } from '../../redux/types'
 
 
@@ -29,16 +29,12 @@ const ParseElement: ParseElement__props = ({element, question, page, section}) =
       return <SecuredInput element={element as InputTypes['SecuredInput']} path={path} />
     case QuestionTypes.NUMBER:
       return <Range element={element as InputTypes['Number']} path={path} />
-    // case QuestionTypes.IMAGE:
-    //   return <Image element={element as InputTypes['Image']} path={path} />
-    // case QuestionTypes.RADIOBOX:
-    //   return <Radiobox element={element as InputTypes['Radiobox']} path={path} />
     case QuestionTypes.RADIOBOX_LIST:
       return <RadioboxList element={element as InputTypes['Radiobox List']} path={path} />
-    // case QuestionTypes.CHECKBOX:
-    //   return <Checkbox element={element as InputTypes['Checkbox']} path={path} />
     case QuestionTypes.CHECKBOX_LIST:
       return <CheckboxList element={element as InputTypes['Checkbox List']} path={path} />
+    case QuestionTypes.IMAGE_LIST:
+      return <ImagesList element={element as InputTypes['Image List']} path={path} />
     case QuestionTypes.LISTS_LIST:
       return <ListsList element={element as InputTypes['Lists List']} path={path} />
     default:

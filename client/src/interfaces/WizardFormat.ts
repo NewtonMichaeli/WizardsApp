@@ -59,7 +59,14 @@ export interface InputTypes {
         type: QuestionTypes.IMAGE,
         name: string
         title: string,
-        url: Url,   // either 
+        url: string,
+    }
+    "Image List": {
+        type: QuestionTypes.IMAGE_LIST,
+        name: string
+        title: string,
+        checkedInput: string | null
+        elements: InputTypes['Image'][]
     }
     "Radiobox List": {
         type: QuestionTypes.RADIOBOX_LIST,
@@ -97,18 +104,22 @@ export type ValidInputType =
     InputTypes['Checkbox List'] |
     InputTypes['Radiobox List'] |
     InputTypes['Lists List'] | 
-    InputTypes['Image']
+    InputTypes['Image'] |
+    InputTypes['Image List']
+    
 
 // Wizard : page : section : Input-List
 export type ValidInputListType =
     InputTypes['Checkbox List'] |
     InputTypes['Radiobox List'] |
+    InputTypes['Image List'] |
     InputTypes['Lists List']
 
 // Wizard : page : section : Input-List
 export type ValidSubInputType =
     InputTypes['Checkbox'] |
-    InputTypes['Radiobox']
+    InputTypes['Radiobox'] |
+    InputTypes['Image']
 
 
 // Wizard : page : section - Format

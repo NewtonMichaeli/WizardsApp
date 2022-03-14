@@ -6,6 +6,8 @@ import { InputTypes } from "../../interfaces/WizardFormat"
 import { QuestionTypes } from "../../redux/types"
 import { RootState } from "../../redux"
 import { wizard_stats_state_type } from "../../redux/types/reducerStateTypes"
+// Assets:
+import noimg from '../../assets/Q-controllers/noimg.png'
 // Components:
 import { InStatisticableField } from "./InputUtils"
 // Styles:
@@ -106,12 +108,75 @@ export const Checkbox: React.FC<{
 
 
 export const Image: React.FC<{
-  question: InputTypes['Image']
-}> = ({question}) => {
+  question: InputTypes['Image'],
+  name: string,
+  checkedPercentage: number
+}> = ({question, name, checkedPercentage}) => {
+
+  // Handlers
+  const imageNotFoundHandler = (e: EventTarget & HTMLImageElement) => {
+    e.onerror = null
+    e.src = noimg
+  }
 
   return (
-    <div className={getStyles(Styles, "Input Input-Image")}>
-      
+    <div className={getStyles(Styles, `Input Input-Partial Input-Image`)}>
+      <div className={Styles["option"]}>
+        <img src={question.url} onError={({currentTarget}) => imageNotFoundHandler(currentTarget)} alt={question.title} />
+      </div>
+      <h5 className={Styles["option-stat"]}>
+        {Math.round(checkedPercentage)}% checked this option
+      </h5>
+    </div>
+  )
+}
+
+
+export const ImagesList: React.FC<{
+  question: InputTypes['Image List']
+}> = ({question}) => {
+
+  // States
+  let answers_amount: number = 0,
+    elements_counter: {[q_name: string]: number} = {}
+
+  const { AllAnswers } = useSelector<RootState, wizard_stats_state_type>(state => state.wizard_stats)
+
+  if (AllAnswers) {
+    Object.entries(AllAnswers).map((UserAnswer, i) => {
+      // username: { q1: {...}, q2: {...} }
+      // console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
+      const checkedElement: string | null = (UserAnswer[1][question.name] as ServerFormInputTypes['Image List'])?.checkedInput ?? null
+      if (checkedElement) {
+        answers_amount ++
+        // init firld on first instance
+        if (!elements_counter[checkedElement]) elements_counter[checkedElement] = 1
+        // increment instance
+        else elements_counter[checkedElement]++
+      }
+    })
+  }
+
+  return (
+    <div className={getStyles(Styles, "Input Input-List Input-ImageList")}>
+      <h3>{question.title}</h3>
+      <h6>Answers: {answers_amount}</h6>
+      <div className={Styles["data-section"]}>
+        <div className={Styles["Input-container"]}>
+          {question.elements.map((input, i) => {
+            
+            let checkedPercentage: number = 0
+            if (elements_counter[input.name] !== undefined)
+              checkedPercentage = elements_counter[input.name] / answers_amount * 100
+
+            return <Image key={input.name} 
+              question={input}
+              checkedPercentage={checkedPercentage}
+              name={question.name} />
+              })
+          }
+        </div>
+      </div>
     </div>
   )
 }
@@ -131,7 +196,7 @@ export const RadioboxList: React.FC<{
   if (AllAnswers) {
     Object.entries(AllAnswers).map((UserAnswer, i) => {
       // username: { q1: {...}, q2: {...} }
-      console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
+      // console.log(i + " | " + question.title + " : ", UserAnswer[1][question.name])
       const checkedElement: string | null = (UserAnswer[1][question.name] as ServerFormInputTypes['Radiobox List'])?.checkedElement ?? null
       if (checkedElement) {
         answers_amount ++
@@ -162,9 +227,6 @@ export const RadioboxList: React.FC<{
               })
           }
         </div>
-        {/* <div className={Styles["stats-container"]}>
-          somestats
-        </div> */}
       </div>
     </div>
   )
@@ -221,9 +283,6 @@ export const CheckboxList: React.FC<{
             })
           }
         </div>
-        {/* <div className={Styles["stats-container"]}>
-          somestats
-        </div> */}
       </div>
     </div>
   )

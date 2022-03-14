@@ -9,6 +9,7 @@ export enum QuestionTypes {
   TEXT = "Text",
   CHECKBOX = "Checkbox",
   IMAGE = "Image",
+  IMAGE_LIST = "Image List",
   TEXTAREA = "Textarea",
   SECURED_INPUT = "SecuredInput",
   RADIOBOX_LIST = "Radiobox List",

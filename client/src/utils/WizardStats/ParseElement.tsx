@@ -38,8 +38,8 @@ const ParseElement: ParseElement__props = ({element, q_idx}) => {
       return <StatsInput.SecuredInput key={q_idx} question={element} />
     case QuestionTypes.NUMBER:
       return <StatsInput.Number key={q_idx} question={element} />
-    // case QuestionTypes.IMAGE:
-    //   return <Image element={element as InputTypes['Image']} path={path} />
+    case QuestionTypes.IMAGE_LIST:
+      return <StatsInput.ImagesList key={q_idx} question={element} />
     case QuestionTypes.RADIOBOX_LIST:
       return <StatsInput.RadioboxList key={q_idx} question={element} />
     case QuestionTypes.CHECKBOX_LIST:
@@ -60,10 +60,8 @@ const ParseElement: ParseElement__props = ({element, q_idx}) => {
       return <ResultsInput.Textarea key={q_idx} question={element} />
     case QuestionTypes.SECURED_INPUT:
       return <ResultsInput.SecuredInput key={q_idx} question={element} />
-    case QuestionTypes.NUMBER:
-      return <ResultsInput.Number key={q_idx} question={element} />
-    // case QuestionTypes.IMAGE:
-    //   return <Image element={element as InputTypes['Image']} path={path} />
+    case QuestionTypes.IMAGE_LIST:
+      return <ResultsInput.ImagesList key={q_idx} question={element} />
     case QuestionTypes.RADIOBOX_LIST:
       return <ResultsInput.RadioboxList key={q_idx} question={element} />
     case QuestionTypes.CHECKBOX_LIST:

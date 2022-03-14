@@ -41,13 +41,12 @@ export const RenderToServerFormInput = (SavedAnswers: ResultQuestions, question:
         name: question.name
       }
       break
-    // case QuestionTypes.IMAGE:
-    //   return {
-    //     type: QuestionTypes.IMAGE,
-    //     name: uuidv4(),
-    //     title: "New Image",
-    //     url: null
-    //   }
+    case QuestionTypes.IMAGE:
+      SavedAnswers[question.name] = {
+        type: QuestionTypes.IMAGE,
+        name: question.name
+      }
+      break
     case QuestionTypes.SECURED_INPUT:
       // Validate values only on move=NEXT
       if (!isMovingBack) {
@@ -94,6 +93,15 @@ export const RenderToServerFormInput = (SavedAnswers: ResultQuestions, question:
       }
       break
 
+    case QuestionTypes.IMAGE_LIST:
+      if (!isMovingBack && !question.checkedInput) throw new Error("Must pick at least 1 image")
+      SavedAnswers[question.name] = {
+        type: QuestionTypes.IMAGE_LIST,
+        name: question.name,
+        checkedInput: question.checkedInput
+      }
+      break
+      
     case QuestionTypes.CHECKBOX_LIST:
       SavedAnswers[question.name] = {
         type: QuestionTypes.CHECKBOX_LIST,

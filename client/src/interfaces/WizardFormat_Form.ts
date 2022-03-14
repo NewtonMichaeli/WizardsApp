@@ -68,8 +68,15 @@ export interface FormInputTypes {
         type: QuestionTypes.IMAGE,
         name: string
         title: string,
-        url: Url,   // either 
-    }
+        url: string
+    },
+    "Image List": {
+        type: QuestionTypes.IMAGE_LIST,
+        name: string
+        title: string,
+        checkedInput: string | null
+        elements: FormInputTypes['Image'][]
+    },
     "Radiobox List": {
         type: QuestionTypes.RADIOBOX_LIST,
         name: string,
@@ -106,7 +113,8 @@ export type ValidFormInputType =
     FormInputTypes['Checkbox List'] |
     FormInputTypes['Radiobox List'] |
     FormInputTypes['Lists List'] | 
-    FormInputTypes['Image']
+    FormInputTypes['Image'] |
+    FormInputTypes['Image List']
 
 
 // Wizard : page : section - Format

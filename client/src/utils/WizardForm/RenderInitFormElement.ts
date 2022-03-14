@@ -40,13 +40,10 @@ export const RenderInitFormInput = (question: ValidInputType): ValidFormInputTyp
       return {
         ...question
       }
-    // case QuestionTypes.IMAGE:
-    //   return {
-    //     type: QuestionTypes.IMAGE,
-    //     name: uuidv4(),
-    //     title: "New Image",
-    //     url: null
-    //   }
+    case QuestionTypes.IMAGE:
+      return {
+        ...question
+      }
     case QuestionTypes.SECURED_INPUT:
       return {
         ...question,
@@ -61,6 +58,11 @@ export const RenderInitFormInput = (question: ValidInputType): ValidFormInputTyp
       return {
         ...question,
         value: ""
+      }
+    case QuestionTypes.IMAGE_LIST:
+      return {
+        ...question,
+        checkedInput: question.checkedInput
       }
     case QuestionTypes.CHECKBOX_LIST:
       return {

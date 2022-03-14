@@ -67,11 +67,6 @@
   justify-content: space-between;
   align-items: center;
 }
-/* .Input.Input-List .data-section .Input-container,
-.Input.Input-List .data-section .stats-container {
-  background-color: green;
-} */
-
 /* input-partial */
 .Input.Input-Partial {
   height: 1rem;
@@ -84,6 +79,21 @@
 .Input.Input-Partial input {
   margin-right: 0.5rem;
   margin-top: 0.2rem;
+}
+.Input.Input-Partial.Input-Image {
+  height: 8rem;
+  justify-content: flex-start;
+}
+.Input.Input-Partial.selected-image .option > img {
+  outline: 3px solid #00aaaaaa;
+  opacity: 1;
+}
+.Input.Input-Partial .option > img {
+  height: 8rem;
+  max-width: 15rem;
+  padding: 0.2rem;
+  border-radius: 4px;
+  opacity: 0.85;
 }
 
 /*// TEXT

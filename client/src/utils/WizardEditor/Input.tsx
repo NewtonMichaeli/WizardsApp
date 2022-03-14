@@ -7,10 +7,13 @@ import { InputChange, input_path_type, list_input_path_type, sub_input_path_type
 // Styles:
 import Styles from '../../styles/Utils/WizardEditor/Input.module.css'
 import { getStyles } from "../../controllers"
+// Assets:
+import noimg from '../../assets/Q-controllers/noimg.png'
 // Utils:
 import { AddInputHere, AddListHere, AddSubInputHere, DeleteInputBtn, OptionsBtn, RequiredBtn } from "./InputUtils"
 import { useDispatch } from "react-redux"
 import { RemoveElement } from "../../redux/actions/WizardEditor"
+import { EventHandler, useState } from "react"
 
 
 export const Label: React.FC<{
@@ -237,19 +240,37 @@ export const Checkbox: React.FC<{
 export const Image: React.FC<{
   element: InputTypes['Image'],
   path: sub_input_path_type,
-}> = ({element, path}) => {
+  name: string,
+  isChecked: boolean,
+  setCheckedInput: (name: string) => void
+}> = ({element, path, isChecked, name, setCheckedInput}) => {
+
+  // Dispatch
+  const dispatch = useDispatch()
+  // States
+  const [Url, SetUrl] = useState(element.url)
+  // Handlers
+  const setUrlHandler = (url: string) => {
+    element.url = url
+    SetUrl(url)
+  }
+  const imageNotFoundHandler = (e: EventTarget & HTMLImageElement) => {
+    e.onerror = null
+    e.src = noimg
+  }
 
   return (
-    <div className={getStyles(Styles, "Input Input-Image")}>
-      <input onChange={(e: InputChange) => element.title = e.target.value}
-        className="title"
-        type="text" />
-      <input type="range" disabled
-        className="fake-box" />
+    <div className={getStyles(Styles, `Input Input-Partial Input-Image ${isChecked ? 'selected-image' : ''}`)}>
+      <div className={Styles["upper-section"]}>
+        <img src={Url} onError={({currentTarget}) => imageNotFoundHandler(currentTarget)} 
+          alt={element.title} title={isChecked ? '' : "Check as Default"} onClick={() => setCheckedInput(element.name)} />
+        <div className={Styles["q-controllers"]}>
+          <DeleteInputBtn onClick={() => dispatch(RemoveElement.SubQuestion(path))} />
+          <OptionsBtn url={{initValue: element.url, onClick: setUrlHandler}} />
+        </div>
+      </div>
       {/* add input here */}
-      <AddInputHere path={path} />
-      {/* add list here */}
-      <AddListHere path={path} />
+      <AddSubInputHere path={path} list_type={QuestionTypes.IMAGE} />
     </div>
   )
 }
@@ -301,6 +322,60 @@ export const RadioboxList: React.FC<{
     </div>
   )
 }
+
+
+
+export const ImagesList: React.FC<{
+  element: InputTypes['Image List'],
+  path: list_input_path_type,
+}> = ({element, path}) => {
+
+  // Dispatch
+  const dispatch = useDispatch()
+  // States
+  const [checkedInput, setCheckedInput] = useState(element.checkedInput)
+  // Handlers
+  const setCheckedInputHandler = (name: string) => {
+    element.checkedInput = name
+    setCheckedInput(name)
+  }
+
+  return (
+    <div className={getStyles(Styles, "Input Input-List Input-ImageList")}>
+      <div className={Styles["upper-section"]}>
+        <input onChange={(e: InputChange) => element.title = e.target.value}
+          className={Styles["title"]}
+          type="text"
+          name={element.name}
+          defaultValue={element.title}
+          placeholder="Image-List Title" />
+        {/* delete list */}
+        <DeleteInputBtn onClick={() => dispatch(RemoveElement.QuestionList(path))} isDeleteList />
+      </div>
+      <div className={Styles["btm-section"]}>
+        {/* render images */}
+        {element.elements.map((_element, i) => 
+          <Image key={_element.name} 
+            element={_element} 
+            name={element.name} 
+            isChecked={checkedInput === _element.name}
+            setCheckedInput={setCheckedInputHandler} 
+            path={{...path, option: i, list: path.option}} />)}
+      </div>
+      {/* add input here */}
+      {path.option !== undefined ? '' : <AddInputHere path={path as input_path_type} />}
+      {/* add sub-input here (if no elements exists) */}
+      {element.elements.length ? '' : 
+        <AddSubInputHere 
+          path={{...path, list: path.option, option: 0}} 
+          list_type={QuestionTypes.IMAGE} noElements />}
+      {/* add list here */}
+      <AddListHere path={path} />
+    </div>
+  )
+}
+
+
 
 
 export const CheckboxList: React.FC<{

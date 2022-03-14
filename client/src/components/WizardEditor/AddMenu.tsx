@@ -47,7 +47,7 @@ const AddMenu: React.FC = () => {
         <li onClick={()=>AddingSubInputMode(QuestionTypes.CHECKBOX)}>Checkbox</li>
         <li onClick={()=>AddingListMode(QuestionTypes.CHECKBOX_LIST)}>Checkbox List</li>
         <li onClick={()=>AddingSubInputMode(QuestionTypes.IMAGE)}>Image</li>
-        <li onClick={()=>AddingSubInputMode(QuestionTypes.IMAGE)}>Image List</li>
+        <li onClick={()=>AddingListMode(QuestionTypes.IMAGE_LIST)}>Image List</li>
         <li onClick={()=>AddingInputMode(QuestionTypes.LABEL)}>Label</li>
         <li onClick={()=>AddingListMode(QuestionTypes.LISTS_LIST)}>Lists List</li>
         <li onClick={()=>AddingSubInputMode(QuestionTypes.RADIOBOX)}>RadioBox</li>
