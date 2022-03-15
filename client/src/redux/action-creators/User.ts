@@ -55,7 +55,8 @@ export const LoadUser = () => async (dispatch: Dispatch<UserAction | AuthAction>
   }
   catch (err: any) {
     console.log(err)
-    dispatch({ type: AuthActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
+    dispatch({type: AuthActionTypes.AUTH_FAIL_RM_TOKEN})
+    // dispatch({ type: AuthActionTypes.AUTH_FAIL })   // -- stop loading and declare failure
   }
 }
 

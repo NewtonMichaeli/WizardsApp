@@ -153,7 +153,7 @@ export const CreateWizardCreator = (e: React.FormEvent<HTMLFormElement>) => asyn
     )
     // Register Succeed
     console.log('success')
-    // dispatch({ type: AuthActionTypes.CREATE_WIZARD_CREATOR_SUCCESS })
+    dispatch({ type: AuthActionTypes.CREATE_WIZARD_CREATOR_SUCCESS })
     // // success msg
     // dispatch(PushFeedback(true, 'WizardCreator Created successfully'))
   }

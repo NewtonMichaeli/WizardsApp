@@ -40,6 +40,12 @@ export default (state = initState, action: AuthAction) => {
         // -- auth failed - go to signin
         window.location.href = '/'        
       return state
+    case 'AUTH_FAIL_RM_TOKEN':
+      window.localStorage.removeItem(TOKEN_NAME)
+      if (window.location.pathname !== '/')
+        // -- auth failed - go to signin
+        window.location.href = '/'        
+      return state
     case 'LOGOUT_SUCCESS':
       localStorage.removeItem(TOKEN_NAME)   // remove token from localStorage
       window.location.href = '/'

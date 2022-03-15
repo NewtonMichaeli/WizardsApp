@@ -5,6 +5,7 @@ export enum AuthActionTypes {
   LOGOUT_SUCCESS = "LOGOUT_SUCCESS",
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
   LOGIN_FAIL = "LOGIN_FAIL",
+  AUTH_FAIL_RM_TOKEN = "AUTH_FAIL_RM_TOKEN",
   REGISTER_SUCCESS = "REGISTER_SUCCESS",
   REGISTER_FAIL = "REGISTER_FAIL",
   ADMIN_AUTH_FAIL = "ADMIN_AUTH_FAIL",
@@ -38,6 +39,10 @@ interface AuthFailAction {
   type: AuthActionTypes.AUTH_FAIL
 }
 
+interface AuthFailRemoveTokenAction {
+  type: AuthActionTypes.AUTH_FAIL_RM_TOKEN
+}
+
 interface LogoutSuccessAction {
   type: AuthActionTypes.LOGOUT_SUCCESS
 }
@@ -54,4 +59,4 @@ interface CreateWizardCreatorSuccessAction {
 // Action types for Authorization Action
 export type AuthAction = 
   LoginFailAction | LoginSuccessAction | RegisterSuccessAction | RegisterFailAction | LogoutSuccessAction | AdminAuthFailAciton | 
-  CreateWizardCreatorSuccessAction | AuthFailAction
+  CreateWizardCreatorSuccessAction | AuthFailAction | AuthFailRemoveTokenAction
