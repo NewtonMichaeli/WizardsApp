@@ -2,7 +2,7 @@
 WizardsApp is an interactive web-based survey administration software, featuring support for Multi-page forms, simple questions, question-containers and more.
 
 ##### Contributors: Netanel (Newton) Michaeli (https://github.com/NewtonMichaeli), Lior Bedok (https://github.com/LiorBedok1077).
-##### Technologies: React.js • Typescript • HTML5, CSS modules • Express.js • MongoDB
+##### Technologies: React.js • Typescript • Redux • HTML5, CSS modules • Express.js • MongoDB
 ---
 ## Download dependencies (once):
 ```
